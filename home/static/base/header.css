@@ -1,0 +1,15 @@
+header {
+  padding: 40px;
+  margin-bottom: 50px;
+  text-align: center;
+  background-color: bisque;
+}
+
+header h1 {
+  color: red;
+}
+
+header ul li{
+  display: inline;
+  margin: 0 50px;
+}
