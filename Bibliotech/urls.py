@@ -5,4 +5,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('user/', include('user.urls')),
+    # Moderator page
+    path('mod/', include('moderator.urls')),
 ]
