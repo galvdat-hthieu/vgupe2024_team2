@@ -4,5 +4,5 @@ from user.views import *
 
 app_name = 'user'
 urlpatterns = [
-    path('login',login, name='index'),   
+    path('login',login, name='login'),   
 ]

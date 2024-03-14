@@ -2,14 +2,23 @@ header {
   padding: 40px;
   margin-bottom: 50px;
   text-align: center;
-  background-color: bisque;
+  background-color: yellow;
 }
 
 header h1 {
-  color: red;
+  color: blue;
 }
 
 header ul li{
   display: inline;
   margin: 0 50px;
+  color:green;
+}
+
+header a{
+  text-decoration: none;
+}
+
+header ul li:hover{
+  color: grey;
 }
