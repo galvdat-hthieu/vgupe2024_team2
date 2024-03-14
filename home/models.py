@@ -24,35 +24,41 @@ class Book(models.Model):
   romanCate = models.BooleanField(default=False, blank=True)
   enterCate = models.BooleanField(default=False, blank=True)
   otherCate = models.BooleanField(default=False, blank=True)
-  language = models.CharField(max_length=200, null=True)
-  description = models.TextField(max_length=1500, null=True)
-  coverImage = models.ImageField(upload_to="book/coverImage", null=True)
-  publisher = models.CharField(max_length=200, null=True)
-  publication = models.DateField(null=True)
-  codeISBN = models.CharField(max_length=50, null=True)
+  language = models.CharField(max_length=200, null=True, blank=True)
+  description = models.TextField(max_length=1500, null=True, blank=True)
+  coverImage = models.ImageField(upload_to="data/book/coverImage", null=True, blank=True)
+  publisher = models.CharField(max_length=200, null=True, blank=True)
+  publication = models.CharField(max_length=50, null=True, blank=True)
+  codeISBN = models.CharField(max_length=50, null=True, blank=True)
+  statusChoices = (
+    (0, "pending"),
+    (1, "accepted"),
+    (2, "rejected")
+  )
+  status = models.IntegerField(choices=statusChoices, default=0)
+
+  def __str__(self) :
+    return self.title
 
 
 class User(AbstractUser):
-  avatar = models.ImageField(upload_to="user/avatar/")
-  birthdate = models.DateField(null=True)
+  avatar = models.ImageField(upload_to="data/user/avatar/", null=True, blank=True)
+  birthdate = models.DateField(null=True, blank=True)
   genderChoices = (
     (0, "male"),
     (1, "female"),
     (2, "other")
   )
   gender = models.IntegerField(choices=genderChoices, null=False, default=2)
-  address = models.CharField(max_length=200, null=True)
-  phoneNum = models.CharField(max_length=50, null=True)
+  address = models.CharField(max_length=200, null=True, blank=True)
+  phoneNum = models.CharField(max_length=50, null=True, blank=True)
   roleChoices = (
     (0, "user"),
     (1, "moderator"),
     (2, "admin"),
     (3, "banned")
   )
-  role = models.IntegerField(choices=roleChoices, default=0,)
-
-  def __str__(self):
-    return self.first_name + " " + self.last_name
+  role = models.IntegerField(choices=roleChoices, default=0)
 
 
 class Copy(models.Model):
@@ -64,8 +70,8 @@ class Copy(models.Model):
     (2, "borrowed"),
     (3, "unavailable")
   )
-  status = models.IntegerField(choices=statusChoices, null=True, default="hidden")
-  note = models.CharField(max_length=200)
+  status = models.IntegerField(choices=statusChoices, default=0)
+  note = models.CharField(max_length=200, null=True, blank=True)
   regDate = models.DateTimeField(null=False)
 
 
@@ -83,7 +89,7 @@ class Borrowance(models.Model):
     (5, "lost")
   )
   status = models.IntegerField(choices=statusChoices, default=0, null=False)
-  deposit = models.FloatField(default=0, null=True)
+  deposit = models.FloatField(default=0, null=True, blank=True)
 
 
 class Review(models.Model):
@@ -97,5 +103,5 @@ class Review(models.Model):
         params={'value': value},
       )
     
-  rating = models.IntegerField(validators=[validateRating], null=True)
-  review = models.TextField(max_length=1500, null=True)
+  rating = models.IntegerField(validators=[validateRating], null=True, blank=True)
+  review = models.TextField(max_length=1500, null=True, blank=True)
