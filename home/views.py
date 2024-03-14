@@ -6,6 +6,3 @@ from django.views import View
 def index(request):
   return render(request, 'index.html')
 
-class loginView(View):
-  def get(request):
-    return render('home/login.html', request)

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1> Info View </h1> 
+
+<p>Username: {{ user.username }}</p>
+<p>Phone number: {{ user.phoneNum }}</p>
+<p>Address: {{user.address}}</p>
+<p>Birthdate: {{user.birthdate}}</p>
+<p>Gender: {{user.gender}}</p>
+
+{% endblock %}

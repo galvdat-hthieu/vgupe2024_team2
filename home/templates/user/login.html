@@ -2,9 +2,10 @@
 
 
 {% block content %}
-<h1> Student Login Form </h1> 
+<h1>Login View</h1> 
 
-<form>  
+<form action="" method="post">  
+    {% csrf_token %}
     <div class="container">   
         <label>Username : </label>   
         <input type="text" placeholder="Enter Username" name="username" required>  
