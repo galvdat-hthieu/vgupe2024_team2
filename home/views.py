@@ -17,7 +17,7 @@ def search(request):
   
 
   if request.GET.get("book_search"):
-    keyword = request.GET.get("book_search")
+    keyword = request.GET.get("book_search").strip()
     books = Book.objects.filter(title__contains = keyword)
     
 
