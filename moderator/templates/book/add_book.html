@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action = "{% url 'add_book:save' %}" method = "post">
+        <p>Title: {{ f.title }}</p>
+        <p>Author: {{ f.author }}</p>
+        <p>Language {{ f.language }}</p>
+
+        {% csrf_token %} <!-- This is a security feature to prevent Cross Site Request Forgery (CSRF) attacks. It is used to protect against unauthorized requests. It is a token that is used to verify that the authenticated user is the one actually making the requests to the web application. -->
+    <input type = "submit" value = "Submit">
+</form>
+</body>
+</html>
