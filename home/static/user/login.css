@@ -9,7 +9,9 @@ button {
     cursor: pointer;   
 }   
  form {   
-    border: 3px solid black;   
+    border: 3px solid black;
+    width: 75%;
+    margin: 0 auto;
 }   
  input[type=text], input[type=password] {   
     width: 100%;   
@@ -29,5 +31,5 @@ button {
 }   
 
  .container {   
-    padding: 25px; 
+    padding: 25px;
 }   

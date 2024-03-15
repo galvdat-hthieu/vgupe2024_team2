@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+{% load static %}
+<h1>Gallery View</h1> 
+
+<div class="galleryView">
+  {% for item in books %}
+  <div class="bookContainer">
+    <div class="leftColumn">
+      {% if item.coverImage %}
+      <img src="{% static item.coverImage %}" width="100px" alt="image">
+      {% else %}
+      <img src="{% static 'data/book/coverImage/default.png' %}" width="100px" alt="image">
+      {% endif %}
+    </div>
+    <div class="rightColumn">
+      <h3>{{item.title}}</h3>
+      <h4>{{item.author}}</h4>
+      <p>Publisher: {{item.publisher}}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
