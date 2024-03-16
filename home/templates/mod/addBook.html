@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <form action = "{% url 'add_book:save' %}" method = "post">
+    <form action = "{% url 'moderator:addBook' %}" method = "post">
         <p>Title: {{ f.title }}</p>
         <p>Author: {{ f.author }}</p>
         <p>Type: {{ f.type }} </p>

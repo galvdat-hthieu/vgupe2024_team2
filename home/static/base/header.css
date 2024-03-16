@@ -1,5 +1,5 @@
 header {
-  padding: 40px;
+  padding: 30px;
   margin-bottom: 50px;
   text-align: center;
   background-color: gray;
@@ -11,7 +11,7 @@ header h1 {
 
 header ul li{
   display: inline;
-  margin: 0 50px;
+  margin: 0 20px;
   color:white;
 }
 
