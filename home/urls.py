@@ -4,7 +4,7 @@ from home.views import *
 
 app_name = 'home'
 urlpatterns = [
-    path('', index, name='index'),
-    path('gallery', galleryView.as_view(), name="gallery"),
-    path('search', search, name = "search"),
+    path('', indexView.as_view(), name='index'),
+    path("gallery", galleryView.as_view(), name="gallery"),
+    path('search', searchView.as_view(), name="search"),
 ]

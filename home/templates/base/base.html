@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{% static 'base/header.css' %}">
   <link rel="stylesheet" href="{% static 'user/login.css' %}">
   <link rel="stylesheet" href="{% static 'base/gallery.css' %}">
-  <title>Document</title>
+  <title>BiblioTech - {{web}}</title>
 </head>
 
 <body>
@@ -17,8 +17,10 @@
     <ul>
       <li><a href="{% url 'home:index' %}">HOME</a></li>
       <li><a href="{% url 'user:info' %}">INFO</a></li>
-      <li>Link 3</li>
+      <li><a href="{% url 'home:gallery' %}">GALLERY</a></li>
+      <li><a href="{% url 'home:search' %}">SEARCH</a></li>
       <li><a href="{% url 'user:login' %}">LOGIN</a></li>
+      <li><a href="{% url 'user:login' %}">REGISTER</a></li>
     </ul>
   </header>
   

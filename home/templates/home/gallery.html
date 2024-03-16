@@ -4,26 +4,6 @@
 {% block content %}
 {% load static %}
 
-<h1>Search option</h1>
-<form method = "get" action = "{% url 'home:search' %}">
-  <fieldset>
-    <legend>Categories:</legend>
-    <label for="literature"><input type="checkbox" id="literature" name="category" value="liteCate"> Literature</label><br>
-    <label for="socieCate"><input type="checkbox" id="social_sciences" name="category" value="socieCate"> Social Sciences</label><br>
-    <label for="natural_sciences"><input type="checkbox" id="natural_sciences" name="category" value="naturCate"> Natural Sciences</label><br>
-    <label for="technology"><input type="checkbox" id="technology" name="category" value="techCate"> Technology</label><br>
-    <label for="politics"><input type="checkbox" id="politics" name="category" value="poliCate"> Politics</label><br>
-    <label for="romantic"><input type="checkbox" id="romantic" name="category" value="romanCate"> Romantic</label><br>
-    <label for="entertainment"><input type="checkbox" id="entertainment" name="category" value="enterCate"> Entertainment</label><br>
-    <label for="other"><input type="checkbox" id="other" name="category" value="otherCate"> Other</label><br>
-  </fieldset>
-
-  <label for="search">Search by Name:</label>
-  <input type="text" id="search" name = "book_search"><br><br>
-
-  <input class="button btn largesearch-btn" type="submit" value="Search">
-</form>
-
 <h1>Gallery View</h1> 
 
 <div class="galleryView">
