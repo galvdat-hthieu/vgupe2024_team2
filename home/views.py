@@ -17,9 +17,10 @@ class searchView(View):
     books = Book.objects.all()
     cateList = ['liteCate','socieCate','naturCate','techCate','poliCate','romanCate','enterCate','otherCate']
 
-    if request.GET.get("book_search"):
-      keyword = request.GET.get("book_search")
-      books = Book.objects.filter(title__contains = keyword)
+  if request.GET.get("book_search"):
+    keyword = request.GET.get("book_search")
+    books = Book.objects.filter(title__contains = keyword)
+    
 
     if request.GET.getlist("category"):
       selected_categories = request.GET.getlist('category')
