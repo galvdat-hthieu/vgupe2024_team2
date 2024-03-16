@@ -3,7 +3,8 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 from django.db.models import Q
-
+from autocorrect import Speller
+from word_forms.word_forms import get_word_forms
 
 # Create your views here.
 class indexView(View):
@@ -13,24 +14,46 @@ class indexView(View):
 
 class searchView(View):
   def get(self, request):
-    books = Book.objects.all()
-    cateList = ['liteCate','socieCate','naturCate','techCate','poliCate','romanCate','enterCate','otherCate']
+    booksByKeyword = Book.objects.none()
 
     if request.GET.get("book_search"):
       keyword = request.GET.get("book_search").strip()
-      books = Book.objects.filter(title__contains = keyword)
+      spell = Speller(lang='en')
+      spell_corrected_keyword = spell(keyword)
+      wordForms = get_word_forms(spell_corrected_keyword)
+      wordFormsList = [keyword,spell_corrected_keyword]
+      if len(wordForms['n']) != 0:
+          wordFormsList.extend(wordForms['n'])
+      if len(wordForms['a']) != 0:
+          wordFormsList.extend(wordForms['a'])
+      if len(wordForms['v']) != 0:
+          wordFormsList.extend(wordForms['v'])
+      if len(wordForms['r']) != 0:
+          wordFormsList.extend(wordForms['r'])
       
+      for keyword in wordFormsList:
+        booksByTitle = Book.objects.filter(title__icontains=keyword)
+        booksByAuthor = Book.objects.filter(author__icontains=keyword)
+        booksByKeyword |= booksByTitle | booksByAuthor
 
-      if request.GET.getlist("category"):
-        selected_categories = request.GET.getlist('category')
-        filter_condition = Q()
-        for category in selected_categories:
-          filter_condition &= Q(**{category: True})
-        books = books.filter(filter_condition)
+    else:
+      booksByKeyword = Book.objects.all()
+        
+      
+    booksByCategories = Book.objects.none()  
 
+    if request.GET.getlist("category"):
+      selected_categories = request.GET.getlist('category')
+      filter_condition = Q()
+      for category in selected_categories:
+        filter_condition &= Q(**{category: True})
+      booksByCategories = Book.objects.filter(filter_condition)
+    else:
+      booksByCategories = Book.objects.all()  
+    
+    books = booksByKeyword & booksByCategories
     context = {
-      'web': "Search",
-      'books': books
+      'books':books
     }
 
     return render(request, 'home/search.html',context)
