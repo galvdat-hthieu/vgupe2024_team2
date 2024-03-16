@@ -20,3 +20,6 @@ Administrator (Admin): In charge of adding and modifying books, book items, and 
 User: The user can search the catalog, as well as checkout, reserve, renew, return a book, leave a review, etc.
 System: Responsible for sending notifications about the latest news onsite and update the status of the service that the users are currently using.
 Guest: The guest can access the webpage to view its content such as latest news from the library, the regulation or the FAQ. 
+
+<img src=".document/flowChart.png" alt="Alt text" title="flow chart">
+<img src=".document/usecaseDiagram.png" alt="Alt text" title="usecase diagram">
