@@ -27,6 +27,7 @@ class Book(models.Model):
   language = models.CharField(max_length=200, null=True, blank=True)
   description = models.TextField(max_length=1500, null=True, blank=True)
   coverImage = models.ImageField(upload_to="data/book/coverImage", null=True, blank=True)
+  pdfFile = models.FileField(upload_to="data/book/pdf",null=True,blank=True)
   publisher = models.CharField(max_length=200, null=True, blank=True)
   publication = models.CharField(max_length=50, null=True, blank=True)
   codeISBN = models.CharField(max_length=50, null=True, blank=True)
