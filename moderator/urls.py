@@ -6,4 +6,5 @@ app_name = "mod"
 urlpatterns = [
     path("", modView.as_view(), name='mod'),
     path('addBook/', addBookView.as_view(), name='addBook'),
+    path('saveBook/', saveBookView.as_view(), name='saveBook'),
 ]

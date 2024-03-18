@@ -2,7 +2,10 @@
 
 
 {% block content %}
-<h1> Add Book View </h1> 
+<h1> Add Book View </h1>
+{% if error %}
+    <p> {{ error }} </p>
+{% endif %}
 <form action = "{% url 'mod:addBook' %}" method = "post">
     <p>Title: {{ f.title }}</p>
     <p>Author: {{ f.author }}</p>

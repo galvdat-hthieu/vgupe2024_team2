@@ -1,5 +1,5 @@
 from django import forms
-from .models import Book
+from home.models import Book
 
 # create the form here.
 class BookForm(forms.ModelForm):

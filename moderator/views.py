@@ -14,10 +14,15 @@ class addBookView(View):
         a = BookForm()
         return render(request, 'mod/addBook.html', {'f': a})
 
+class saveBookView(View):
     def post(self, request):
-        a = BookForm(request.POST, request.FILES)
-        if a.is_valid():
-            a.save()
-            return HttpResponse('Book added successfully')
+        if request.method == 'POST':
+            a = BookForm(request.POST, request.FILES)
+            if a.is_valid():
+                saved_book = a.save()
+                book_id = saved_book.id
+                return HttpResponse(f'Book added successfully with ID: {book_id}')
+            else:
+                return HttpResponse('Invalid data')
         else:
-            return HttpResponse('Invalid data')
+            return HttpResponse('Invalid method')

@@ -37,9 +37,10 @@ class Book(models.Model):
     (2, "rejected")
   )
   status = models.IntegerField(choices=statusChoices, default=0)
+  id = models.AutoField(primary_key=True)
 
   def __str__(self) :
-    return self.title
+    return str(self.id) + ". " + self.title
 
 
 class User(AbstractUser):
