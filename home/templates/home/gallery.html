@@ -11,9 +11,9 @@
   <div class="bookContainer">
     <div class="leftColumn">
       {% if item.coverImage %}
-      <img src="{% static item.coverImage %}" width="100px" height="140px" alt="image">
+      <img src="media/{{item.coverImage }}" width="100px" height="140px" alt="image">
       {% else %}
-      <img src="{% static 'data/book/coverImage/default.png' %}" width="100px" height="140px" alt="image">
+      <img src="media/book/coverImage/default.jpg" width="150px" alt="image">
       {% endif %}
     </div>
     <div class="rightColumn">
