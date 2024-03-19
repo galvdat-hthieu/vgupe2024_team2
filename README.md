@@ -23,4 +23,4 @@ Guest: The guest can access the webpage to view its content such as latest news 
 
 <img src=".document/flowChart.png" alt="Alt text" title="flow chart">
 <img src=".document/usecaseDiagram.png" alt="Alt text" title="usecase diagram">
-<img src=".document/ER-Diagram.png" alt="Alt text" title="usecase diagram">
+<img src=".document/ER-diagram.png" alt="Alt text" title="usecase diagram">
