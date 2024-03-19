@@ -9,6 +9,8 @@ urlpatterns = [
     path("", modView.as_view(), name='mod'),
     path('addBook/', addBookView.as_view(), name='addBook'),
     path('saveBook/', saveBookView.as_view(), name='saveBook'),
+    path('addCopy/', addCopyView.as_view(), name='addCopy'),
+    path('saveCopy/', saveCopyView.as_view(), name='saveCopy'),
 ]
 
 if settings.DEBUG:
