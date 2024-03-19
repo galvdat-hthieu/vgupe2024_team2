@@ -1,0 +1,23 @@
+<div class="bookContainer">
+  <div class="leftColumn">
+    {% if item.coverImage %}
+    <img src="media/{{item.coverImage }}" width="100px" height="140px" alt="image">
+    {% else %}
+    <img src="media/book/defaultCover.jpg" width="150px" alt="image">
+    {% endif %}
+  </div>
+  <div class="rightColumn">
+    <p>{{item.id}}</p>
+    <h3>{{item.title}}</h3>
+    <h4>{{item.author}}</h4>
+    {% if item.publisher and item.publication %}
+    <p>{{item.publisher}}@{{item.publication}}</p>
+    {% else %}
+      {% if item.publisher %}
+      <p>{{item.publisher}}</p>
+      {% else %}
+      <p>{{item.publication}}</p>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
