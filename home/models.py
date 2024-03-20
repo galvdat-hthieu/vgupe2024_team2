@@ -4,6 +4,37 @@ from django.forms import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
+def getBookImageURL(instance, filename):
+  if instance.id != None:
+      return "book/{}/coverImage.png".format(instance.id)
+  else:
+    queryset = Book.objects.all().order_by('pk')
+    last = queryset.last()
+    last_id = last.id
+    file_number = last_id+1
+    return "book/{}/coverImage.png".format(file_number)
+
+def getImageURL(instance, filename):
+  if instance.id != None:
+      return "book/{}/pdfFile.pdf".format(instance.id)
+  else:
+    queryset = Book.objects.all().order_by('pk')
+    last = queryset.last()
+    last_id = last.id
+    file_number = last_id+1
+    return "book/{}/pdfFile.pdf".format(file_number)
+
+def getUserImageURL(instance, filename):
+  if instance.id != None:
+      return "user/{}/avatar.png".format(instance.id)
+  else:
+    queryset = User.objects.all().order_by('pk')
+    last = queryset.last()
+    last_id = last.id
+    file_number = last_id+1
+    return "user/{}/avatar.png".format(file_number)
+
+
 class Book(models.Model):
   title = models.CharField(max_length=200, null=False, default="UNTITLED")
   author = models.CharField(max_length=200, null=False, default="UNKNOWN")
@@ -26,8 +57,8 @@ class Book(models.Model):
   otherCate = models.BooleanField(default=False, blank=True)
   language = models.CharField(max_length=200, null=True, blank=True)
   description = models.TextField(max_length=1500, null=True, blank=True)
-  coverImage = models.ImageField(upload_to="data/book/coverImage", null=True, blank=True)
-  pdfFile = models.FileField(upload_to="data/book/pdfFile",null=True,blank=True)
+  coverImage = models.ImageField(upload_to=getBookImageURL, null=True, blank=True)
+  pdfFile = models.FileField(upload_to=getBookImageURL,null=True,blank=True)
   publisher = models.CharField(max_length=200, null=True, blank=True)
   publication = models.CharField(max_length=50, null=True, blank=True)
   codeISBN = models.CharField(max_length=50, null=True, blank=True)
@@ -44,7 +75,7 @@ class Book(models.Model):
 
 
 class User(AbstractUser):
-  avatar = models.ImageField(upload_to="data/user/avatar/", null=True, blank=True)
+  avatar = models.ImageField(upload_to=getUserImageURL, null=True, blank=True)
   birthdate = models.DateField(null=True, blank=True)
   genderChoices = (
     (0, "male"),
