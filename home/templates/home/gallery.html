@@ -8,21 +8,7 @@
 
 <div class="galleryView">
   {% for item in books %}
-  <div class="bookContainer">
-    <div class="leftColumn">
-      {% if item.coverImage %}
-      <img src="media/{{item.coverImage }}" width="100px" height="140px" alt="image">
-      {% else %}
-      <img src="media/book/coverImage/default.jpg" width="150px" alt="image">
-      {% endif %}
-    </div>
-    <div class="rightColumn">
-      <p>{{item.id}}</p>
-      <h3>{{item.title}}</h3>
-      <h4>{{item.author}}</h4>
-      <p>Publisher: {{item.publisher}}</p>
-    </div>
-  </div>
+    {% include 'home/panel.html' %}
   {% endfor %}
 </div>
 
