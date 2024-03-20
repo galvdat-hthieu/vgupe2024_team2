@@ -14,7 +14,7 @@ def getBookImageURL(instance, filename):
     file_number = last_id+1
     return "book/{}/coverImage.png".format(file_number)
 
-def getImageURL(instance, filename):
+def getBookPDFURL(instance, filename):
   if instance.id != None:
       return "book/{}/pdfFile.pdf".format(instance.id)
   else:
@@ -58,7 +58,7 @@ class Book(models.Model):
   language = models.CharField(max_length=200, null=True, blank=True)
   description = models.TextField(max_length=1500, null=True, blank=True)
   coverImage = models.ImageField(upload_to=getBookImageURL, null=True, blank=True)
-  pdfFile = models.FileField(upload_to=getBookImageURL,null=True,blank=True)
+  pdfFile = models.FileField(upload_to=getBookPDFURL,null=True,blank=True)
   publisher = models.CharField(max_length=200, null=True, blank=True)
   publication = models.CharField(max_length=50, null=True, blank=True)
   codeISBN = models.CharField(max_length=50, null=True, blank=True)
