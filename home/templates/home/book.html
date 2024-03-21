@@ -1,0 +1,91 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+{% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .left {
+            flex: 1;
+            padding-right: 20px;
+        }
+        .right {
+            flex: 1;
+        }
+        img {
+            width: 400px;
+            height: 500px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+        }
+        .reviews {
+            clear: both;
+            margin-top: 20px;
+        }
+        .review {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 20px;
+        }
+        .review h3 {
+            margin-top: 0;
+        }
+    </style>
+
+
+
+    <div class="container">
+        <div class="left">
+            <h2>{{book.title}}</h2>
+            <p><strong>Author:</strong> {{book.author}}</p>
+            <p><strong>Publisher:</strong> {{book.publisher}}</p>
+            <p><strong>Language:</strong> {{book.language}}</p>
+            <p><strong>Publication:</strong> {{book.publication}}</p>
+            <p><strong>Description:</strong> {{book.description}}</p>
+            <a href="#" class="btn">Read Book</a>
+            <a href="#" class="btn">Borrow</a>
+        </div>
+        <div class="right">
+            {% if book.coverImage %}
+            <img src="{{book.coverImage.url}}" alt={{book.title}}>
+            {% else %}
+            <img src="/media/book/defaultCover.jpg" alt="{{ book.title }}">
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="reviews">
+        <h2>Reviews</h2>
+        <div class="review">
+            <h3>SBTC Zeros</h3>
+            <p>Cuon sach nay that la hay. Nho co no ma toi da tra het so no 5ty dong. Xin cam on tac gia. Amen da phat!</p>
+        </div>
+        <div class="review">
+            <h3>VIE Lung Mat A.K.A SBTC SeLA</h3>
+            <p><i>This comment has been sensored due to its content violating community standards.</i></p>
+        </div>
+    </div>
+
+{% endblock %}

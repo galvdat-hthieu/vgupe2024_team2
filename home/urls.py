@@ -9,7 +9,9 @@ urlpatterns = [
     path('', indexView.as_view(), name='index'),
     path("gallery", galleryView.as_view(), name="gallery"),
     path('search', searchView.as_view(), name="search"),
+    path('gallery/<int:id>/',bookView.as_view(), name="gallery"),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static( settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
+#urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

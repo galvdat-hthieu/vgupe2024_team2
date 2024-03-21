@@ -79,3 +79,12 @@ class registerView(View):
   
   def post(self, request):
     pass
+
+
+class bookView(View):
+  def get(self, request, id):
+    book = Book.objects.get(id=id)
+    context = {
+      'book':book
+    }
+    return render(request, "home/book.html", context)
