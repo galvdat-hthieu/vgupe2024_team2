@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
@@ -68,17 +68,6 @@ class galleryView(View):
       "books": books,
     }
     return render(request, "home/gallery.html", context)
-  
-
-class registerView(View):
-  def get(self, request):
-    context = {
-      "web": "Register"
-    }
-    return render(request, "home/register.html", context)
-  
-  def post(self, request):
-    pass
 
 
 class bookView(View):
