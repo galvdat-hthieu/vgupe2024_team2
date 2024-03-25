@@ -22,5 +22,6 @@ System: Responsible for sending notifications about the latest news onsite and u
 Guest: The guest can access the webpage to view its content such as latest news from the library, the regulation or the FAQ. 
 
 <img src=".document/flowChart.png" alt="Alt text" title="flow chart">
-<img src=".document/usecaseDiagram.png" alt="Alt text" title="usecase diagram">
+<img src=".document/usecase_guest.png" alt="Alt text" title="usecase diagram" width=400px>
+<img src=".document/usecase_other.png" alt="Alt text" title="usecase diagram">
 <img src=".document/ER-diagram.png" alt="Alt text" title="usecase diagram">

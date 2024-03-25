@@ -1,19 +1,24 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.views import View
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from user.forms import RegisterForm
+from user.forms import RegisterForm, LoginForm
 
 class loginView(View):
   def get(self, request):
-    return render(request, 'user/login.html')
+    form = LoginForm()
+    context = {
+      "web": "Login",
+      "form": form,
+    }
+    return render(request, 'user/login.html', context)
   
   def post(self, request):
     username = request.POST.get('username')
     password = request.POST.get('password')
     user = authenticate(username=username, password=password)
     if user is None:
-      return HttpResponse("User khong ton tai")
+      return redirect("/user/login")
     else:
       login(request=request, user=user)
       return render(request, "user/info.html")
@@ -24,7 +29,7 @@ class registerView(View):
     form = RegisterForm()
     context = {
       "web": "Register",
-      "form": form
+      "form": form,
     }
     return render(request, "user/register.html", context)
   
@@ -44,3 +49,9 @@ class infoView(LoginRequiredMixin, View):
   
   def post(self, request):
     pass
+
+
+class logoutView(View):
+  def get(self, request):
+    logout(request=request)
+    return redirect("/")
