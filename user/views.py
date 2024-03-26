@@ -3,6 +3,7 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from user.forms import RegisterForm, LoginForm
+from home.models import *
 
 class loginView(View):
   def get(self, request):
@@ -14,14 +15,22 @@ class loginView(View):
     return render(request, 'user/login.html', context)
   
   def post(self, request):
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    user = authenticate(username=username, password=password)
-    if user is None:
-      return redirect("/user/login")
+    form = LoginForm(request, data=request.POST)
+    context = {
+      "web": "Login",
+      "form": form,
+    }
+    if form.is_valid():
+      username = request.POST.get('username')
+      password = request.POST.get('password')
+      user = authenticate(username=username, password=password)
+      if user is None:
+        return redirect("/user/login")
+      else:
+        login(request=request, user=user)
+        return render(request, "user/info.html", context)
     else:
-      login(request=request, user=user)
-      return render(request, "user/info.html")
+      return render(request, "user/login.html", context)
     
 
 class registerView(View):
@@ -35,7 +44,8 @@ class registerView(View):
   
   def post(self, request):
     form = RegisterForm(request.POST)
-
+    address = request.POST.get("email_address")
+    print(address)
     if form.is_valid():
       form.save()
       return redirect("/user/login")
@@ -46,8 +56,6 @@ class registerView(View):
       }
       return render(request, "user/register.html", context)
 
-
-
 class infoView(LoginRequiredMixin, View):
   login_url = "/user/login"
   def get(self, request):
@@ -56,7 +64,6 @@ class infoView(LoginRequiredMixin, View):
   
   def post(self, request):
     pass
-
 
 class logoutView(View):
   def get(self, request):
