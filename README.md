@@ -25,21 +25,21 @@ User: The user can search the catalog, as well as checkout, reserve, renew, retu
 System: Responsible for sending notifications about the latest news onsite and update the status of the service that the users are currently using.
 Guest: The guest can access the webpage to view its content such as latest news from the library, the regulation or the FAQ. 
 
-<a href=".document/diagram/usecase/usecase_guest.png">Use case diagram for guest</a>
+<a href=".document/diagrams/usecase/usecase_guest.png">Use case diagram for guest</a>
 
-<a href=".document/diagram/usecase/usecase_other.png">Use case diagram for user, moderator and admin</a>
+<a href=".document/diagrams/usecase/usecase_other.png">Use case diagram for user, moderator and admin</a>
 
 -----
 
 ### Sequence Diagram
 
-<a href=".document/diagram/sequence/Guest.png">Sequence diagram for guest functions: contact, search book, view books, read news</a>
+<a href=".document/diagrams/sequence/Guest.png">Sequence diagram for guest functions: contact, search book, view books, read news</a>
 
-<a href=".document/diagram/sequence/sequence_register.png">Sequence diagram for "register" function</a>
+<a href=".document/diagrams/sequence/sequence_register.png">Sequence diagram for "register" function</a>
 
 <a href=".document/diagram/sequence/sequence_login.jpg">Sequence diagram for "login" function</a>
 
-<a href=".document/diagram/sequence/sequence_addbook.png">Sequence diagram for "add book" function</a>
+<a href=".document/diagrams/sequence/sequence_addbook.png">Sequence diagram for "add book" function</a>
 
 -----
 
