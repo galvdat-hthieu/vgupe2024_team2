@@ -37,7 +37,7 @@ Guest: The guest can access the webpage to view its content such as latest news 
 
 <a href=".document/diagrams/sequence/sequence_register.png">Sequence diagram for "register" function</a>
 
-<a href=".document/diagram/sequence/sequence_login.jpg">Sequence diagram for "login" function</a>
+<a href=".document/diagrams/sequence/sequence_login.jpg">Sequence diagram for "login" function</a>
 
 <a href=".document/diagrams/sequence/sequence_addbook.png">Sequence diagram for "add book" function</a>
 
