@@ -39,6 +39,13 @@ class registerView(View):
     if form.is_valid():
       form.save()
       return redirect("/user/login")
+    else:
+      context = {
+        "web": "Register",
+        "form": form,
+      }
+      return render(request, "user/register.html", context)
+
 
 
 class infoView(LoginRequiredMixin, View):
