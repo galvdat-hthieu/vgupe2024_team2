@@ -20,8 +20,12 @@
       <li><a href="{% url 'user:info' %}">INFO</a></li>
       <li><a href="{% url 'home:gallery' %}">GALLERY</a></li>
       <li><a href="{% url 'home:search' %}">SEARCH</a></li>
+      {% if user.username %}
+      <li><a href="{% url 'user:logout' %}">LOGOUT</a></li>
+      {% else %}
       <li><a href="{% url 'user:login' %}">LOGIN</a></li>
       <li><a href="{% url 'user:register' %}">REGISTER</a></li>
+      {% endif %}
     </ul>
   </header>
   
