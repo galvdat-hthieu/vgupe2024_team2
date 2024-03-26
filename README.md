@@ -25,3 +25,4 @@ Guest: The guest can access the webpage to view its content such as latest news 
 <img src=".document/usecase_guest.png" alt="Alt text" title="usecase diagram" width=400px>
 <img src=".document/usecase_other.png" alt="Alt text" title="usecase diagram">
 <img src=".document/ER-diagram.png" alt="Alt text" title="usecase diagram">
+<a href=".document/ER-diagram.png">Diagram</a>
