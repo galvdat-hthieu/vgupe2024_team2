@@ -41,6 +41,8 @@ Guest: The guest can access the webpage to view its content such as latest news 
 
 <a href=".document/diagrams/sequence/sequence_addbook.png">Sequence diagram for "add book" function</a>
 
+<a href=".document/diagrams/sequence/Review.svg">Sequence diagram for "user's book review" function</a>
+
 -----
 
 ### E-R Class Diagram
