@@ -143,3 +143,6 @@ class Review(models.Model):
     
   rating = models.IntegerField(validators=[validateRating], null=True, blank=True)
   review = models.TextField(max_length=1500, null=True, blank=True)
+
+  def __str__(self) :
+    return "Review " + str(self.id)

@@ -47,9 +47,27 @@
         .review h3 {
             margin-top: 0;
         }
+        .rounded-sm {
+            border-radius: 0.25rem;
+        }
+        .mt-6 {
+            margin-top: 1.5rem;
+        }
+        .bg-gray-100 {
+            background-color: #f7fafc;
+        }
+        .submit {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+        }
     </style>
-
-
 
     <div class="container">
         <div class="left">
@@ -71,16 +89,38 @@
         </div>
     </div>
 
-    <div class="reviews">
-        <h2>Reviews</h2>
-        <div class="review">
-            <h3>SBTC Zeros</h3>
-            <p>Cuon sach nay that la hay. Nho co no ma toi da tra het so no 5ty dong. Xin cam on tac gia. Amen da phat!</p>
-        </div>
-        <div class="review">
-            <h3>VIE Lung Mat A.K.A SBTC SeLA</h3>
-            <p><i>This comment has been sensored due to its content violating community standards.</i></p>
-        </div>
-    </div>
+    <div class = "container">
+            <h2>Reviews</h2>
+            {% if user.username %}
+            <form method="post" action="." class="mt-6 bg-gray-100 rounded-sm">
+                {% csrf_token %}
+            <!-- <div>
+                <label>Rating: </label><br>
+                <select>name = "rating"
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
 
+            <div>
+                <label>Comment:</label><br>
+                <textarea name="comment"></textarea>
+            </div>
+            -->
+            {{form.bookID.as_hidden}}
+            {{form.userID.as_hidden}}
+            <label>Rating: </label>
+            {{form.rating}}
+            <br>
+            <label>Review: </label>
+            {{form.review}}
+            <div>
+                <button type="submit" class = "submit">Submit</button>
+            </div>
+            {% endif %}
+            </form>
+            
 {% endblock %}

@@ -1,10 +1,13 @@
-from django.shortcuts import render, HttpResponse, redirect
-from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import *
-from django.db.models import Q
 from autocorrect import Speller
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
+from django.views import View
 from word_forms.word_forms import get_word_forms
+
+from .forms import *
+from .models import *
+
 
 # Create your views here.
 class indexView(View):
@@ -73,7 +76,21 @@ class galleryView(View):
 class bookView(View):
   def get(self, request, id):
     book = Book.objects.get(id=id)
+    form = ReviewForm(initial={"bookID": Book.objects.get(id=id),"userID": request.user,})
     context = {
-      'book':book
+      'book':book,
+      "form": form,
     }
     return render(request, "home/book.html", context)
+  
+  def post(self, request, id):
+    form = ReviewForm(request.POST)
+  
+    if form.is_valid():
+      new_review = form.save(commit=False)
+      new_review.save()
+      return HttpResponse("Review added successfully")
+    
+    return render(request, "home/book.html", {'form': form})
+      
+          
