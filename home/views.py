@@ -82,7 +82,7 @@ class bookView(View):
       'book': book,
       "form": form,
       "time": timezone.now(),
-      'user': request.user,
+      "username": request.user.username,
     }
     return render(request, "home/book.html", context)
   
@@ -91,6 +91,7 @@ class bookView(View):
   
     if form.is_valid():
       new_review = form.save(commit=False)
+      new_review.user = request.user.username
       new_review.save()
       return HttpResponseRedirect('#')
     

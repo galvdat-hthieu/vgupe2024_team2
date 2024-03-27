@@ -125,9 +125,7 @@
             <label>Review: </label>
                 {{form.review}}
             <br>
-            <label>Created at: </label>
                 {{form.created_at.as_hidden}}
-                {{time}}
             <div>
                 <button type="submit" class = "submit">Submit</button>
             </div>
@@ -143,7 +141,7 @@
             <h3>Reader Reviews</h3>
             {% for review in book.reviews.all %}
                 <div class="comment">
-                    <span class='username'>{{user}}</span>
+                    <span class='username'>{{username}}</span>
                     <p class = 'text'>{{ review.review }} - {{ review.rating }}</p>
                     <span class='datetime'>{{ review.created_at }}</span>
                 </div>
