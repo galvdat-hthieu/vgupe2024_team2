@@ -67,6 +67,27 @@
             margin-top: 10px;
             display: block;
         }
+        .comment {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .username {
+            font-weight: bold;
+            color: #333;
+        }
+        .datetime {
+            position: right;
+            right: 10;
+            font-size: 12px;
+            color: #999;
+        }
+        .rating {
+            font-size: 12px;
+            color: #999;
+        }
     </style>
 
     <div class="container">
@@ -90,41 +111,49 @@
     </div>
 
     <div class = "container">
-            <h2>Reviews</h2>
+        <div class="left">
+            <h3>Rating & Reviews</h3>
             {% if user.username %}
             <form method="post" action="." class="mt-6 bg-gray-100 rounded-sm">
                 {% csrf_token %}
-            <!-- <div>
-                <label>Rating: </label><br>
-                <select>name = "rating"
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
 
-            <div>
-                <label>Comment:</label><br>
-                <textarea name="comment"></textarea>
-            </div>
-            -->
             {{form.bookID.as_hidden}}
             {{form.userID.as_hidden}}
             <label>Rating: </label>
-            {{form.rating}}
+                {{form.rating}}
             <br>
             <label>Review: </label>
-            {{form.review}}
+                {{form.review}}
             <br>
             <label>Created at: </label>
-            {{form.created_at.as_hidden}}
-            {{time}}
+                {{form.created_at.as_hidden}}
+                {{time}}
             <div>
                 <button type="submit" class = "submit">Submit</button>
             </div>
             {% endif %}
             </form>
+        </div>
+    </div>
+
+        
+    <div class="container">
+        {% if book.reviews.all %}
+        <div class="left">
+            <h3>Reader Reviews</h3>
+            {% for review in book.reviews.all %}
+                <div class="comment">
+                    <span class='username'>{{user}}</span>
+                    <p class = 'text'>{{ review.review }} - {{ review.rating }}</p>
+                    <span class='datetime'>{{ review.created_at }}</span>
+                </div>
+                {% endfor %}
+                
+            {% else %}
+                <p>No reviews yet.</p>
+            {% endif %}
+    </div>
+        
+    
             
 {% endblock %}

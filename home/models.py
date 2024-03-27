@@ -131,7 +131,7 @@ class Borrowance(models.Model):
 
 
 class Review(models.Model):
-  bookID = models.ForeignKey(Book, on_delete=models.CASCADE)
+  bookID = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reviews')
   userID = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def validateRating(value):

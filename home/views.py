@@ -1,6 +1,7 @@
 from autocorrect import Speller
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from django.views import View
 from django.utils import timezone
@@ -78,9 +79,10 @@ class bookView(View):
     book = Book.objects.get(id=id)
     form = ReviewForm(initial={"bookID": Book.objects.get(id=id),"userID": request.user,})
     context = {
-      'book':book,
+      'book': book,
       "form": form,
-      "time": timezone.now()
+      "time": timezone.now(),
+      'user': request.user,
     }
     return render(request, "home/book.html", context)
   
@@ -90,7 +92,7 @@ class bookView(View):
     if form.is_valid():
       new_review = form.save(commit=False)
       new_review.save()
-      return HttpResponse("Review added successfully")
+      return HttpResponseRedirect('#')
     
     return render(request, "home/book.html", {'form': form})
       
