@@ -20,7 +20,7 @@
         .right {
             flex: 1;
         }
-        img {
+        .bookimg {
             width: 400px;
             height: 500px;
         }
@@ -103,7 +103,7 @@
         </div>
         <div class="right">
             {% if book.coverImage %}
-            <img src="{{book.coverImage.url}}" alt={{book.title}}>
+            <img src="{{book.coverImage.url}}" alt={{book.title}} class="bookimg">
             {% else %}
             <img src="/media/book/defaultCover.jpg" alt="{{ book.title }}">
             {% endif %}
@@ -139,9 +139,19 @@
         {% if book.reviews.all %}
         <div class="left">
             <h3>Reader Reviews</h3>
-            {% for review in book.reviews.all %}
+            {% for review in book.reviews.all reversed %}
                 <div class="comment">
-                    <span class='username'>{{username}}</span>
+                    <span style="float: left; width: 70px;">
+                    {% if review.userID.avatar %}
+                    <img src="/media/{{ review.userID.avatar }}" width=50px alt="avatar">
+                    {% else %}
+                    <img src="/media/user/defaultAvatar.jpg" width=50px alt="default avatar">
+                    {% endif %}
+                    </span>
+                    <span>
+                        
+                    </span>
+                    <span class='username'>{{ review.userID }}</span>
                     <p class = 'text'>{{ review.review }} - {{ review.rating }}</p>
                     <span class='datetime'>{{ review.created_at }}</span>
                 </div>

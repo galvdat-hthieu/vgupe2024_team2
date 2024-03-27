@@ -81,8 +81,7 @@ class bookView(View):
     context = {
       'book': book,
       "form": form,
-      "time": timezone.now(),
-      "username": request.user.username,
+      "time": timezone.now()
     }
     return render(request, "home/book.html", context)
   
