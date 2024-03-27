@@ -95,7 +95,6 @@ class User(AbstractUser):
   )
   role = models.IntegerField(choices=roleChoices, default=0)
 
-
 class Copy(models.Model):
   bookID = models.ForeignKey(Book, null=False, on_delete=models.CASCADE)
   userID = models.ForeignKey(User, null=False, on_delete=models.CASCADE)

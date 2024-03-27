@@ -5,7 +5,6 @@ from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from django.views import View
 from django.utils import timezone
 from word_forms.word_forms import get_word_forms
-
 from .forms import *
 from .models import *
 

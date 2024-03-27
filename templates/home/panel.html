@@ -1,10 +1,10 @@
 <div class="bookContainer">
   <div class="leftColumn">
-    <a href="{% url 'home:gallery' item.id%}">
+    <a href="{% url 'home:gallery' item.id %}">
     {% if item.coverImage %}
-    <img src="media/{{item.coverImage }}" width="100px" height="140px" alt="image">
+    <img src="/media/{{ item.coverImage }}" width="100px" height="140px" alt="image">
     {% else %}
-    <img src="media/book/defaultCover.jpg" width="150px" alt="image">
+    <img src="/media/book/defaultCover.jpg" width="150px" alt="image">
     {% endif %}
     </a>
   </div>

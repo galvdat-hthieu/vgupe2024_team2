@@ -59,7 +59,10 @@ class registerView(View):
 class infoView(LoginRequiredMixin, View):
   login_url = "/user/login"
   def get(self, request):
-    context = {"user": request.user}
+    context = {
+      "web": "Info",
+      "user": request.user,
+    }
     return render(request, "user/info.html", context)
   
   def post(self, request):
