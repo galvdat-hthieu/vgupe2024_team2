@@ -117,6 +117,10 @@
             <br>
             <label>Review: </label>
             {{form.review}}
+            <br>
+            <label>Created at: </label>
+            {{form.created_at.as_hidden}}
+            {{time}}
             <div>
                 <button type="submit" class = "submit">Submit</button>
             </div>

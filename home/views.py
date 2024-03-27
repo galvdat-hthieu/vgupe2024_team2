@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from django.views import View
+from django.utils import timezone
 from word_forms.word_forms import get_word_forms
 
 from .forms import *
@@ -80,6 +81,7 @@ class bookView(View):
     context = {
       'book':book,
       "form": form,
+      "time": timezone.now()
     }
     return render(request, "home/book.html", context)
   
