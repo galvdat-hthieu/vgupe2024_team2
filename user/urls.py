@@ -9,8 +9,8 @@ urlpatterns = [
     path('login/',loginView.as_view(), name='login'),
     path('logout/',logoutView.as_view(), name='logout'),
     path('register/',registerView.as_view(), name='register'),
-    path("info/", infoView.as_view(), name="info"),
-
+    path("profile/info/", profileInfoView.as_view(), name="info"),
+    path("profile/edit/", profileEditView.as_view(), name="edit")
 ]
 
 if settings.DEBUG:

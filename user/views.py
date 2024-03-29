@@ -7,6 +7,8 @@ from home.models import *
 
 class loginView(View):
   def get(self, request):
+    if (request.user.username):
+      return redirect("home:index")
     form = LoginForm()
     context = {
       "web": "Login",
@@ -25,10 +27,10 @@ class loginView(View):
       password = request.POST.get('password')
       user = authenticate(username=username, password=password)
       if user is None:
-        return redirect("/user/login")
+        return redirect("user:login")
       else:
         login(request=request, user=user)
-        return render(request, "user/info.html", context)
+        return redirect("user:info")
     else:
       return render(request, "user/login.html", context)
     
@@ -56,19 +58,30 @@ class registerView(View):
       }
       return render(request, "user/register.html", context)
 
-class infoView(LoginRequiredMixin, View):
+
+class logoutView(View):
+  def get(self, request):
+    logout(request=request)
+    return redirect("/")
+  
+
+class profileInfoView(LoginRequiredMixin, View):
   login_url = "/user/login"
   def get(self, request):
     context = {
       "web": "Info",
       "user": request.user,
     }
-    return render(request, "user/info.html", context)
+    return render(request, "user/profileInfo.html", context)
   
   def post(self, request):
     pass
 
-class logoutView(View):
+
+class profileEditView(LoginRequiredMixin, View):
   def get(self, request):
-    logout(request=request)
-    return redirect("/")
+    context = {
+      "web": "Edit profile",
+
+    }
+    return render(request, "user/profileEdit.html", context)

@@ -1,0 +1,34 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href="/static/user/info.css">
+</head>
+
+<h1> Info View </h1> 
+<div class="container">
+  <div>
+    <span style="float: right; text-align: right;">
+      <a href="{% url 'user:edit' %}">Edit profile</a>
+    </span>
+  </div>
+  <br>
+  {% if user.avatar %}
+  <img src="/media/{{ user.avatar }}" width=150px alt="avatar image">
+  {% else %}
+  <img src="/media/user/defaultAvatar.jpg" width="150px" alt="image">
+  {% endif %}
+  <p><span><b>User: </b></span> {{ user.username }}</p>
+  <p><span><b>Full name: </b></span> {{ user.last_name }}, {{ user.first_name }}</p>
+  <p><span><b>Email: </b></span> {{ user.email_address }}</p>
+  <p><span><b>Phone number: </b></span> {{ user.phoneNum }}</p>
+  <p><span><b>Address: </b></span> {{ user.address }}</p>
+  <p><span><b>Birthdate: </b></span> {{ user.birthdate }}</p>
+  <p><span><b>Gender: </b></span> {{ user.get_gender_display }}</p>
+  <p><span><b>Role: </b></span> {{ user.get_role_display }}</p>
+  
+  {% endblock %}
+
+</div>

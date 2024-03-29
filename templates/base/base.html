@@ -13,8 +13,10 @@
 
 <body>
   <header>
-    <a href="{% url 'home:index' %}"><h1>BiblioTech App</h1></a>
-    
+    <span style="float: right; color: white;">Good day, {{ user.first_name }}!</span>
+    <p>
+      <a href="{% url 'home:index' %}"><h1>BiblioTech App</h1></a>
+    </p>
     <ul>
       <li><a href="{% url 'home:index' %}">HOME</a></li>
       <li><a href="{% url 'user:info' %}">INFO</a></li>
