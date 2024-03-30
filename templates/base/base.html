@@ -13,7 +13,7 @@
 
 <body>
   <header>
-    <span style="float: right; color: white;">Good day, {{ user.first_name }}!</span>
+    <span style="float: right; color: white;">Good day, <a href="{% url 'user:info' %}">{{ user.first_name }}</a>!</span>
     <p>
       <a href="{% url 'home:index' %}"><h1>BiblioTech App</h1></a>
     </p>

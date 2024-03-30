@@ -1,5 +1,5 @@
 from home.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from django import forms
 from django.core.exceptions import ValidationError
 
@@ -23,3 +23,9 @@ class RegisterForm(UserCreationForm):
     if User.objects.filter(email_address=email).exists():
         raise ValidationError("Email exists")
     return self.cleaned_data
+
+class ProfileEditForm(forms.ModelForm):
+  class Meta:
+    model = User
+    fields = ["first_name", "last_name", "birthdate", "gender",
+              "address", "phoneNum"]

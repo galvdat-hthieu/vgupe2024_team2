@@ -1,8 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
-from django.views import View
+from django.views import View, generic
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from user.forms import RegisterForm, LoginForm
+from user.forms import *
 from home.models import *
 
 class loginView(View):
@@ -50,7 +50,7 @@ class registerView(View):
     print(address)
     if form.is_valid():
       form.save()
-      return redirect("/user/login")
+      return redirect("user:login")
     else:
       context = {
         "web": "Register",
@@ -80,8 +80,21 @@ class profileInfoView(LoginRequiredMixin, View):
 
 class profileEditView(LoginRequiredMixin, View):
   def get(self, request):
+    form = ProfileEditForm(instance=request.user)
     context = {
       "web": "Edit profile",
-
+      "form": form,
     }
     return render(request, "user/profileEdit.html", context)
+  
+  def post(self, request):
+    form = ProfileEditForm(request.POST, instance=request.user)
+    if form.is_valid():
+      form.save()
+      return redirect("user:info")
+    else:
+      context = {
+        "web": "Edit profile",
+        "form": form,
+      }
+      return render(request, "user/profileEdit.html", context)
