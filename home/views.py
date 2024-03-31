@@ -57,7 +57,9 @@ class searchView(View):
     
     books = booksByKeyword & booksByCategories
     context = {
-      'books':books
+      "books": books,
+      "cssFiles": ["/static/home/gallery.css",
+                   "/static/home/search.css"],
     }
 
     return render(request, 'home/search.html',context)
@@ -68,6 +70,8 @@ class galleryView(View):
     books = Book.objects.all()
     context = {
       "web": "Gallery",
+      "cssFiles": ["/static/home/gallery.css",
+                  ],
       "user": request.user,
       "books": books,
     }

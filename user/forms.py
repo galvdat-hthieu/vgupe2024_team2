@@ -23,3 +23,10 @@ class RegisterForm(UserCreationForm):
     if User.objects.filter(email_address=email).exists():
         raise ValidationError("Email exists")
     return self.cleaned_data
+
+class ProfileEditForm(forms.ModelForm):
+  class Meta:
+    model = User
+    fields = ["avatar",
+              "first_name", "last_name", "birthdate", "gender",
+              "address", "phoneNum"]

@@ -10,8 +10,8 @@
   </div>
   <div class="rightColumn">
     <p>{{item.id}}</p>
-    <h3><a href="{% url 'home:gallery' item.id%}">{{item.title}}</a></h3>
-    <h4>{{item.author}}</h4>
+    <h5><a href="{% url 'home:gallery' item.id%}">{{item.title}}</a></h4>
+    <p>{{item.author}}<p>
     {% if item.publisher and item.publication %}
     <p>{{item.publisher}}@{{item.publication}}</p>
     {% else %}
