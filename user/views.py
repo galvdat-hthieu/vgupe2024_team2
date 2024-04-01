@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.views import View
-from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from user.forms import *
 from home.models import *
@@ -98,6 +100,34 @@ class profileEditView(LoginRequiredMixin, View):
     else:
       context = {
         "web": "Edit profile",
+        "cssFiles": [],
         "form": form,
       }
       return render(request, "user/profileEdit.html", context)
+    
+class changePasswordView(LoginRequiredMixin, View):
+  def get(self, request):
+    form = PasswordChangeForm(request.user)
+    context = {
+      "web": "Change password",
+      "cssFiles": [],
+      "form": form,
+    }
+    return render(request, "user/passwordChange.html", context)
+  
+  def post(self, request):
+    form = PasswordChangeForm(request.user, request.POST)
+    context = {
+      "web": "Change password",
+      "cssFiles": ["/static/user/passwordChange.css",
+                   ],
+      "form": form,
+    }
+    if form.is_valid():
+      user = form.save()
+      update_session_auth_hash(request, user)  # Important!
+      messages.success(request, 'Your password was successfully updated!')
+      return redirect("/")
+    else:
+      messages.error(request, 'Please correct the error below.')
+      return render(request, "user/passwordChange.html", context)
