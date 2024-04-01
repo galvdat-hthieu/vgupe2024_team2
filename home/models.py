@@ -107,7 +107,6 @@ class Copy(models.Model):
   status = models.IntegerField(choices=statusChoices, default=0)
   note = models.TextField(max_length=200, null=True, blank=True)
   regDate = models.DateTimeField(null=False)
-  id = models.AutoField(primary_key=True)
 
   def __str__(self) :
     return str(self.id) + ". " + self.bookID.title

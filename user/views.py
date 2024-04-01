@@ -24,6 +24,8 @@ class loginView(View):
     form = LoginForm(request, data=request.POST)
     context = {
       "web": "Login",
+      "cssFiles": ["/static/user/login.css",
+                   ],
       "form": form,
     }
     if form.is_valid():
@@ -34,7 +36,7 @@ class loginView(View):
         return redirect("user:login")
       else:
         login(request=request, user=user)
-        return redirect("user:info")
+        return redirect("home:index")
     else:
       return render(request, "user/login.html", context)
     
