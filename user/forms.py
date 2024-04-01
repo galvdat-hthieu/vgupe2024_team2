@@ -25,8 +25,9 @@ class RegisterForm(UserCreationForm):
     return self.cleaned_data
 
 class ProfileEditForm(forms.ModelForm):
+
   class Meta:
     model = User
-    fields = ["avatar",
-              "first_name", "last_name", "birthdate", "gender",
+    fields = ["avatar", "first_name", "last_name", "birthdate", "gender",
               "address", "phoneNum"]
+    

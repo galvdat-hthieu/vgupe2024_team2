@@ -9,14 +9,14 @@
 
 <h1> Profile Edit View</h1> 
 <div class="container">
-  
+<!--   
   {% if user.avatar %}
   <img src="/media/{{ user.avatar }}" width=150px alt="avatar image">
   {% else %}
   <img src="/media/user/defaultAvatar.jpg" width="150px" alt="image">
-  {% endif %}
+  {% endif %} -->
 
-  <form action="" method="post" style="padding: 20px;">
+  <form action="" method="post" style="padding: 20px;" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="SAVE">
