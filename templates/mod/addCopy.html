@@ -2,40 +2,37 @@
 
 
 {% block content %}
-<div class="container">
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <div class="container-fluid p-0">
-            <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="True">&times;</span>
-                </button>
-                {{ message | safe}}
-            </div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <div class="container-fluid p-0">
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="True">&times;</span>
+            </button>
+            {{ message | safe}}
         </div>
-        {% endfor %}
-    </ul>
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
+<h3> Add Copy View </h3>
+<span style="float: left; margin-right: 50px;">
+    {% if book.coverImage %}
+    <img src="{{ book.coverImage.url }}" width="100px" alt="{{ book.title }}" class="bookimg">
+    {% else %}
+    <img src="/media/book/defaultCover.jpg" width="100px" alt="{{ book.title }}" class="bookimg">
     {% endif %}
-    
-    <h3> Add Copy View </h3>
-    <span style="float: left; margin-right: 50px;">
-        {% if book.coverImage %}
-        <img src="{{ book.coverImage.url }}" width="100px" alt="{{ book.title }}" class="bookimg">
-        {% else %}
-        <img src="/media/book/defaultCover.jpg" width="100px" alt="{{ book.title }}" class="bookimg">
-        {% endif %}
-    </span>
-    <p>{{ book.title }}</p>
-    <p>{{ book.author }}</p>
-    <p>{{ book.publisher }}</p>
-    <p>{{ book.codeISBN }}</p>
-    
-    <form action = "" method = "post">
-        {% csrf_token %} 
-        {{ form.as_p }}
-    
-        <input type = "submit" value = "Submit">
-    </form>
-</div>
+</span>
+<p>{{ book.title }}</p>
+<p>{{ book.author }}</p>
+<p>{{ book.publisher }}</p>
+<p>{{ book.codeISBN }}</p>
+
+<form action = "" method = "post">
+    {% csrf_token %} 
+    {{ form.as_p }}
+
+    <input type = "submit" value = "Submit">
+</form>
 {% endblock %}
