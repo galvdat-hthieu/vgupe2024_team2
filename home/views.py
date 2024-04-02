@@ -1,14 +1,14 @@
 from autocorrect import Speller
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, FileResponse
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from django.views import View
 from django.utils import timezone
 from word_forms.word_forms import get_word_forms
 from .forms import *
 from .models import *
-
+import os
 
 # Create your views here.
 class indexView(View):
@@ -87,6 +87,9 @@ class bookView(View):
       "form": form,
       "time": timezone.now()
     }
+
+
+
     return render(request, "home/book.html", context)
   
   def post(self, request, id):
@@ -101,3 +104,32 @@ class bookView(View):
     return render(request, "home/book.html", {'form': form})
       
           
+class vendorView(View):
+  def get(self, request, username):
+  
+    vendor = User.objects.get(username=username)
+    books = Book.objects.filter(ownerID=vendor.id)
+    totalAmount = books.count()
+    print(totalAmount)
+    context = {
+    'vendor': vendor,
+    'books':books,
+    'totalAmount':totalAmount
+    }
+
+    return render(request, "mod/modVendor.html",context)
+  def post(self, request, username):
+
+    return render(request, "mod/modVendor.html")
+
+def readPDF(request, id):
+  book = Book.objects.get(id=id)
+
+
+  context = {
+    'book':book,
+    }
+
+  return render(request, "home/pdf.html", context)
+  
+

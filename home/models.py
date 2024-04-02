@@ -35,6 +35,25 @@ def getUserImageURL(instance, filename):
     file_number = last_id+1
     return "user/{}/avatar.png".format(file_number)
 
+class User(AbstractUser):
+  email_address = models.EmailField(null=False, blank=False, unique=True, help_text="Required", error_messages="This field is compulsory and must follow email format")
+  avatar = models.ImageField(upload_to=getUserImageURL, null=True, blank=True)
+  birthdate = models.DateField(null=True, blank=True)
+  genderChoices = (
+    (0, "male"),
+    (1, "female"),
+    (2, "other")
+  )
+  gender = models.IntegerField(choices=genderChoices, null=False, default=2)
+  address = models.CharField(max_length=200, null=True, blank=True)
+  phoneNum = models.CharField(max_length=50, null=True, blank=True)
+  roleChoices = (
+    (0, "user"),
+    (1, "moderator"),
+    (2, "admin"),
+    (3, "banned")
+  )
+  role = models.IntegerField(choices=roleChoices, default=0)
 
 class Book(models.Model):
   title = models.CharField(max_length=200, null=False, default="UNTITLED")
@@ -48,6 +67,7 @@ class Book(models.Model):
     (5, "other")
   )
   type = models.IntegerField(choices=typeChoices, null=False)
+  ownerID = models.ForeignKey(User, on_delete=models.CASCADE, default=9)
   liteCate = models.BooleanField(default=False, blank=True)
   socieCate = models.BooleanField(default=False, blank=True)
   naturCate = models.BooleanField(default=False, blank=True)
@@ -75,25 +95,7 @@ class Book(models.Model):
     return str(self.id) + ". " + self.title
 
 
-class User(AbstractUser):
-  email_address = models.EmailField(null=False, blank=False, unique=True, help_text="Required", error_messages="This field is compulsory and must follow email format")
-  avatar = models.ImageField(upload_to=getUserImageURL, null=True, blank=True)
-  birthdate = models.DateField(null=True, blank=True)
-  genderChoices = (
-    (0, "male"),
-    (1, "female"),
-    (2, "other")
-  )
-  gender = models.IntegerField(choices=genderChoices, null=False, default=2)
-  address = models.CharField(max_length=200, null=True, blank=True)
-  phoneNum = models.CharField(max_length=50, null=True, blank=True)
-  roleChoices = (
-    (0, "user"),
-    (1, "moderator"),
-    (2, "admin"),
-    (3, "banned")
-  )
-  role = models.IntegerField(choices=roleChoices, default=0)
+
 
 class Copy(models.Model):
   bookID = models.ForeignKey(Book, null=False, on_delete=models.CASCADE)

@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
+
+X_FRAME_OPTIONS = 'ALLOWALL'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
