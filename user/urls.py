@@ -12,6 +12,7 @@ urlpatterns = [
     path('register/', registerView.as_view(), name="register"),
     path("profile/info/", profileInfoView.as_view(), name="info"),
     path("profile/edit/", profileEditView.as_view(), name="edit"),
+    path("activate/<uidb64>/<token>", activate, name="activate"),
 ]
 
 if settings.DEBUG:

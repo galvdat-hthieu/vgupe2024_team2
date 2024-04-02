@@ -1,15 +1,21 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.views import View
 from django.contrib import messages
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import EmailMessage
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from user.forms import *
 from home.models import *
+from user.tokens import *
 
 class loginView(View):
   def get(self, request):
-    if (request.user.username):
+    if (request.user.is_authenticated):
       return redirect("home:index")
     form = LoginForm()
     context = {
@@ -40,6 +46,39 @@ class loginView(View):
     else:
       return render(request, "user/login.html", context)
     
+def activateEmail(request, user, to_email):
+  mail_subject = "Activate your user account."
+  message = render_to_string("user/template_activate_account.html", {
+    "user": user.username,
+    "domain": get_current_site(request).domain,
+    "uid": urlsafe_base64_encode(force_bytes(user.username)),
+    "token": account_activation_token.make_token(user),
+    "protocol": "https" if request.is_secure() else "http"
+  })
+  print("Username:", user.username)
+  print("Code:", urlsafe_base64_encode(force_bytes(user.pk)))
+  email = EmailMessage(mail_subject, message, to=[to_email])
+  if email.send():
+    messages.success(request, f'Dear <b>{user}</b>, please go to your email <b>{to_email}</b>.')
+  else:
+    messages.error(request, f'Problem sending email to {to_email}, check if you typed correctly')
+
+def activate(request, uidb64, token):
+  try:
+    uid = force_str(urlsafe_base64_decode(uidb64))
+    print(uidb64)
+    print(uid)
+    user = User.objects.get(username = uid)
+  except:
+    user = None
+  print(user.username)
+  if user is not None and account_activation_token.check_token(user, token):
+    user.is_active = True
+    user.save()
+    messages.success(request, "Create account successfully. You can log in now.")
+  else:
+    messages.error(request, "Activation link is invalid")
+  return redirect("home:index")
 
 class registerView(View):
   def get(self, request):
@@ -52,10 +91,13 @@ class registerView(View):
   
   def post(self, request):
     form = RegisterForm(request.POST)
-    address = request.POST.get("email_address")
-    print(address)
     if form.is_valid():
-      form.save()
+      user = form.save(commit=False)
+      user.is_active = False
+      user.save()
+      print(user.username)
+      activateEmail(request, user, form.cleaned_data.get('email_address'))
+      # user.save()
       return redirect("/user/login")
     else:
       context = {
@@ -122,7 +164,7 @@ class changePasswordView(LoginRequiredMixin, View):
     context = {
       "web": "Change password",
       "cssFiles": ["/static/user/passwordChange.css",
-                   ],
+                  ],
       "form": form,
     }
     if form.is_valid():
