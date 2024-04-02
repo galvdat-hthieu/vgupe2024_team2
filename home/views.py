@@ -1,19 +1,22 @@
 from autocorrect import Speller
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, FileResponse
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from django.views import View
 from django.utils import timezone
 from word_forms.word_forms import get_word_forms
 from .forms import *
 from .models import *
-
+import os
 
 # Create your views here.
 class indexView(View):
   def get(self, request):
-    return render(request, 'home/index.html')
+    context = {
+      "web":"Home"
+    }
+    return render(request, 'home/index.html',context)
 
 
 class searchView(View):
@@ -57,6 +60,7 @@ class searchView(View):
     
     books = booksByKeyword & booksByCategories
     context = {
+      "web":"Search",
       "books": books,
       "cssFiles": ["/static/home/gallery.css",
                    "/static/home/search.css"],
@@ -83,21 +87,75 @@ class bookView(View):
     book = Book.objects.get(id=id)
     form = ReviewForm(initial={"bookID": Book.objects.get(id=id),"userID": request.user,})
     context = {
+      "web": book.title,
+      "cssFiles": ["/static/home/book.css",
+                   ],
+      "time": timezone.now(),
       'book': book,
       "form": form,
-      "time": timezone.now()
     }
+
+
+
     return render(request, "home/book.html", context)
   
   def post(self, request, id):
     form = ReviewForm(request.POST)
-  
+    book = Book.objects.get(id=id)
     if form.is_valid():
-      new_review = form.save(commit=False)
-      new_review.user = request.user.username
-      new_review.save()
-      return HttpResponseRedirect('#')
-    
-    return render(request, "home/book.html", {'form': form})
+      form.save()
+      messages.success(request, "Your rating and review has been saved.")
+      return redirect("home:book", id)
+    else:
+      context = {
+      "web": book.title,
+      "cssFiles": ["/static/home/book.css",
+                   ],
+      "time": timezone.now(),
+      "book": book,
+      "form": form,
+      }
+      messages.error(request, "Your rating and review need to follow the format.")
+      return render(request, "home/book.html", context)
       
+class bookPDFView(View):
+  def get(self, request, id):
+    book = Book.objects.get(id=id)
+    context = {
+      "web": book.title,
+      "cssFiles": [],
+      "time": timezone.now(),
+      'book': book,
+    }
+    return render(request, "home/pdfDisplay.html", context)
           
+class vendorView(View):
+  def get(self, request, username):
+  
+    vendor = User.objects.get(username=username)
+    books = Book.objects.filter(ownerID=vendor.id)
+    totalAmount = books.count()
+    print(totalAmount)
+    context = {
+    "web":vendor.first_name,
+    'vendor': vendor,
+    'books':books,
+    'totalAmount':totalAmount
+    }
+
+    return render(request, "mod/modVendor.html",context)
+  def post(self, request, username):
+
+    return render(request, "mod/modVendor.html")
+
+def readPDF(request, id):
+  book = Book.objects.get(id=id)
+
+
+  context = {
+    'book':book,
+    }
+
+  return render(request, "home/pdf.html", context)
+  
+

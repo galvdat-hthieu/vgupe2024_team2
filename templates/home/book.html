@@ -3,164 +3,123 @@
 
 {% block content %}
 {% load static %}
-    <style>
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .left {
-            flex: 1;
-            padding-right: 20px;
-        }
-        .right {
-            flex: 1;
-        }
-        .bookimg {
-            width: 400px;
-            height: 500px;
-        }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            display: block;
-        }
-        .reviews {
-            clear: both;
-            margin-top: 20px;
-        }
-        .review {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 20px;
-        }
-        .review h3 {
-            margin-top: 0;
-        }
-        .rounded-sm {
-            border-radius: 0.25rem;
-        }
-        .mt-6 {
-            margin-top: 1.5rem;
-        }
-        .bg-gray-100 {
-            background-color: #f7fafc;
-        }
-        .submit {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            display: block;
-        }
-        .comment {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
-        .username {
-            font-weight: bold;
-            color: #333;
-        }
-        .datetime {
-            position: right;
-            right: 10;
-            font-size: 12px;
-            color: #999;
-        }
-        .rating {
-            font-size: 12px;
-            color: #999;
-        }
-    </style>
 
+{% for message in messages %}
+<div class="container-fluid p-0">
+    <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="True">&times;</span>
+        </button>
+        {{ message | safe }}
     <div class="container">
-        <div class="left">
-            <h2>{{book.title}}</h2>
-            <p><strong>Author:</strong> {{book.author}}</p>
-            <p><strong>Publisher:</strong> {{book.publisher}}</p>
-            <p><strong>Language:</strong> {{book.language}}</p>
-            <p><strong>Publication:</strong> {{book.publication}}</p>
-            <p><strong>Description:</strong> {{book.description}}</p>
-            <a href="#" class="btn">Read Book</a>
-            <a href="#" class="btn">Borrow</a>
-        </div>
-        <div class="right">
-            {% if book.coverImage %}
-            <img src="{{book.coverImage.url}}" alt={{book.title}} class="bookimg">
-            {% else %}
-            <img src="/media/book/defaultCover.jpg" alt="{{ book.title }}" class="bookimg">
-            {% endif %}
-        </div>
-    </div>
 
-    <div class = "container">
-        <div class="left">
-            <h3>Rating & Reviews</h3>
-            {% if user.username %}
-            <form method="post" action="." class="mt-6 bg-gray-100 rounded-sm">
-                {% csrf_token %}
-
-            {{form.bookID.as_hidden}}
-            {{form.userID.as_hidden}}
-            <label>Rating: </label>
-                {{form.rating}}
-            <br>
-            <label>Review: </label>
-                {{form.review}}
-            <br>
-                {{form.created_at.as_hidden}}
-            <div>
-                <button type="submit" class = "submit">Submit</button>
-            </div>
-            {% endif %}
-            </form>
-        </div>
-    </div>
-
+    <div class="left">
+        <h2>{{book.title}}</h2>
+        <p><strong>Owner:</strong><a href="{% url 'home:vendor' book.ownerID.username%}"> {{book.ownerID.first_name}}</a></p>
+        <p><strong>Author:</strong> {{book.author}}</p>
+        <p><strong>Publisher:</strong> {{book.publisher}}</p>
+        <p><strong>Language:</strong> {{book.language}}</p>
+        <p><strong>Publication:</strong> {{book.publication}}</p>
+        <p><strong>Description:</strong> {{book.description}}</p>
+        {% if book.pdfFile %}
+        <a href="{% url 'home:readPDF' book.id%}" class="btn">Read Book</a>
+        {% else %}
+        <a href="#" class="btn">Read Book</a>
+        {% endif %}
         
-    <div class="container">
-        {% if book.reviews.all %}
-        <div class="left">
-            <h3>Reader Reviews</h3>
-            {% for review in book.reviews.all reversed %}
-                <div class="comment">
-                    <span style="float: left; width: 70px;">
-                    {% if review.userID.avatar %}
-                    <img src="/media/{{ review.userID.avatar }}" width=50px alt="avatar">
-                    {% else %}
-                    <img src="/media/user/defaultAvatar.jpg" width=50px alt="default avatar">
-                    {% endif %}
-                    </span>
-                    <span>
-                        
-                    </span>
-                    <span class='username'>{{ review.userID }}</span>
-                    <p class = 'text'>{{ review.review }} - {{ review.rating }}</p>
-                    <span class='datetime'>{{ review.created_at }}</span>
-                </div>
-                {% endfor %}
-                
-            {% else %}
-                <p>No reviews yet.</p>
-            {% endif %}
+        <a href="#" class="btn">Borrow</a>
     </div>
+    <div class="right">
+        {% if book.coverImage %}
+        <img src="{{book.coverImage.url}}" alt={{book.title}} class="bookimg">
+        {% else %}
+        <img src="/media/book/defaultCover.jpg" alt="{{ book.title }}" class="bookimg">
+        {% endif %}
+    </div>
+</div>
+</div>
+{% endfor %}
+
+<div class="container">
+    <div class="left">
+        <h2>{{book.title}}</h2>
+        <p><strong>Author:</strong> {{book.author}}</p>
+        <p><strong>Publisher:</strong> {{book.publisher}}</p>
+        <p><strong>Language:</strong> {{book.language}}</p>
+        <p><strong>Publication:</strong> {{book.publication}}</p>
+        <p><strong>Description:</strong> {{book.description}}</p>
+        {% if book.pdfFile %}
+        <a href="{% url 'home:bookPDF' book.id %}" class="btn">Read Book</a>
+        {% endif %}
+        {% if user.is_authenticated and user.role >= 1 %}
+        <a href="{% url 'mod:addCopy' book.id %}" class="btn">Add Copy</a>
+        {% endif %}
+        <a href="#" class="btn">Borrow</a>
+    </div>
+    <div class="right">
+        {% if book.coverImage %}
+        <img src="{{ book.coverImage.url }}" alt={{ book.title }} class="bookimg">
+        {% else %}
+        <img src="/media/book/defaultCover.jpg" alt="{{ book.title }}" class="bookimg">
+        {% endif %}
+    </div>
+</div>
+
+<div class = "container">
+    <div class="left">
+        <h3>Rating & Reviews</h3>
+        
+        {% if user.username %}
+        <form method="post" action="" class="mt-6 bg-gray-100 rounded-sm">
+        {% csrf_token %}
+        {% for key, value in form.error.items %}
+            {{value}}
+        {% endfor %}
+
+        {{form.bookID.as_hidden}}
+        {{form.userID.as_hidden}}
+        <label>Rating: </label>
+            {{form.rating}}
+        <br>
+        <label>Review: </label>
+            {{form.review}}
+        <br>
+            {{form.created_at.as_hidden}}
+        <div>
+            <button type="submit" class = "submit">Submit</button>
+        </div>
+        {% endif %}
+        </form>
+    </div>
+</div>
+
+    
+<div class="container">
+    {% if book.reviews.all %}
+    <div class="left">
+        <h3>Reader Reviews</h3>
+        {% for review in book.reviews.all reversed %}
+            <div class="comment">
+                <span style="float: left; width: 70px;">
+                {% if review.userID.avatar %}
+                <img src="/media/{{ review.userID.avatar }}" width=50px alt="avatar">
+                {% else %}
+                <img src="/media/user/defaultAvatar.jpg" width=50px alt="default avatar">
+                {% endif %}
+                </span>
+                <span>
+                    
+                </span>
+                <span class='username'>{{ review.userID }}</span>
+                <p class = 'text'>{{ review.review }} - {{ review.rating }}</p>
+                <span class='datetime'>{{ review.created_at }}</span>
+            </div>
+            {% endfor %}
+            
+        {% else %}
+            <p>No reviews yet.</p>
+        {% endif %}
+</div>
         
     
             

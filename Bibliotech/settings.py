@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
+
+X_FRAME_OPTIONS = 'ALLOWALL'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -153,5 +156,6 @@ EMAIL_HOST_USER = "bibliotechapplication@gmail.com"
 EMAIL_HOST_PASSWORD = "ecqmlzuaiyqwygul"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 PASSWORD_RESET_TIMEOUT = 14400 #4 hours = 14400 seconds
