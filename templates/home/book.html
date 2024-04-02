@@ -10,19 +10,20 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="True">&times;</span>
         </button>
-        {{ message | safe }}
-    <div class="container">
+        {{ message }}
+    </div>
+</div>
+<div class="container">
 
     <div class="left">
         <h2>{{book.title}}</h2>
-        <p><strong>Owner:</strong><a href="{% url 'home:vendor' book.ownerID.username%}"> {{book.ownerID.first_name}}</a></p>
         <p><strong>Author:</strong> {{book.author}}</p>
         <p><strong>Publisher:</strong> {{book.publisher}}</p>
         <p><strong>Language:</strong> {{book.language}}</p>
         <p><strong>Publication:</strong> {{book.publication}}</p>
         <p><strong>Description:</strong> {{book.description}}</p>
         {% if book.pdfFile %}
-        <a href="{% url 'home:readPDF' book.id%}" class="btn">Read Book</a>
+        <a href="{% url 'home:bookPDF' book.id%}" class="btn">Read Book</a>
         {% else %}
         <a href="#" class="btn">Read Book</a>
         {% endif %}
