@@ -17,16 +17,17 @@
 </ul>
 {% endif %}
 <h3> Add Copy View </h3>
+<span style="float: left; margin-right: 50px;">
+    {% if book.coverImage %}
+    <img src="{{ book.coverImage.url }}" width="100px" alt="{{ book.title }}" class="bookimg">
+    {% else %}
+    <img src="/media/book/defaultCover.jpg" width="100px" alt="{{ book.title }}" class="bookimg">
+    {% endif %}
+</span>
 <p>{{ book.title }}</p>
 <p>{{ book.author }}</p>
 <p>{{ book.publisher }}</p>
 <p>{{ book.codeISBN }}</p>
-
-{% if book.coverImage %}
-<img src="{{ book.coverImage.url }}" width="500px" alt="{{ book.title }}" class="bookimg">
-{% else %}
-<img src="/media/book/defaultCover.jpg" width="500px" alt="{{ book.title }}" class="bookimg">
-{% endif %}
 
 <form action = "" method = "post">
     {% csrf_token %} 
