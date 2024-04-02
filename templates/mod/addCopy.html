@@ -2,17 +2,36 @@
 
 
 {% block content %}
-<h1> Add Copy View </h1>
-{% if error %}
-    <p> {{ error }} </p>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <div class="container-fluid p-0">
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="True">&times;</span>
+            </button>
+            {{ message | safe}}
+        </div>
+    </div>
+    {% endfor %}
+</ul>
 {% endif %}
-<form action = "{% url 'mod:saveCopy' %}" method = "post">
-    <p>BookID: {{ f.bookID }}</p>
-    <p>UserID: {{ f.userID }}</p>
-    <p>Status: {{ f.status }} </p>
-    <p>Note: {{ f.note }} </p>
-    <p>Registration Date: <input type="date" id="regDate" name="regDate"></p>
-    {% csrf_token %} <!-- This is a security feature to prevent Cross Site Request Forgery (CSRF) attacks. It is used to protect against unauthorized requests. It is a token that is used to verify that the authenticated user is the one actually making the requests to the web application. -->
-<input type = "submit" value = "Submit">
+<h3> Add Copy View </h3>
+<p>{{ book.title }}</p>
+<p>{{ book.author }}</p>
+<p>{{ book.publisher }}</p>
+<p>{{ book.codeISBN }}</p>
+
+{% if book.coverImage %}
+<img src="{{ book.coverImage.url }}" width="500px" alt="{{ book.title }}" class="bookimg">
+{% else %}
+<img src="/media/book/defaultCover.jpg" width="500px" alt="{{ book.title }}" class="bookimg">
+{% endif %}
+
+<form action = "" method = "post">
+    {% csrf_token %} 
+    {{ form.as_p }}
+
+    <input type = "submit" value = "Submit">
 </form>
 {% endblock %}
