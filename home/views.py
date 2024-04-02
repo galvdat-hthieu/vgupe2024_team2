@@ -94,9 +94,6 @@ class bookView(View):
       'book': book,
       "form": form,
     }
-
-
-
     return render(request, "home/book.html", context)
   
   def post(self, request, id):
