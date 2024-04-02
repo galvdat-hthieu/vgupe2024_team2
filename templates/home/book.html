@@ -93,7 +93,7 @@
     <div class="container">
         <div class="left">
             <h2>{{book.title}}</h2>
-            <p><strong>Owner:</strong> {{book.ownerID.first_name}}</p>
+            <p><strong>Owner:</strong><a href="{% url 'home:vendor' book.ownerID.username%}"> {{book.ownerID.first_name}}</a></p>
             <p><strong>Author:</strong> {{book.author}}</p>
             <p><strong>Publisher:</strong> {{book.publisher}}</p>
             <p><strong>Language:</strong> {{book.language}}</p>

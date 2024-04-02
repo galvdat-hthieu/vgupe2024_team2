@@ -13,7 +13,10 @@ import os
 # Create your views here.
 class indexView(View):
   def get(self, request):
-    return render(request, 'home/index.html')
+    context = {
+      "web":"Home"
+    }
+    return render(request, 'home/index.html',context)
 
 
 class searchView(View):
@@ -57,6 +60,7 @@ class searchView(View):
     
     books = booksByKeyword & booksByCategories
     context = {
+      "web":"Search",
       "books": books,
       "cssFiles": ["/static/home/gallery.css",
                    "/static/home/search.css"],
@@ -83,6 +87,7 @@ class bookView(View):
     book = Book.objects.get(id=id)
     form = ReviewForm(initial={"bookID": Book.objects.get(id=id),"userID": request.user,})
     context = {
+      "web":book.title,
       'book': book,
       "form": form,
       "time": timezone.now()
@@ -112,6 +117,7 @@ class vendorView(View):
     totalAmount = books.count()
     print(totalAmount)
     context = {
+    "web":vendor.first_name,
     'vendor': vendor,
     'books':books,
     'totalAmount':totalAmount
