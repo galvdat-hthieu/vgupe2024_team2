@@ -175,3 +175,12 @@ class changePasswordView(LoginRequiredMixin, View):
     else:
       messages.error(request, 'Please correct the error below.')
       return render(request, "user/passwordChange.html", context)
+    
+class wallView(LoginRequiredMixin, View):
+  def get(self, request, id):
+    user = User.objects.get(id=id)
+    context = {
+        'wallOwner': user,
+        'cssFiles': ["/static/user/wall.css",],
+    }
+    return render(request, "user/wall.html", context)

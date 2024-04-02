@@ -85,7 +85,7 @@
                 <span>
                     
                 </span>
-                <span class='username'>{{ review.userID }}</span>
+                <a href="{% url 'user:wall' review.userID.id %}">{{ review.userID }}</a>
                 <p class = 'text'>{{ review.review }} - {{ review.rating }}</p>
                 <span class='datetime'>{{ review.created_at }}</span>
             </div>

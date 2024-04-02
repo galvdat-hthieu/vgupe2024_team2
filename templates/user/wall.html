@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+{% load static %}
+
+
+<div class = 'profileContainer'>
+    {% if wallOwner.avatar %}
+    <img src="/media/{{ wallOwner.avatar }}" width=150px alt="avatar image">
+    {% else %}
+    <img src="/media/user/defaultAvatar.jpg" width="150px" alt="image">
+    {% endif %}
+
+    {{wallOwner.username}}
+
+    <div class="dropdown">
+        <button class="dropbtn">More <i class="arrow"></i></button>
+        <div class="dropdown-content">
+            <a href="#">Item 1</a>
+            <a href="#">Item 2</a>
+            <a href="#">Item 3</a>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
