@@ -67,7 +67,6 @@ class Book(models.Model):
     (5, "other")
   )
   type = models.IntegerField(choices=typeChoices, null=False)
-  ownerID = models.ForeignKey(User, on_delete=models.CASCADE, default=9)
   liteCate = models.BooleanField(default=False, blank=True)
   socieCate = models.BooleanField(default=False, blank=True)
   naturCate = models.BooleanField(default=False, blank=True)
@@ -93,8 +92,6 @@ class Book(models.Model):
 
   def __str__(self) :
     return str(self.id) + ". " + self.title
-
-
 
 
 class Copy(models.Model):

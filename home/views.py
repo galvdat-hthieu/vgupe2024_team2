@@ -87,10 +87,12 @@ class bookView(View):
     book = Book.objects.get(id=id)
     form = ReviewForm(initial={"bookID": Book.objects.get(id=id),"userID": request.user,})
     context = {
-      "web":book.title,
+      "web": book.title,
+      "cssFiles": ["/static/home/book.css",
+                   ],
+      "time": timezone.now(),
       'book': book,
       "form": form,
-      "time": timezone.now()
     }
 
 
@@ -99,15 +101,33 @@ class bookView(View):
   
   def post(self, request, id):
     form = ReviewForm(request.POST)
-  
+    book = Book.objects.get(id=id)
     if form.is_valid():
-      new_review = form.save(commit=False)
-      new_review.user = request.user.username
-      new_review.save()
-      return HttpResponseRedirect('#')
-    
-    return render(request, "home/book.html", {'form': form})
+      form.save()
+      messages.success(request, "Your rating and review has been saved.")
+      return redirect("home:book", id)
+    else:
+      context = {
+      "web": book.title,
+      "cssFiles": ["/static/home/book.css",
+                   ],
+      "time": timezone.now(),
+      "book": book,
+      "form": form,
+      }
+      messages.error(request, "Your rating and review need to follow the format.")
+      return render(request, "home/book.html", context)
       
+class bookPDFView(View):
+  def get(self, request, id):
+    book = Book.objects.get(id=id)
+    context = {
+      "web": book.title,
+      "cssFiles": [],
+      "time": timezone.now(),
+      'book': book,
+    }
+    return render(request, "home/pdfDisplay.html", context)
           
 class vendorView(View):
   def get(self, request, username):
