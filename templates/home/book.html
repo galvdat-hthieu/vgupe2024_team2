@@ -13,32 +13,6 @@
         {{ message }}
     </div>
 </div>
-<div class="container">
-
-    <div class="left">
-        <h2>{{book.title}}</h2>
-        <p><strong>Author:</strong> {{book.author}}</p>
-        <p><strong>Publisher:</strong> {{book.publisher}}</p>
-        <p><strong>Language:</strong> {{book.language}}</p>
-        <p><strong>Publication:</strong> {{book.publication}}</p>
-        <p><strong>Description:</strong> {{book.description}}</p>
-        {% if book.pdfFile %}
-        <a href="{% url 'home:bookPDF' book.id%}" class="btn">Read Book</a>
-        {% else %}
-        <a href="#" class="btn">Read Book</a>
-        {% endif %}
-        
-        <a href="#" class="btn">Borrow</a>
-    </div>
-    <div class="right">
-        {% if book.coverImage %}
-        <img src="{{book.coverImage.url}}" alt={{book.title}} class="bookimg">
-        {% else %}
-        <img src="/media/book/defaultCover.jpg" alt="{{ book.title }}" class="bookimg">
-        {% endif %}
-    </div>
-</div>
-</div>
 {% endfor %}
 
 <div class="container">
