@@ -11,7 +11,67 @@
         <span aria-hidden="True">&times;</span>
         </button>
         {{ message | safe }}
+
+{% for message in messages %}
+<div class="container-fluid p-0">
+    <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="True">&times;</span>
+        </button>
+        {{ message | safe }}
     <div class="container">
+
+    <div class="left">
+        <h2>{{book.title}}</h2>
+        <p><strong>Owner:</strong><a href="{% url 'home:vendor' book.ownerID.username%}"> {{book.ownerID.first_name}}</a></p>
+        <p><strong>Author:</strong> {{book.author}}</p>
+        <p><strong>Publisher:</strong> {{book.publisher}}</p>
+        <p><strong>Language:</strong> {{book.language}}</p>
+        <p><strong>Publication:</strong> {{book.publication}}</p>
+        <p><strong>Description:</strong> {{book.description}}</p>
+        {% if book.pdfFile %}
+        <a href="{% url 'home:readPDF' book.id%}" class="btn">Read Book</a>
+        {% else %}
+        <a href="#" class="btn">Read Book</a>
+        {% endif %}
+        
+        <a href="#" class="btn">Borrow</a>
+    </div>
+    <div class="right">
+        {% if book.coverImage %}
+        <img src="{{book.coverImage.url}}" alt={{book.title}} class="bookimg">
+        {% else %}
+        <img src="/media/book/defaultCover.jpg" alt="{{ book.title }}" class="bookimg">
+        {% endif %}
+    </div>
+</div>
+</div>
+{% endfor %}
+
+<div class="container">
+    <div class="left">
+        <h2>{{book.title}}</h2>
+        <p><strong>Author:</strong> {{book.author}}</p>
+        <p><strong>Publisher:</strong> {{book.publisher}}</p>
+        <p><strong>Language:</strong> {{book.language}}</p>
+        <p><strong>Publication:</strong> {{book.publication}}</p>
+        <p><strong>Description:</strong> {{book.description}}</p>
+        {% if book.pdfFile %}
+        <a href="{% url 'home:bookPDF' book.id %}" class="btn">Read Book</a>
+        {% endif %}
+        {% if user.is_authenticated and user.role >= 1 %}
+        <a href="{% url 'mod:addCopy' book.id %}" class="btn">Add Copy</a>
+        {% endif %}
+        <a href="#" class="btn">Borrow</a>
+    </div>
+    <div class="right">
+        {% if book.coverImage %}
+        <img src="{{ book.coverImage.url }}" alt={{ book.title }} class="bookimg">
+        {% else %}
+        <img src="/media/book/defaultCover.jpg" alt="{{ book.title }}" class="bookimg">
+        {% endif %}
+    </div>
+</div>
 
     <div class="left">
         <h2>{{book.title}}</h2>
@@ -75,6 +135,16 @@
         {% for key, value in form.error.items %}
             {{value}}
         {% endfor %}
+<div class = "container">
+    <div class="left">
+        <h3>Rating & Reviews</h3>
+        
+        {% if user.username %}
+        <form method="post" action="" class="mt-6 bg-gray-100 rounded-sm">
+        {% csrf_token %}
+        {% for key, value in form.error.items %}
+            {{value}}
+        {% endfor %}
 
         {{form.bookID.as_hidden}}
         {{form.userID.as_hidden}}
@@ -109,6 +179,33 @@
     </div>
 </div>
 
+    
+<div class="container">
+    {% if book.reviews.all %}
+    <div class="left">
+        <h3>Reader Reviews</h3>
+        {% for review in book.reviews.all reversed %}
+            <div class="comment">
+                <span style="float: left; width: 70px;">
+                {% if review.userID.avatar %}
+                <img src="/media/{{ review.userID.avatar }}" width=50px alt="avatar">
+                {% else %}
+                <img src="/media/user/defaultAvatar.jpg" width=50px alt="default avatar">
+                {% endif %}
+                </span>
+                <span>
+                    
+                </span>
+                <span class='username'>{{ review.userID }}</span>
+                <p class = 'text'>{{ review.review }} - {{ review.rating }}</p>
+                <span class='datetime'>{{ review.created_at }}</span>
+            </div>
+            {% endfor %}
+            
+        {% else %}
+            <p>No reviews yet.</p>
+        {% endif %}
+</div>
     
 <div class="container">
     {% if book.reviews.all %}
