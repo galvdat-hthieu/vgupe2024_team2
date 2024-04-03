@@ -16,7 +16,7 @@ class indexView(View):
     context = {
       "web":"Home"
     }
-    return render(request, 'home/index.html',context)
+    return render(request, 'testing/index.html',context)
 
 
 class searchView(View):
