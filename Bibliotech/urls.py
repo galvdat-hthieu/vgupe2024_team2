@@ -9,6 +9,7 @@ urlpatterns = [
     path('user/', include('user.urls')),
     # Moderator page
     path('mod/', include('moderator.urls')),
+    path('accounts/', include('allauth.urls')),
 ]
 
 if settings.DEBUG:

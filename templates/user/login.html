@@ -2,6 +2,7 @@
 
 
 {% block content %}
+{% load socialaccount %}
 <style>
     .errorlist{
         color: red;
@@ -38,6 +39,8 @@
         <button type="button" class="cancelbtn"> Cancel</button>   
         Forgot <a href="#"> password? </a>   
     </div>   
+    <script src="//accounts.google.com/gsi/client" async></script>
+    <a href="{% provider_login_url 'google' %}">Login with Google</a>
 </form>
 
 {% endblock %}
