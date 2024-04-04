@@ -13,14 +13,14 @@ class LoginForm(AuthenticationForm):
 class RegisterForm(UserCreationForm):
   class Meta:
     model = User
-    fields = ["username", "email_address", "password1", "password2",
+    fields = ["username", "email", "password1", "password2",
               "first_name", "last_name", "birthdate", "gender",
               "address", "phoneNum"]
     # fields = "__all__"
 
   def clean(self):
-    email = self.cleaned_data.get('email_address')
-    if User.objects.filter(email_address=email).exists():
+    email = self.cleaned_data.get('email')
+    if User.objects.filter(email=email).exists():
         raise ValidationError("Email exists")
     return self.cleaned_data
 

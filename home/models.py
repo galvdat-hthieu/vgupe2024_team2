@@ -36,7 +36,7 @@ def getUserImageURL(instance, filename):
     return "user/{}/avatar.png".format(file_number)
 
 class User(AbstractUser):
-  email_address = models.EmailField(null=False, blank=False, unique=True, help_text="Required", error_messages="This field is compulsory and must follow email format")
+  email = models.EmailField(null=False, blank=False, unique=True, help_text="Required", error_messages="This field is compulsory and must follow email format")
   avatar = models.ImageField(upload_to=getUserImageURL, null=True, blank=True)
   birthdate = models.DateField(null=True, blank=True)
   genderChoices = (

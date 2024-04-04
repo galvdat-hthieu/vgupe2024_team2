@@ -6,7 +6,7 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', "publisher", "language", "codeISBN")
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ("id", 'username', "email_address")
+    list_display = ("id", 'username', "email")
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ("id", 'bookID', 'userID', 'rating', 'created_at')

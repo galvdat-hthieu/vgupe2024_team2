@@ -78,6 +78,11 @@ SOCIALACCOUNT_PROVIDERS = {
             'key': ''
         },
         'FETCH_USERINFO': True,
+        'SCOPE': [
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email',
+        ],
+        'AUTH_PARAMS': {'access_type': 'online'},
     }
 }
 

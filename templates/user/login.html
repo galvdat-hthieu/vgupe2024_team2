@@ -40,7 +40,10 @@
         Forgot <a href="#"> password? </a>   
     </div>   
     <script src="//accounts.google.com/gsi/client" async></script>
-    <a href="{% provider_login_url 'google' %}">Login with Google</a>
+</form>
+<form action="{% provider_login_url 'google' %}" method="post">
+    {% csrf_token %}
+    <button type="submit" style="width: 200px;">Log in with Google</button>
 </form>
 
 {% endblock %}
