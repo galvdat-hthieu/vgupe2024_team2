@@ -166,17 +166,20 @@ class borrowView(View):
 
   def post(self, request):
     if request.method == 'POST':
-        modName = request.POST.get("source")  
-        mod = User.objects.get(first_name=modName)
-        bookID = request.POST.get("bookID")
-        book = Book.objects.get(id=bookID)
-        copy = Copy.objects.filter(userID_id=mod.id, bookID_id=book.id).first()
+        userID = request.POST.get("userID")
+        if userID == "None":
+          return redirect("user:login")
+        else:
+          modName = request.POST.get("source")  
+          mod = User.objects.get(first_name=modName)
+          bookID = request.POST.get("bookID")
+          book = Book.objects.get(id=bookID)
+          copy = Copy.objects.filter(userID_id=mod.id, bookID_id=book.id).first()
 
-        context = {
-            'mod':mod,
-            'book':book,
-            'copy':copy,
-        }
-        return render(request, "home/borrowance.html", context)
-    else:
-        return render(request, "home/borrowance.html")
+          context = {
+              'mod':mod,
+              'book':book,
+              'copy':copy,
+          }
+          return render(request, "home/borrowance.html", context)
+      
