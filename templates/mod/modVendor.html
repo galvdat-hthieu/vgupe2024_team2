@@ -4,9 +4,7 @@
 {% block content %}
 {% load static %}
     <style>
-        /* Basic CSS styles */
-        
-        
+        /* Basic CSS styles */       
         .container {
             max-width: 800px;
             margin: auto;
@@ -34,13 +32,14 @@
     <div class="vendor-info">
         <h2>Vendor Name: {{vendor.first_name}}</h2>
         <p>Contact Email: {{vendor.email}}</p>
-        <p>Total books: {{totalAmount}}</p>
+        <p>Total books available: {{totalBooks}} books ({{totalCopies}} copies)</p>
+        {% comment %} <p>Total books: {{totalAmount}}</p> {% endcomment %}
     </div>
     <div class="galleryView">
         {% for item in books %}
           {% include 'home/panel.html' %}
         {% endfor %}
-      </div>
+    </div>
 </div>
 
 {% endblock %}

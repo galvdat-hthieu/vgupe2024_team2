@@ -1,8 +1,9 @@
 {% extends 'base/base.html' %}
 
-
-{% block content %}
 {% load static %}
+{% block content %}
+
+
 
 {% for message in messages %}
 <div class="container-fluid p-0">
@@ -14,6 +15,71 @@
     </div>
 </div>
 {% endfor %}
+<link rel="stylesheet" type = "text/css" href="{% static 'home/book.css' %}">
+<style>
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 310px; /* Adjusted width */
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      font-size: small; /* Adjust font size */
+    }
+    
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    
+    .dropdown-button {
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      cursor: pointer;
+      padding: 0px 5px;
+    }
+    
+    .dropdown-button:focus {
+      outline: none;
+    }
+    
+    .down-arrow {
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid black;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 2px;
+      pointer-events: none; /* This line makes the arrow area non-clickable */
+    }
+    
+    /* Hide the text in the button */
+    .dropdown-button span.text {
+      display: none;
+    }
+    
+    #selectedOption {
+      width: 310px; /* Adjusted width */
+      font-style: italic; /* Make the font italic */
+      font-size: small; /* Adjust font size */
+    }
+    
+    /* Style for container */
+    .see-more-container {
+      margin-top: 10px; /* Adjust as needed */
+    }
+    </style>
+
+
 
 <div class="container">
     <div class="left">
@@ -23,23 +89,100 @@
         <p><strong>Language:</strong> {{book.language}}</p>
         <p><strong>Publication:</strong> {{book.publication}}</p>
         <p><strong>Description:</strong> {{book.description}}</p>
+    
         {% if book.pdfFile %}
         <a href="{% url 'home:bookPDF' book.id %}" class="btn">Read Book</a>
         {% endif %}
         {% if user.is_authenticated and user.role >= 1 %}
         <a href="{% url 'mod:addCopy' book.id %}" class="btn">Add Copy</a>
         {% endif %}
-        <a href="#" class="btn">Borrow</a>
-    </div>
-    <div class="right">
-        {% if book.coverImage %}
-        <img src="{{ book.coverImage.url }}" alt={{ book.title }} class="bookimg">
-        {% else %}
-        <img src="/media/book/defaultCover.jpg" alt="{{ book.title }}" class="bookimg">
-        {% endif %}
-    </div>
-</div>
+        
+        <p><strong>Choose a provider:</strong> {{book.description}}</p>
+        <form id="borrowForm" action="{% url 'home:borrow' %}" method="post">
+        {% csrf_token %}
+        <div class="dropdown">
+            <input type="text" id="selectedOption" value="Please select a provider" readonly name="source"> <!-- Default value set to "Please select a provider" -->
+            <button class="dropdown-button" onclick="toggleDropdown()">
+              <span class="down-arrow"></span>
+              <span class="text">Dropdown</span>
+            </button>
+            <div class="dropdown-content" id="dropdownContent">
+                {% for mod, count in mods_objects_dict.items %}
+                <a href="#" onclick="selectOption('{{ mod.first_name }}', '{{ mod.id }}', event)">{{ mod.first_name }} ({{ count }} copies available)</a>
+                {% endfor %}
+            </div>
+        </div>
+          
+        <input type="hidden" name="bookID" value="{{ book.id }}">
+        <input type="hidden" name="userID" value="{{ user.id }}">
 
+<!-- Container for "See more books" links -->
+<div class="see-more-container">
+    {% for mod, count in mods_objects_dict.items %}
+    <a id="seeOption{{ mod.id }}" href="{% url 'home:vendor' mod.username %}" style="display: none;">See more books of {{ mod.first_name }}</a>
+    {% endfor %}
+</div>
+<button type="submit" class="btn">Borrow</button>
+</form>
+<script>
+
+    function validateAndSubmitForm(event) {
+        var selectedOptionInput = document.getElementById("selectedOption");
+        
+        if (selectedOptionInput.value === "Please select a provider") {
+            // If the selected option is still the default one, display an alert message
+            alert("Please select a provider");
+            event.preventDefault(); // Prevent the form from being submitted
+        }
+    }
+    
+    document.getElementById("borrowForm").addEventListener("submit", validateAndSubmitForm);
+
+
+    document.addEventListener('click', function(event) {
+      var dropdownContent = document.getElementById("dropdownContent");
+      var selectedOptionInput = document.getElementById("selectedOption");
+      
+      if (!event.target.matches('.dropdown-button') && !event.target.matches('.dropdown-content')) {
+        dropdownContent.style.display = "none";
+      }
+    });
+    
+    function toggleDropdown() {
+      event.preventDefault();
+      var dropdownContent = document.getElementById("dropdownContent");
+      if (dropdownContent.style.display === "none" || dropdownContent.style.display === "") {
+        dropdownContent.style.display = "block";
+      } else {
+        dropdownContent.style.display = "none";
+      }
+    }
+    
+    function selectOption(name, id, event) {
+        event.preventDefault();
+        var selectedOptionInput = document.getElementById("selectedOption");
+        selectedOptionInput.value = name;
+    
+        // Show the corresponding link based on the selected option
+        {% for mod, count in mods_objects_dict.items %}
+        document.getElementById("seeOption{{ mod.id }}").style.display = id === '{{ mod.id }}' ? 'inline' : 'none';
+        {% endfor %}
+    }
+    
+    // Display the "See more books" link for the default option initially
+    var defaultOption = document.getElementById("selectedOption").value;
+    selectOption(defaultOption, event); // Pass the event as an argument to the function
+    </script>
+        
+            </div>
+            <div class="right">
+                {% if book.coverImage %}
+                <img src="{{ book.coverImage.url }}" alt={{ book.title }} class="bookimg">
+                {% else %}
+                <img src="/media/book/defaultCover.jpg" alt="{{ book.title }}" class="bookimg">
+                {% endif %}
+            </div>
+        </div>
 <div class = "container">
     <div class="left">
         <h3>Rating & Reviews</h3>
