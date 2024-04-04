@@ -1,6 +1,6 @@
 from autocorrect import Speller
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import HttpResponseRedirect, FileResponse
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from django.views import View
@@ -85,6 +85,13 @@ class galleryView(View):
 class bookView(View):
   def get(self, request, id):
     book = Book.objects.get(id=id)
+    copies = Copy.objects.filter(bookID=book)
+    mod_counts = copies.values('userID').annotate(count=Count('id'))
+    mod_counts_dict = {item['userID']: item['count'] for item in mod_counts}
+    mod_ids = mod_counts_dict.keys()
+    mods = User.objects.filter(pk__in=mod_ids)
+    mods_objects_dict = {mod: mod_counts_dict[mod.id] for mod in mods}
+
     form = ReviewForm(initial={"bookID": Book.objects.get(id=id),"userID": request.user,})
     context = {
       "web": book.title,
@@ -93,6 +100,7 @@ class bookView(View):
       "time": timezone.now(),
       'book': book,
       "form": form,
+      "mods_objects_dict":mods_objects_dict,
     }
     return render(request, "home/book.html", context)
   
@@ -130,14 +138,18 @@ class vendorView(View):
   def get(self, request, username):
   
     vendor = User.objects.get(username=username)
-    books = Book.objects.filter(ownerID=vendor.id)
-    totalAmount = books.count()
-    print(totalAmount)
+    copies = Copy.objects.filter(userID_id=vendor.id,status=1)
+    books = Book.objects.filter(id__in=copies.values('bookID_id'))
+
+    totalBooks = books.count()
+    totalCopies = copies.count()
+
     context = {
     "web":vendor.first_name,
     'vendor': vendor,
-    'books':books,
-    'totalAmount':totalAmount
+    'books': books,
+    'totalBooks': totalBooks,
+    'totalCopies': totalCopies,
     }
 
     return render(request, "mod/modVendor.html",context)
@@ -145,14 +157,26 @@ class vendorView(View):
 
     return render(request, "mod/modVendor.html")
 
-def readPDF(request, id):
-  book = Book.objects.get(id=id)
 
-
-  context = {
-    'book':book,
-    }
-
-  return render(request, "home/pdf.html", context)
   
 
+class borrowView(View):
+  def get(self, request):
+    return render(request, "home/borrowance.html")
+
+  def post(self, request):
+    if request.method == 'POST':
+        modName = request.POST.get("source")  
+        mod = User.objects.get(first_name=modName)
+        bookID = request.POST.get("bookID")
+        book = Book.objects.get(id=bookID)
+        copy = Copy.objects.filter(userID_id=mod.id, bookID_id=book.id).first()
+
+        context = {
+            'mod':mod,
+            'book':book,
+            'copy':copy,
+        }
+        return render(request, "home/borrowance.html", context)
+    else:
+        return render(request, "home/borrowance.html")

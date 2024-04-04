@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+{% load static %}
+
+<h1>Temporary page: used for gathering borrowance data to implement borrow mechanism later</h1>
+
+<p><strong>Book title:</strong>{{book.title}}</p>
+<p><strong>Copy id:</strong>{{copy.id}}</p>
+<p><strong>Owner:</strong>{{mod.first_name}}</p>
+<p><strong>Borrower:</strong>{{user.first_name}}</p>
+
+{% endblock %}
