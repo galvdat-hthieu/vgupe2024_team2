@@ -12,6 +12,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from user.forms import *
 from home.models import *
 from user.tokens import *
+from allauth.socialaccount.models import SocialAccount
+
 
 class loginView(View):
   def get(self, request):
@@ -107,6 +109,12 @@ class registerView(View):
       return render(request, "user/register.html", context)
 
 
+class signupRedirect(View):
+  def get(self, request):
+    messages.error(request, "There are errors when logging in.<br> There might already exist an account with this email.")
+    return redirect("user:login")
+
+
 class logoutView(View):
   def get(self, request):
     logout(request=request)
@@ -116,9 +124,13 @@ class logoutView(View):
 class profileInfoView(LoginRequiredMixin, View):
   login_url = "/user/login"
   def get(self, request):
+    try:
+      socialAccount = SocialAccount.objects.get(user = request.user)
+    except SocialAccount.DoesNotExist:
+      socialAccount = None
     context = {
       "web": "Info",
-      "user": request.user,
+      "socialAccount": socialAccount,
     }
     return render(request, "user/profileInfo.html", context)
   
@@ -129,15 +141,24 @@ class profileInfoView(LoginRequiredMixin, View):
 class profileEditView(LoginRequiredMixin, View):
   def get(self, request):
     form = ProfileEditForm(instance=request.user)
+    try:
+      socialAccount = SocialAccount.objects.get(user = request.user)
+    except SocialAccount.DoesNotExist:
+      socialAccount = None
     context = {
       "web": "Edit profile",
       "cssFiles": [],
       "form": form,
+      "socialAccount": socialAccount,
     }
     return render(request, "user/profileEdit.html", context)
   
   def post(self, request):
     form = ProfileEditForm(request.POST, request.FILES, instance=request.user)
+    try:
+      socialAccount = SocialAccount.objects.get(user = request.user)
+    except SocialAccount.DoesNotExist:
+      socialAccount = None
     if form.is_valid():
       form.save()
       return redirect("user:info")
@@ -146,6 +167,7 @@ class profileEditView(LoginRequiredMixin, View):
         "web": "Edit profile",
         "cssFiles": [],
         "form": form,
+        "socialAccount": socialAccount,
       }
       return render(request, "user/profileEdit.html", context)
     

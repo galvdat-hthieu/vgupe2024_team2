@@ -13,7 +13,12 @@
   {% if user.avatar %}
   <img src="/media/{{ user.avatar }}" width=150px alt="avatar image">
   {% else %}
-  <img src="/media/user/defaultAvatar.jpg" width="150px" alt="image">
+    {% if socialAccount %}
+    <img src="{{ socialAccount.get_avatar_url }}" alt="avatar">
+    <i>Image from your linked Google Account</i>
+    {% else %}
+    <img src="/media/user/defaultAvatar.jpg" width="150px" alt="image">
+    {% endif %}
   {% endif %}
 
   <form action="" method="post" style="padding: 20px;" enctype="multipart/form-data">

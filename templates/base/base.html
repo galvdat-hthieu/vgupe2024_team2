@@ -39,12 +39,16 @@
       <li>
         <div class="btn-group" style="text-align: left;">
           <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Account
-            {% if user.avatar %}
-            <img src="/media/{{ user.avatar }}" width=20px height="20px" alt="avatar" class="rounded-circle">
+          Account
+          {% if user.avatar %}
+          <img src="/media/{{ user.avatar }}" width=20px height="20px" alt="avatar" class="rounded-circle">
+          {% else %}
+            {% if socialAccount %}
+            <img src="{{ socialAccount.get_avatar_url }}" width=20px height="20px" alt="avatar" class="rounded-circle">
             {% else %}
-            <img src="/media/user/defaultAvatar.jpg" width="20px" height="20px" alt="avatar" class="rounded-circle object-fit-cover">
+            <img src="/media/user/defaultAvatar.jpg"width=20px height="20px" alt="avatar" class="rounded-circle">
             {% endif %}
+          {% endif %}
           </button>
           <div class="dropdown-menu"  style="text-align-last: left;">
             <a class="dropdown-item" href="{% url 'user:info' %}">Profile</a>

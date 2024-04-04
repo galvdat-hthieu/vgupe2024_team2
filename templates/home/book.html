@@ -219,11 +219,15 @@
         {% for review in book.reviews.all reversed %}
             <div class="comment">
                 <span style="float: left; width: 70px;">
-                {% if review.userID.avatar %}
-                <img src="/media/{{ review.userID.avatar }}" width=50px alt="avatar">
-                {% else %}
-                <img src="/media/user/defaultAvatar.jpg" width=50px alt="default avatar">
-                {% endif %}
+                  {% if user.avatar %}
+                  <img src="/media/{{ user.avatar }}" width="50px">
+                  {% else %}
+                    {% if socialAccount %}
+                    <img src="{{ socialAccount.get_avatar_url }}" width="50px">
+                    {% else %}
+                    <img src="/media/user/defaultAvatar.jpg" width="50px">
+                    {% endif %}
+                  {% endif %}
                 </span>
                 <span>
                     
