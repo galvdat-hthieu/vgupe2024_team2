@@ -8,6 +8,7 @@ from django.utils import timezone
 from word_forms.word_forms import get_word_forms
 from .forms import *
 from .models import *
+from allauth.socialaccount.models import SocialAccount
 import os
 
 # Create your views here.
@@ -93,6 +94,10 @@ class bookView(View):
     mods_objects_dict = {mod: mod_counts_dict[mod.id] for mod in mods}
 
     form = ReviewForm(initial={"bookID": Book.objects.get(id=id),"userID": request.user,})
+    try:
+      socialAccount = SocialAccount.objects.get(user = request.user)
+    except SocialAccount.DoesNotExist:
+      socialAccount = None
     context = {
       "web": book.title,
       "cssFiles": ["/static/home/book.css",
@@ -100,6 +105,7 @@ class bookView(View):
       "time": timezone.now(),
       'book': book,
       "form": form,
+      "socialAccount": socialAccount,
       "mods_objects_dict":mods_objects_dict,
     }
     return render(request, "home/book.html", context)
@@ -122,7 +128,8 @@ class bookView(View):
       }
       messages.error(request, "Your rating and review need to follow the format.")
       return render(request, "home/book.html", context)
-      
+
+
 class bookPDFView(View):
   def get(self, request, id):
     book = Book.objects.get(id=id)
@@ -133,7 +140,8 @@ class bookPDFView(View):
       'book': book,
     }
     return render(request, "home/pdfDisplay.html", context)
-          
+
+
 class vendorView(View):
   def get(self, request, username):
   
@@ -156,9 +164,6 @@ class vendorView(View):
   def post(self, request, username):
 
     return render(request, "mod/modVendor.html")
-
-
-  
 
 class borrowView(View):
   def get(self, request):
