@@ -1,0 +1,62 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+{% block content %}
+{% include 'base/message.html' %}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="column">
+            <div class="wallContainer">
+                {% if wallOwner.avatar %}
+                <img src="/media/{{ wallOwner.avatar }}" width=150px alt="avatar image" style="display: inline-block;">
+                {% else %}
+                <img src="/media/user/defaultAvatar.jpg" width="150px" alt="image">
+                {% endif %}
+                <h3 style = "display: inline-block;" >{{ wallOwner.username }}</h3>
+            </div>
+            
+            <div class="wallBody">
+                <h6 style="display: inline";>Email: </h6>
+                <p style="display: inline">{{ wallOwner.email }}</p>
+                <br>
+                <h6 style="margin-top: 10px; display:inline-block">Activity: </h6>
+                <p style="display: inline;">Joined in April 2019, last active in February 2023</p>
+            </div>
+            
+            
+            <h3 style="margin-left: 10px;">{{wallOwner.first_name}}'s Thoughts</h3>
+
+            <div class="thoughtBox" style="display: inline-block;">
+                <div class="img">
+                    {% if wallOwner.avatar %}
+                    <img src="/media/{{ wallOwner.avatar }}" width=150px alt="avatar image">
+                    {% else %}
+                    <img src="/media/user/defaultAvatar.jpg" width="150px" alt="image">
+                    {% endif %}
+                    <a href="#" class="thoughtRec" style="display: inline-block; text-decoration: none; color:black">
+                        <p>Share your thoughts...</p>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="column" style="margin-top: 30px;">
+            <h3>{{wallOwner.first_name}}'s Favorite Book</h3>
+            <div class="boxContainer">
+                <img src="/media/book/1/coverImage.png" width="100px" alt="image">
+                <img src="/media/book/2/coverImage.png" width="100px" alt="image">
+                <img src="/media/book/5/coverImage.png" width="100px" alt="image">
+            </div>
+            
+        </div>
+
+        
+    </div>
+</div>
+
+
+{% endblock %}

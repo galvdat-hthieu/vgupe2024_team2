@@ -177,7 +177,7 @@
             </div>
             <div class="right">
                 {% if book.coverImage %}
-                <img src="{{ book.coverImage.url }}" alt={{ book.title }} class="bookimg">
+                <img src="{{ book.coverImage.url }}" alt="{{ book.title }}" class="bookimg">
                 {% else %}
                 <img src="/media/book/defaultCover.jpg" alt="{{ book.title }}" class="bookimg">
                 {% endif %}
