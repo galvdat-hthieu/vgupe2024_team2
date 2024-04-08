@@ -48,22 +48,6 @@ class loginView(View):
     else:
       return render(request, "user/login.html", context)
     
-def activateEmail(request, user, to_email):
-  mail_subject = "Activate your user account."
-  message = render_to_string("user/template_activate_account.html", {
-    "user": user.username,
-    "domain": get_current_site(request).domain,
-    "uid": urlsafe_base64_encode(force_bytes(user.username)),
-    "token": account_activation_token.make_token(user),
-    "protocol": "https" if request.is_secure() else "http"
-  })
-  print("Username:", user.username)
-  print("Code:", urlsafe_base64_encode(force_bytes(user.pk)))
-  email = EmailMessage(mail_subject, message, to=[to_email])
-  if email.send():
-    messages.success(request, f'Dear <b>{user}</b>, please go to your email <b>{to_email}</b>.')
-  else:
-    messages.error(request, f'Problem sending email to {to_email}, check if you typed correctly')
 
 def activate(request, uidb64, token):
   try:
@@ -98,7 +82,7 @@ class registerView(View):
       user.is_active = False
       user.save()
       print(user.username)
-      activateEmail(request, user, form.cleaned_data.get('email_address'))
+      registerView.activateEmail(request, user, form.cleaned_data.get('email_address'))
       # user.save()
       return redirect("/user/login")
     else:
@@ -107,6 +91,23 @@ class registerView(View):
         "form": form,
       }
       return render(request, "user/register.html", context)
+
+  def activateEmail(request, user, to_email):
+    mail_subject = "Activate your user account."
+    message = render_to_string("user/template_activate_account.html", {
+      "user": user.username,
+      "domain": get_current_site(request).domain,
+      "uid": urlsafe_base64_encode(force_bytes(user.username)),
+      "token": account_activation_token.make_token(user),
+      "protocol": "https" if request.is_secure() else "http"
+    })
+    print("Username:", user.username)
+    print("Code:", urlsafe_base64_encode(force_bytes(user.pk)))
+    email = EmailMessage(mail_subject, message, to=[to_email])
+    if email.send():
+      messages.success(request, f'Dear <b>{user}</b>, please go to your email <b>{to_email}</b>.')
+    else:
+      messages.error(request, f'Problem sending email to {to_email}, check if you typed correctly')
 
 
 class signupRedirect(View):

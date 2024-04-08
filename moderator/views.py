@@ -8,25 +8,38 @@ from home.models import *
 class modView(View):
   def get(self, request):
     return HttpResponse('Moderator page')
+  
+  def post(self, request):
+    pass
 
 
 class addBookView(View):
   def get(self, request):
     if (request.user.is_authenticated and request.user.role >= 1):
-      a = BookForm()
-      return render(request, 'mod/addBook.html', {'f': a})
+      form = BookForm()
+      context = {
+        "web": "Add Copy",
+        "cssFiles": [],
+        "form": form,
+      }
+      return render(request, 'mod/addBook.html', context)
     else:
       messages.error(request, "You don't have the right to add book.")
       return redirect("home:index")
 
   def post(self, request):
-    a = BookForm(request.POST, request.FILES)
-    if a.is_valid():
-      saved_book = a.save()
-      book_id = saved_book.id
-      return HttpResponse(f'Book added successfully with ID: {book_id}')
+    form = BookForm(request.POST, request.FILES)
+    context = {
+      "web": "Add Copy",
+      "cssFiles": [],
+      "form": form,
+    }
+    if form.is_valid():
+      form.save()
+      messages.success(request,f"Book is added successfylly.")
+      return redirect("home:gallery")
     else:
-      return HttpResponse('Invalid data')
+      return render(request, 'mod/addBook.html', context)
 
 class addCopyView(View):
   def get(self, request, id):

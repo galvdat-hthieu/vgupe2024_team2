@@ -1,15 +1,16 @@
 {% extends 'base/base.html' %}
 
-
 {% block content %}
+{% include 'base/message.html' %}
+
+
+<div class="container">
 <h1> Add Book View </h1>
-{% if error %}
-    <p> {{ error }} </p>
-{% endif %}
 <form action = "#" method = "post">
-    <p>Title: {{ f.title }}</p>
-    <p>Author: {{ f.author }}</p>
-    <p>Type: {{ f.type }} </p>
+    {% csrf_token %}
+    <p>Title: {{ form.title }}</p>
+    <p>Author: {{ form.author }}</p>
+    <p>Type: {{ form.type }} </p>
 
     <fieldset>
         <legend>Categories:</legend>
@@ -192,9 +193,9 @@
             return true;
         }
         </script>
-    <p>Description: {{ f.description }}</p>
-    <p>CoverImage: {{ f.coverImage }}</p>
-    <p>Publisher: {{ f.publisher }}</p>
+    <p>Description: {{ form.description }}</p>
+    <p>CoverImage: {{ form.coverImage }}</p>
+    <p>Publisher: {{ form.publisher }}</p>
     <p>Publication Year:
         <select id="Publication" name="Publication">
             <option value="">Select Year</option>
@@ -225,10 +226,10 @@
             }
         </script>
     </p>
-    <p>Code ISBN: {{ f.codeISBN }}</p>
-    <p>Status: {{ f.status }} </p>
+    <p>Code ISBN: {{ form.codeISBN }}</p>
+    <p>Status: {{ form.status }} </p>
     
-    {% csrf_token %} <!-- This is a security feature to prevent Cross Site Request Forgery (CSRF) attacks. It is used to protect against unauthorized requests. It is a token that is used to verify that the authenticated user is the one actually making the requests to the web application. -->
 <input type = "submit" value = "Submit">
 </form>
+</div>
 {% endblock %}

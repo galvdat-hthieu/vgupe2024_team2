@@ -4,13 +4,20 @@
 
 {% block content %}
 
-
-<h1>Gallery View</h1> 
-
-<div class="galleryView">
-  {% for item in books %}
-    {% include 'home/panel.html' %}
-  {% endfor %}
+<div class="container">
+  <h3>Gallery View
+    {% if user.is_authenticated and user.role >= 1 %}
+    <span style="float: right; font-size: medium;">
+      <a href="{% url 'mod:addBook' %}">Add new Book</a>
+    </span>
+    {% endif %}
+  </h3> 
+  
+  <div class="galleryView">
+    {% for item in books %}
+      {% include 'home/panel.html' %}
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock %}
