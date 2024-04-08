@@ -14,8 +14,14 @@ import os
 # Create your views here.
 class indexView(View):
   def get(self, request):
+    try:
+      socialAccount = SocialAccount.objects.get(user = request.user)
+    except SocialAccount.DoesNotExist:
+      socialAccount = None
     context = {
-      "web":"Home"
+      "web":"Home",
+      "cssFiles": [],
+      "socialAccount": socialAccount,
     }
     return render(request, 'home/index.html',context)
 
@@ -59,12 +65,17 @@ class searchView(View):
     else:
       booksByCategories = Book.objects.all()  
     
+    try:
+      socialAccount = SocialAccount.objects.get(user = request.user)
+    except SocialAccount.DoesNotExist:
+      socialAccount = None
     books = booksByKeyword & booksByCategories
     context = {
       "web":"Search",
       "books": books,
       "cssFiles": ["/static/home/gallery.css",
                    "/static/home/search.css"],
+      "socialAccount": socialAccount,
     }
 
     return render(request, 'home/search.html',context)
@@ -72,12 +83,17 @@ class searchView(View):
 
 class galleryView(View):
   def get(self, request):
+    try:
+      socialAccount = SocialAccount.objects.get(user = request.user)
+    except SocialAccount.DoesNotExist:
+      socialAccount = None
     books = Book.objects.all()
     context = {
       "web": "Gallery",
       "cssFiles": ["/static/home/gallery.css",
                   ],
       "user": request.user,
+      "socialAccount": socialAccount,
       "books": books,
     }
     return render(request, "home/gallery.html", context)

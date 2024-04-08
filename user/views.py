@@ -175,20 +175,30 @@ class profileEditView(LoginRequiredMixin, View):
 class changePasswordView(LoginRequiredMixin, View):
   def get(self, request):
     form = PasswordChangeForm(request.user)
+    try:
+      socialAccount = SocialAccount.objects.get(user = request.user)
+    except SocialAccount.DoesNotExist:
+      socialAccount = None
     context = {
       "web": "Change password",
       "cssFiles": [],
       "form": form,
+      "socialAccount": socialAccount,
     }
     return render(request, "user/passwordChange.html", context)
   
   def post(self, request):
     form = PasswordChangeForm(request.user, request.POST)
+    try:
+      socialAccount = SocialAccount.objects.get(user = request.user)
+    except SocialAccount.DoesNotExist:
+      socialAccount = None
     context = {
       "web": "Change password",
       "cssFiles": ["/static/user/passwordChange.css",
                   ],
       "form": form,
+      "socialAccount": socialAccount,
     }
     if form.is_valid():
       user = form.save()
