@@ -12,16 +12,22 @@ from allauth.socialaccount.models import SocialAccount
 import os
 
 # Create your views here.
-class indexView(View):
-  def get(self, request):
+def getSocialAccount(request):
+  if (request.user.is_authenticated):
     try:
       socialAccount = SocialAccount.objects.get(user = request.user)
     except SocialAccount.DoesNotExist:
       socialAccount = None
+  else:
+    socialAccount = None
+  return socialAccount
+
+class indexView(View):
+  def get(self, request):
     context = {
       "web":"Home",
       "cssFiles": [],
-      "socialAccount": socialAccount,
+      "socialAccount": getSocialAccount(request),
     }
     return render(request, 'home/index.html',context)
 
@@ -65,17 +71,13 @@ class searchView(View):
     else:
       booksByCategories = Book.objects.all()  
     
-    try:
-      socialAccount = SocialAccount.objects.get(user = request.user)
-    except SocialAccount.DoesNotExist:
-      socialAccount = None
     books = booksByKeyword & booksByCategories
     context = {
       "web":"Search",
       "books": books,
       "cssFiles": ["/static/home/gallery.css",
                    "/static/home/search.css"],
-      "socialAccount": socialAccount,
+      "socialAccount": getSocialAccount(request),
     }
 
     return render(request, 'home/search.html',context)
@@ -83,17 +85,13 @@ class searchView(View):
 
 class galleryView(View):
   def get(self, request):
-    try:
-      socialAccount = SocialAccount.objects.get(user = request.user)
-    except SocialAccount.DoesNotExist:
-      socialAccount = None
     books = Book.objects.all()
     context = {
       "web": "Gallery",
       "cssFiles": ["/static/home/gallery.css",
                   ],
       "user": request.user,
-      "socialAccount": socialAccount,
+      "socialAccount": getSocialAccount(request),
       "books": books,
     }
     return render(request, "home/gallery.html", context)
@@ -110,10 +108,6 @@ class bookView(View):
     mods_objects_dict = {mod: mod_counts_dict[mod.id] for mod in mods}
 
     form = ReviewForm(initial={"bookID": Book.objects.get(id=id),"userID": request.user,})
-    try:
-      socialAccount = SocialAccount.objects.get(user = request.user)
-    except SocialAccount.DoesNotExist:
-      socialAccount = None
     context = {
       "web": book.title,
       "cssFiles": ["/static/home/book.css",
@@ -121,7 +115,7 @@ class bookView(View):
       "time": timezone.now(),
       'book': book,
       "form": form,
-      "socialAccount": socialAccount,
+      "socialAccount": getSocialAccount(request),
       "mods_objects_dict":mods_objects_dict,
     }
     return render(request, "home/book.html", context)
@@ -141,6 +135,7 @@ class bookView(View):
       "time": timezone.now(),
       "book": book,
       "form": form,
+      "socialAccount": getSocialAccount(request),
       }
       messages.error(request, "Your rating and review need to follow the format.")
       return render(request, "home/book.html", context)
@@ -154,6 +149,7 @@ class bookPDFView(View):
       "cssFiles": [],
       "time": timezone.now(),
       'book': book,
+      "socialAccount": getSocialAccount(request),
     }
     return render(request, "home/pdfDisplay.html", context)
 
@@ -169,11 +165,12 @@ class vendorView(View):
     totalCopies = copies.count()
 
     context = {
-    "web":vendor.first_name,
-    'vendor': vendor,
-    'books': books,
-    'totalBooks': totalBooks,
-    'totalCopies': totalCopies,
+      "web":vendor.first_name,
+      'vendor': vendor,
+      'books': books,
+      'totalBooks': totalBooks,
+      'totalCopies': totalCopies,
+      "socialAccount": getSocialAccount(request),
     }
 
     return render(request, "mod/modVendor.html",context)
