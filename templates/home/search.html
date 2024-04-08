@@ -2,6 +2,7 @@
 
 
 {% block content %}
+{% include 'base/message.html' %}
 {% load static %}
 <div class="content">
 
@@ -28,7 +29,7 @@
   <h1>Result</h1> 
 
   <div class="galleryView">
-    {% for item in books %}
+    {% for item in books reversed %}
       {% include 'home/panel.html' %}
     {% endfor %}
   </div>

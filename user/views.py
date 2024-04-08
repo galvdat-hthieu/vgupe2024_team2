@@ -83,7 +83,7 @@ class registerView(View):
       user.is_active = False
       user.save()
       print(user.username)
-      registerView.activateEmail(request, user, form.cleaned_data.get('email_address'))
+      registerView.activateEmail(request, user, form.cleaned_data.get('email'))
       # user.save()
       return redirect("/user/login")
     else:
@@ -97,13 +97,14 @@ class registerView(View):
     mail_subject = "Activate your user account."
     message = render_to_string("user/template_activate_account.html", {
       "user": user.username,
-      "domain": get_current_site(request).domain,
+      "domain": request.get_host(),
       "uid": urlsafe_base64_encode(force_bytes(user.username)),
       "token": account_activation_token.make_token(user),
       "protocol": "https" if request.is_secure() else "http"
     })
     print("Username:", user.username)
     print("Code:", urlsafe_base64_encode(force_bytes(user.pk)))
+    print("Current site:", request.get_host())
     email = EmailMessage(mail_subject, message, to=[to_email])
     if email.send():
       messages.success(request, f'Dear <b>{user}</b>, please go to your email <b>{to_email}</b>.')

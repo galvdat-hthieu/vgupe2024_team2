@@ -3,6 +3,7 @@
 
 
 {% block content %}
+{% include 'base/message.html' %}
 
 <div class="container">
   <h3>Gallery View
@@ -14,7 +15,7 @@
   </h3> 
   
   <div class="galleryView">
-    {% for item in books %}
+    {% for item in books reversed %}
       {% include 'home/panel.html' %}
     {% endfor %}
   </div>

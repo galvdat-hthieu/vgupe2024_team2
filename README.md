@@ -48,6 +48,12 @@ Our team have four actors in our system:
 
 <img src=".document/ER-diagram.png" alt="Alt text" title="usecase diagram">
 
+-----
+
+### Deployment Diagram
+
+<img src=".document/diagrams/deployment/deployment.jpg" alt="Alt text" title="deployment diagram">
+
 <!-- <img src=".document/flowChart.png" alt="Alt text" title="flow chart">
 <img src=".document/usecase_guest.png" alt="Alt text" title="usecase diagram" width=400px>
 <img src=".document/usecase_other.png" alt="Alt text" title="usecase diagram"> -->
