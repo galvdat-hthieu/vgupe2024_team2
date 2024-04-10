@@ -1,6 +1,6 @@
 .wallContainer{
     margin: 10px;
-    border-bottom: 2px solid black;
+    border-bottom: 1px solid lightgrey;
     float: left;
     padding-bottom: 10px;
     width: 90%;
@@ -12,8 +12,9 @@
 }
 
 .boxContainer{
-    width: 80%;
     text-align: center;
+    border: 1px solid lightgrey;
+    margin-right: 100px;
 }
 
 .column {
@@ -28,7 +29,7 @@
 }
 
 .thoughtBox {
-    border: 3px solid black;
+    border: 1px solid #8380B6;
     margin: 10px;
     padding: 10px;
     width: 90%;
@@ -38,14 +39,16 @@
     border-radius: 50%;
     width: 50px;
     height: 50px;
+    margin: 10px;
 }
 
 .thoughtRec {
-    border: 1px solid black;
+    border: 1px solid whitesmoke;
     border-radius: 10px;
     margin: 10px;
     padding: 10px;
     width: 80%;
+    background-color: #C2CAE8;
 }
 
 .thoughtRec:hover{
