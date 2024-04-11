@@ -3,232 +3,43 @@
 {% block content %}
 {% include 'base/message.html' %}
 
-
 <div class="container">
 <h1> Add Book View </h1>
-<form action = "#" method = "post">
-    {% csrf_token %}
-    <p>Title: {{ form.title }}</p>
-    <p>Author: {{ form.author }}</p>
-    <p>Type: {{ form.type }} </p>
+<form action = "#" method = "post" enctype="multipart/form-data">
+  {% csrf_token %}
 
-    <fieldset>
-        <legend>Categories:</legend>
-        <label for="literature"><input type="checkbox" id="literature" name="category" value="liteCate"> Literature</label><br>
-        <label for="socieCate"><input type="checkbox" id="social_sciences" name="category" value="socieCate"> Social Sciences</label><br>
-        <label for="natural_sciences"><input type="checkbox" id="natural_sciences" name="category" value="naturCate"> Natural Sciences</label><br>
-        <label for="technology"><input type="checkbox" id="technology" name="category" value="techCate"> Technology</label><br>
-        <label for="politics"><input type="checkbox" id="politics" name="category" value="poliCate"> Politics</label><br>
-        <label for="romantic"><input type="checkbox" id="romantic" name="category" value="romanCate"> Romantic</label><br>
-        <label for="entertainment"><input type="checkbox" id="entertainment" name="category" value="enterCate"> Entertainment</label><br>
-        <label for="other"><input type="checkbox" id="other" name="category" value="otherCate"> Other</label><br>
-    </fieldset>
+  <p>Title: {{ form.title }}</p>
+  <p>Author: {{ form.author }}</p>
+  <p>Type: {{ form.type }} </p>
 
-    <p>Language:
-        <select id="Language" name="Language">
-            <option value="">----------</option>
-        </select>
-        <script>
-            const languages = [
-            "Afrikaans",
-            "Albanian",
-            "Amharic",
-            "Arabic",
-            "Aragonese",
-            "Armenian",
-            "Asturian",
-            "Azerbaijani",
-            "Basque",
-            "Belarusian",
-            "Bengali",
-            "Bosnian",
-            "Breton",
-            "Bulgarian",
-            "Catalan",
-            "Central Kurdish",
-            "Chinese",
-            "Chinese (Hong Kong)",
-            "Chinese (Simplified)",
-            "Chinese (Traditional)",
-            "Corsican",
-            "Croatian",
-            "Czech",
-            "Danish",
-            "Dutch",
-            "English",
-            "English (Australia)",
-            "English (Canada)",
-            "English (India)",
-            "English (New Zealand)",
-            "English (South Africa)",
-            "English (United Kingdom)",
-            "English (United States)",
-            "Esperanto",
-            "Estonian",
-            "Faroese",
-            "Filipino",
-            "Finnish",
-            "French",
-            "French (Canada)",
-            "French (France)",
-            "French (Switzerland)",
-            "Galician",
-            "Georgian",
-            "German",
-            "German (Austria)",
-            "German (Germany)",
-            "German (Liechtenstein)",
-            "German (Switzerland)",
-            "Greek",
-            "Guarani",
-            "Gujarati",
-            "Hausa",
-            "Hawaiian",
-            "Hebrew",
-            "Hindi",
-            "Hungarian",
-            "Icelandic",
-            "Indonesian",
-            "Interlingua",
-            "Irish",
-            "Italian",
-            "Italian (Italy)",
-            "Italian (Switzerland)",
-            "Japanese",
-            "Kannada",
-            "Kazakh",
-            "Khmer",
-            "Korean",
-            "Kurdish",
-            "Kyrgyz",
-            "Lao",
-            "Latin",
-            "Latvian",
-            "Lingala",
-            "Lithuanian",
-            "Macedonian",
-            "Malay",
-            "Malayalam",
-            "Maltese",
-            "Marathi",
-            "Mongolian",
-            "Nepali",
-            "Norwegian",
-            "Norwegian Bokmål",
-            "Norwegian Nynorsk",
-            "Occitan",
-            "Oriya",
-            "Oromo",
-            "Pashto",
-            "Persian",
-            "Polish",
-            "Portuguese",
-            "Portuguese (Brazil)",
-            "Portuguese (Portugal)",
-            "Punjabi",
-            "Quechua",
-            "Romanian",
-            "Romanian (Moldova)",
-            "Romansh",
-            "Russian",
-            "Scottish Gaelic",
-            "Serbian",
-            "Serbo",
-            "Shona",
-            "Sindhi",
-            "Sinhala",
-            "Slovak",
-            "Slovenian",
-            "Somali",
-            "Southern Sotho",
-            "Spanish",
-            "Spanish (Argentina)",
-            "Spanish (Latin America)",
-            "Spanish (Mexico)",
-            "Spanish (Spain)",
-            "Spanish (United States)",
-            "Sundanese",
-            "Swahili",
-            "Swedish",
-            "Tajik",
-            "Tamil",
-            "Tatar",
-            "Telugu",
-            "Thai",
-            "Tigrinya",
-            "Tongan",
-            "Turkish",
-            "Turkmen",
-            "Twi",
-            "Ukrainian",
-            "Urdu",
-            "Uyghur",
-            "Uzbek",
-            "Vietnamese",
-            "Walloon",
-            "Welsh",
-            "Western Frisian",
-            "Xhosa",
-            "Yiddish",
-            "Yoruba",
-            "Zulu"
-            ];
-        function generateLanguages() {
-            const selectLanguage = document.getElementById('Language');
-            languages.forEach((language) => {
-                const option = document.createElement('option');
-                option.value = language;
-                option.text = language;
-                selectLanguage.appendChild(option);
-            });
-        }
-        generateLanguages();
+  <legend>Categories:</legend>
+  <label><input type="checkbox" id="liteCate" name="liteCate"> Literature</label><br>
+  <label><input type="checkbox" id="socieCate" name="socieCate"> Social Sciences</label><br>
+  <label><input type="checkbox" id="naturCate" name="naturCate"> Natural Sciences</label><br>
+  <label><input type="checkbox" id="techCate" name="techCate"> Technology</label><br>
+  <label><input type="checkbox" id="poliCate" name="poliCate"> Politics</label><br>
+  <label><input type="checkbox" id="romanCate" name="romanCate"> Romantic</label><br>
+  <label><input type="checkbox" id="enterCate" name="enterCate"> Entertainment</label><br>
+  <label><input type="checkbox" id="otherCate" name="otherCate"> Other</label><br>
 
-        function validateLanguage() {
-            const selectedLanguage = document.getElementById('Language').value;
-            if (!selectedLanguage) {
-                alert('Please select a language.');
-                return false;
-            }
-            return true;
-        }
-        </script>
-    <p>Description: {{ form.description }}</p>
-    <p>CoverImage: {{ form.coverImage }}</p>
-    <p>Publisher: {{ form.publisher }}</p>
-    <p>Publication Year:
-        <select id="Publication" name="Publication">
-            <option value="">Select Year</option>
-        </select>
-        <script>
-            function generateYears() {
-            const selectElement = document.getElementById('Publication');
-            const currentYear = new Date().getFullYear();
-            const startYear = 1900;
-            const endYear = 2024;
-            for (let year = endYear; year >= startYear; year--) {
-                const option = document.createElement('option');
-                option.value = year;
-                option.text = year;
-                selectElement.appendChild(option);
-            }
-            }
-            // Call the function to generate years
-            generateYears();
-
-            function validateYear() {
-            const selectedYear = document.getElementById('Publication').value;
-            if (!selectedYear) {
-                alert('Please select a year.');
-            return false;
-            }
-            return true;
-            }
-        </script>
-    </p>
-    <p>Code ISBN: {{ form.codeISBN }}</p>
-    <p>Status: {{ form.status }} </p>
-    
+  <p>Language:
+    <select id="language" name="language">
+        <option value="">----------</option>
+    </select>
+    <!-- Add option in addBook.js -->
+  </p>
+<p>Description: {{ form.description }}</p>
+<p>CoverImage: {{ form.coverImage }}</p>
+<p>Publisher: {{ form.publisher }}</p>
+<p>Publication Year:
+  <select id="publication" name="publication">
+    <option value="">Select Year</option>
+  </select>
+  <!-- Add option in addBook.js -->
+</p>
+<p>Code ISBN: {{ form.codeISBN }}</p>
+<p>Status: {{ form.status }} </p>
+  
 <input type = "submit" value = "Submit">
 </form>
 </div>

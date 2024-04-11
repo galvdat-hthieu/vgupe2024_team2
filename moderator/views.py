@@ -20,6 +20,8 @@ class addBookView(View):
       context = {
         "web": "Add Copy",
         "cssFiles": [],
+        "jsFiles": ["/static/mod/addBook.js",
+                  ],
         "form": form,
       }
       return render(request, 'mod/addBook.html', context)
@@ -32,6 +34,8 @@ class addBookView(View):
     context = {
       "web": "Add Copy",
       "cssFiles": [],
+      "jsFiles": ["/static/mod/addBook.js",
+                  ],
       "form": form,
     }
     if form.is_valid():
