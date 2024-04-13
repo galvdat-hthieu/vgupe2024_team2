@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
+from django.urls import reverse_lazy
 from django.views import View
 from django.contrib import messages
 from django.template.loader import render_to_string
@@ -7,6 +8,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from user.forms import *
@@ -97,14 +99,14 @@ class registerView(View):
     mail_subject = "Activate your user account."
     message = render_to_string("user/template_activate_account.html", {
       "user": user.username,
-      "domain": request.get_host(),
+      "domain": get_current_site(),
       "uid": urlsafe_base64_encode(force_bytes(user.username)),
       "token": account_activation_token.make_token(user),
       "protocol": "https" if request.is_secure() else "http"
     })
     print("Username:", user.username)
     print("Code:", urlsafe_base64_encode(force_bytes(user.pk)))
-    print("Current site:", request.get_host())
+    print("Current site:", get_current_site())
     email = EmailMessage(mail_subject, message, to=[to_email])
     if email.send():
       messages.success(request, f'Dear <b>{user}</b>, please go to your email <b>{to_email}</b>.')
@@ -190,7 +192,8 @@ class changePasswordView(LoginRequiredMixin, View):
     else:
       messages.error(request, 'Please correct the error below.')
       return render(request, "user/passwordChange.html", context)
-    
+
+
 class wallView(LoginRequiredMixin, View):
   def get(self, request, id):
     user = User.objects.get(id=id)
@@ -199,3 +202,9 @@ class wallView(LoginRequiredMixin, View):
         'cssFiles': ["/static/user/wall.css",],
     }
     return render(request, "user/wall.html", context)
+  
+class recoverAccount(auth_views.PasswordResetView):
+  success_url = reverse_lazy("user:password_reset_done"),
+  email_template_name = "user/password_reset_email.html"
+  template_name = "user/password_reset_form.html"
+  subject_template_name = "user/password_reset_subject.txt"
