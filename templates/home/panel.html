@@ -8,8 +8,12 @@
     {% endif %}
     </a>
   </div>
-  <div class="rightColumn">
-    <p>{{item.id}}</p>
+  <div class="rightColumn p-2">
+    <p>
+      {{item.id}}
+      <span class="badge badge-success float-right m-1">{{ item.language }}</span>
+      <span class="badge badge-warning float-right m-1">{{ item.get_type_display }}</span>
+    </p>
     <h5><a href="{% url 'home:book' item.id%}">{{item.title}}</a></h5>
     <p>{{item.author}}</h4>
     {% if item.publisher and item.publication %}

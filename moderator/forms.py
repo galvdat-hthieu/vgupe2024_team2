@@ -12,7 +12,7 @@ class CopyForm(forms.ModelForm):
     model = Copy
     fields = '__all__'
     widgets = {
-      "regDate": forms.DateInput(attrs={"type": "date"}),
+      "regDate": forms.HiddenInput(),
       "bookID": forms.HiddenInput(),
       "userID": forms.HiddenInput(),
     }

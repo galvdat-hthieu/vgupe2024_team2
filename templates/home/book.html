@@ -98,7 +98,7 @@
         <a href="{% url 'mod:editBook' book.id %}" class="btn">Edit Book</a>
         {% endif %}
         
-        <p><strong>Choose a provider:</strong> {{book.description}}</p>
+        <p><strong>Choose a provider:</strong></p>
         <form id="borrowForm" action="{% url 'home:borrow' %}" method="post">
         {% csrf_token %}
         <div class="dropdown">
