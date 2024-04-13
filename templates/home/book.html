@@ -95,6 +95,7 @@
         {% endif %}
         {% if user.is_authenticated and user.role >= 1 %}
         <a href="{% url 'mod:addCopy' book.id %}" class="btn">Add Copy</a>
+        <a href="{% url 'mod:editBook' book.id %}" class="btn">Edit Book</a>
         {% endif %}
         
         <p><strong>Choose a provider:</strong> {{book.description}}</p>

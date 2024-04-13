@@ -45,6 +45,7 @@ class addBookView(View):
     else:
       return render(request, 'mod/addBook.html', context)
 
+
 class addCopyView(View):
   def get(self, request, id):
     book = Book.objects.get(id = id)
@@ -72,13 +73,42 @@ class addCopyView(View):
         return redirect("home:book", id)
       else:
         context = {
-            "web": "Add Copy",
-            "cssFiles": [],
-            "book": book,
-            "form": form,
+          "web": "Add Copy",
+          "cssFiles": [],
+          "book": book,
+          "form": form,
         }
         messages.error(request, "There is a problem with adding your copy.")
         return render(request, 'mod/addCopy.html', context)
     else:
       messages.error(request, "You don't have the right to add copy.")
       return redirect("home:index")
+    
+
+class editBookView(View):
+  def get(self, request, id):
+    book = Book.objects.get(id = id)
+    form = BookForm(instance=book)
+    context = {
+      "web": "Edit Book",
+      "cssFiles": [],
+      "book": book,
+      "form": form,
+    }
+    return render(request, "mod/editBook.html", context)
+
+  def post(self, request, id):
+    book = Book.objects.get(id = id)
+    form = BookForm(request.POST, request.FILES, instance=book)
+    if form.is_valid():
+      form.save()
+      messages.success(request, "The book has been edited succesfully.")
+      return redirect("home:book", id)
+    else:
+      context = {
+        "web": "Edit Book",
+        "cssFiles": [],
+        "book": book,
+        "form": form,
+      }
+      return render(request, "mod/editBook.html", context)
