@@ -12,5 +12,8 @@ urlpatterns = [
     path('addCopy/<int:id>', addCopyView.as_view(), name='addCopy'),
 ]
 
+
+
+
 if settings.DEBUG:
     urlpatterns += static( settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

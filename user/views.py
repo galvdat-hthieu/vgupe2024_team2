@@ -127,7 +127,7 @@ class logoutView(View):
   
 
 class profileInfoView(LoginRequiredMixin, View):
-  login_url = "/user/login"
+  login_url = "user:login"
   def get(self, request):
     context = {
       "web": "Info",
@@ -140,6 +140,7 @@ class profileInfoView(LoginRequiredMixin, View):
 
 
 class profileEditView(LoginRequiredMixin, View):
+  login_url = "user:login"
   def get(self, request):
     form = ProfileEditForm(instance=request.user)
     context = {
@@ -164,6 +165,7 @@ class profileEditView(LoginRequiredMixin, View):
       }
       return render(request, "user/profileEdit.html", context)
     
+
 class changePasswordView(LoginRequiredMixin, View):
   def get(self, request):
     form = PasswordChangeForm(request.user)
@@ -195,6 +197,7 @@ class changePasswordView(LoginRequiredMixin, View):
 
 
 class wallView(LoginRequiredMixin, View):
+  login_url = "user:login"
   def get(self, request, id):
     user = User.objects.get(id=id)
     context = {
