@@ -30,4 +30,3 @@ for provider_class in provider_classes:
     provider_urlpatterns += prov_urlpatterns
 
 urlpatterns += provider_urlpatterns
-print(provider_urlpatterns)

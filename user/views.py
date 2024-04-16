@@ -201,13 +201,28 @@ class wallView(LoginRequiredMixin, View):
   def get(self, request, id):
     user = User.objects.get(id=id)
     context = {
-        'wallOwner': user,
-        'cssFiles': ["/static/user/wall.css",],
+      "web": "Wall",
+      'wallOwner': user,
+      'cssFiles': ["/static/user/wall.css",],
     }
     return render(request, "user/wall.html", context)
   
-class recoverAccount(auth_views.PasswordResetView):
-  success_url = reverse_lazy("user:password_reset_done"),
-  email_template_name = "user/password_reset_email.html"
-  template_name = "user/password_reset_form.html"
-  subject_template_name = "user/password_reset_subject.txt"
+class recoverAccountView(auth_views.PasswordResetView):
+  success_url = reverse_lazy("user:recover_done")
+  email_template_name = "user/recover/recoverEmail.html"
+  template_name = "user/recover/recoverForm.html"
+  subject_template_name = "user/recover/recoverEmailSubject.txt"
+
+
+class recoverDoneView(auth_views.PasswordResetDoneView):
+  template_name = "user/recover/recoverDone.html"
+
+
+class recoverConfirmView(auth_views.PasswordResetConfirmView):
+  success_url=reverse_lazy("user:recover_complete")
+  template_name = "user/recover/recoverConfirm.html"
+
+
+class recoverCompleteView(auth_views.PasswordResetCompleteView):
+  template_name = "user/recover/recoverComplete.html"
+  login_url = "user:login"

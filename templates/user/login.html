@@ -1,49 +1,35 @@
 {% extends 'base/base.html' %}
 
-
 {% block content %}
 {% load socialaccount %}
-<style>
-    .errorlist{
-        color: red;
-    }
-</style>
+{% include 'base/message.html' %}
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <div class="container-fluid p-0">
-        <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="True">&times;</span>
-            </button>
-            {{ message | safe}}
-        </div>
-    </div>
-    {% endfor %}
-</ul>
-{% endif %}
-
-<h1>Login View</h1> 
-
-<form action="" method="post">  
-    {% csrf_token %}
-    {% for key, value in form.error.items %}
-        {{value}}
-    {% endfor %}
-
-    <div class="container">
-        {{form.as_p}}
-        <button type="submit">Login</button>   
-        <input type="checkbox" checked="checked"> Remember me   
-        <button type="button" class="cancelbtn"> Cancel</button>   
-        Forgot <a href="#"> password? </a>   
-    </div>   
-    <script src="//accounts.google.com/gsi/client" async></script>
-</form>
-<form action="{% provider_login_url 'google' %}" method="post">
-    {% csrf_token %}
-    <button type="submit" style="width: 200px;">Log in with Google</button>
-</form>
+<div class="container">
+    <h3 style="text-align: center;">Login View</h3> 
+    
+    <form action="" method="post">  
+        {% csrf_token %}
+        {% for key, value in form.error.items %}
+            {{value}}
+        {% endfor %}
+    
+        <div class="container">
+            {{form.as_p}}
+            <button type="submit">Login</button>   
+            <input type="checkbox" checked="checked"> Remember me     
+            <span style="float: right">
+                Forgot <a href="{% url 'user:recover' %}"> password? </a>   
+            </span>
+        </div>   
+        <script src="//accounts.google.com/gsi/client" async></script>
+    </form>
+    <form action="{% provider_login_url 'google' %}" method="get">
+        {% csrf_token %}
+        <button type="submit">
+            Log in with Google
+            <i class="fa-brands fa-google"></i>
+        </button>
+    </form>
+</div>
 
 {% endblock %}

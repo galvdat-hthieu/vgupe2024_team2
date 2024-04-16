@@ -8,14 +8,17 @@
     color: red;
   }
 </style>
+{% include 'base/message.html' %}
 
-<h1>Register View</h1>
-<form action="" method="post" style="padding: 30px">
-  {% csrf_token %}
-
-  {{form.as_p}}
-
-  <input type="submit" value="Register">
-</form>
+<div class="container">
+  <h1>Register View</h1>
+  <form action="" method="post" style="padding: 30px">
+    {% csrf_token %}
+  
+    {{form.as_p}}
+  
+    <input type="submit" value="Register">
+  </form>
+</div>
 
 {% endblock %}
