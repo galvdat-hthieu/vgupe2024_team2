@@ -47,6 +47,9 @@ class loginView(View):
         return redirect("user:login")
       else:
         login(request=request, user=user)
+        remember_me = request.POST.get('remember_me')
+        if not remember_me:
+          request.session.set_expiry(0)
         return redirect("home:index")
     else:
       return render(request, "user/login.html", context)
