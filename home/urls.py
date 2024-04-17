@@ -9,9 +9,9 @@ urlpatterns = [
     path('', indexView.as_view(), name='index'),
     path("gallery", galleryView.as_view(), name="gallery"),
     path('search', searchView.as_view(), name="search"),
-    path('gallery/<int:id>/book',bookView.as_view(), name="book"),
-    path('gallery/<int:id>/pdf', bookPDFView.as_view(), name="bookPDF"),
-    path('shelf/<str:username>',shelfView.as_view(), name = "shelf"),
+    path('gallery/bookid=<int:id>/book',bookView.as_view(), name="book"),
+    path('gallery/bookid=<int:id>/pdf', bookPDFView.as_view(), name="bookPDF"),
+    path('shelf/userid=<str:username>',shelfView.as_view(), name = "shelf"),
     path('borrow',borrowView.as_view(), name = "borrow"),
 ]
 

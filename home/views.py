@@ -160,19 +160,18 @@ class shelfView(View):
 
   def get(self, request, username):
     vendor = User.objects.get(username=username)
-    copies = Copy.objects.filter(userID_id=vendor.id)
-    books = Book.objects.filter(id__in=copies.values('bookID_id'))
-
-    totalBooks = books.count()
-    totalCopies = copies.count()
-
+    copies_1 = Copy.objects.filter(userID_id=vendor.id)
+    books = Book.objects.filter(id__in=copies_1.values('bookID_id'))
+    copies_2 = []
+    for i in range(0, len(books)):
+      copies_2.append(Copy.objects.filter(userID_id=vendor.id, bookID_id = books[i].id))
     context = {
       "web":vendor.first_name,
-      "cssFiles": ["/static/home/panel.css"],
+      "cssFiles": ["/static/home/shelfItem.css"],
       'vendor': vendor,
       'books': books,
-      'totalBooks': totalBooks,
-      'totalCopies': totalCopies,
+      'copies': copies_1,
+      'copies_2': copies_2,
       "socialAccount": getSocialAccount(request),
     }
 

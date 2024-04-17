@@ -7,12 +7,12 @@
   <div class="vendor-info">
     <h2>Vendor Name: {{vendor.first_name}}</h2>
     <p>Contact Email: {{vendor.email}}</p>
-    <p>Total books available: {{totalBooks}} books ({{totalCopies}} copies)</p>
+    <p>Total books: {{books.count}} books ({{copies.count}} copies)</p>
     {% comment %} <p>Total books: {{totalAmount}}</p> {% endcomment %}
   </div>
   <div class="galleryView">
-    {% for item in books %}
-      {% include 'home/panel.html' %}
+    {% for item in copies_2 %}
+      {% include 'home/shelfItem.html' %}
     {% endfor %}
   </div>
 </div>

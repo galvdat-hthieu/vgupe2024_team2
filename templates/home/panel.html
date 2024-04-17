@@ -21,7 +21,7 @@
       {% endif %}
     </p>
     <h5><a href="{% url 'home:book' item.id%}">{{item.title}}</a></h5>
-    <p>{{item.author}}</h4>
+    <p>{{item.author}}</p>
     {% if item.publisher and item.publication %}
     <p>{{item.publisher}}@{{item.publication}}</p>
     {% else %}
