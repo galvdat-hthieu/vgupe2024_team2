@@ -10,6 +10,8 @@
 .leftColumn{
   grid-column-start: 1;
   grid-column-end: 2;
+  padding-top: 10px;
+  padding-left: 30px;
   /* border: 2px solid black; */
 }
 
