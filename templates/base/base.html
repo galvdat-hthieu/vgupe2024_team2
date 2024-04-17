@@ -42,14 +42,17 @@
             {% if user.avatar %}
             <img src="/media/{{ user.avatar }}" width=20px height="20px" alt="avatar" class="rounded-circle">
             {% else %}
-            {% if socialAccount %}
-            <img src="{{ socialAccount.get_avatar_url }}" width=20px height="20px" alt="avatar" class="rounded-circle">
-            {% else %}
-            <img src="/media/user/defaultAvatar.jpg"width=20px height="20px" alt="avatar" class="rounded-circle">
-            {% endif %}
+              {% if socialAccount %}
+              <img src="{{ socialAccount.get_avatar_url }}" width=20px height="20px" alt="avatar" class="rounded-circle">
+              {% else %}
+              <img src="/media/user/defaultAvatar.jpg"width=20px height="20px" alt="avatar" class="rounded-circle">
+              {% endif %}
             {% endif %}
           </button>
           <div class="dropdown-menu"  style="text-align-last: left;">
+            <a class="dropdown-item" href="{% url 'home:shelf' request.user.id %}">My Bookshelf</a>
+            <a class="dropdown-item" href="{% url 'user:wall' request.user.id %}">My Wall</a>
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'user:info' %}">Profile</a>
             <a class="dropdown-item" href="{% url 'user:edit' %}">Edit profile</a>
             <a class="dropdown-item" href="{% url 'user:changePassword' %}">Change password</a>

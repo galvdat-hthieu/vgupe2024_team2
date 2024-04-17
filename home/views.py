@@ -158,8 +158,8 @@ class bookPDFView(View):
 class shelfView(View):
   template = "home/shelf.html"
 
-  def get(self, request, username):
-    vendor = User.objects.get(username=username)
+  def get(self, request, id):
+    vendor = User.objects.get(id=id)
     copies_1 = Copy.objects.filter(userID_id=vendor.id)
     books = Book.objects.filter(id__in=copies_1.values('bookID_id'))
     copies_2 = []

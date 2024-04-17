@@ -44,9 +44,11 @@
     {% for copy in item %}
         <div class="copyContainer">
           <p>
-            <span class="badge badge-success float-left">{{ copy.get_status_display }}</span>
+            <span class="badge badge-success float-right">{{ copy.get_status_display }}</span>
             <i class="m-3">Copy ID: {{ copy.id }}</i>
-            <span style="float: right;">{{copy.bookID.title}}</span>
+          </p>
+          <p>
+            {{copy.note}}
           </p>
         </div>
     {% endfor %}

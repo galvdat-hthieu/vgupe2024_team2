@@ -102,9 +102,13 @@
             </div>
             <div class="right">
                 {% if book.coverImage %}
-                <img src="{{ book.coverImage.url }}" alt="{{ book.title }}" class="bookimg">
+                    {% if book.manual == True  %}
+                    <img src="/media/{{ book.coverImage }}"  alt="image">
+                    {% else %}
+                    <img src="{{ book.coverImage }}"  alt="image">
+                    {% endif %}
                 {% else %}
-                <img src="/media/book/defaultCover.jpg" alt="{{ book.title }}" class="bookimg">
+                <img src="/media/book/defaultCover.jpg"  alt="image">
                 {% endif %}
             </div>
         </div>
