@@ -72,6 +72,7 @@ def activate(request, uidb64, token):
     messages.error(request, "Activation link is invalid")
   return redirect("home:index")
 
+
 class registerView(View):
   def get(self, request):
     form = RegisterForm()
@@ -206,10 +207,12 @@ class wallView(LoginRequiredMixin, View):
     context = {
       "web": "Wall",
       'wallOwner': user,
+      "socialAccount": getSocialAccount(request),
       'cssFiles': ["/static/user/wall.css",],
     }
     return render(request, "user/wall.html", context)
   
+
 class recoverAccountView(auth_views.PasswordResetView):
   success_url = reverse_lazy("user:recover_done")
   email_template_name = "user/recover/recoverEmail.html"

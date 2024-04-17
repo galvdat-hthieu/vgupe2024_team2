@@ -22,6 +22,7 @@ def getSocialAccount(request):
     socialAccount = None
   return socialAccount
 
+
 class indexView(View):
   def get(self, request):
     context = {
@@ -75,7 +76,7 @@ class searchView(View):
     context = {
       "web":"Search",
       "books": books,
-      "cssFiles": ["/static/home/gallery.css",
+      "cssFiles": ["/static/home/panel.css",
                    "/static/home/search.css"],
       "socialAccount": getSocialAccount(request),
     }
@@ -88,7 +89,7 @@ class galleryView(View):
     books = Book.objects.all()
     context = {
       "web": "Gallery",
-      "cssFiles": ["/static/home/gallery.css",
+      "cssFiles": ["/static/home/panel.css",
                   ],
       "user": request.user,
       "socialAccount": getSocialAccount(request),
@@ -154,11 +155,12 @@ class bookPDFView(View):
     return render(request, "home/pdfDisplay.html", context)
 
 
-class vendorView(View):
+class shelfView(View):
+  template = "home/shelf.html"
+
   def get(self, request, username):
-  
     vendor = User.objects.get(username=username)
-    copies = Copy.objects.filter(userID_id=vendor.id,status=1)
+    copies = Copy.objects.filter(userID_id=vendor.id)
     books = Book.objects.filter(id__in=copies.values('bookID_id'))
 
     totalBooks = books.count()
@@ -166,6 +168,7 @@ class vendorView(View):
 
     context = {
       "web":vendor.first_name,
+      "cssFiles": ["/static/home/panel.css"],
       'vendor': vendor,
       'books': books,
       'totalBooks': totalBooks,
@@ -173,10 +176,11 @@ class vendorView(View):
       "socialAccount": getSocialAccount(request),
     }
 
-    return render(request, "mod/modVendor.html",context)
+    return render(request, self.template, context)
   def post(self, request, username):
 
-    return render(request, "mod/modVendor.html")
+    return render(request, self.template)
+
 
 class borrowView(View):
   def get(self, request):
