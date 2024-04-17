@@ -10,6 +10,7 @@ urlpatterns = [
     path("addBook", addBookView.as_view(), name='addBook'),
     path('editBook/<int:id>', editBookView.as_view(), name='editBook'),
     path('addCopy/<int:id>', addCopyView.as_view(), name='addCopy'),
+    path('import', importDataView.as_view(), name="import"),
 ]
 
 

@@ -66,15 +66,15 @@ class Book(models.Model):
     (4, "comic"),
     (5, "other")
   )
-  type = models.IntegerField(choices=typeChoices, null=False)
-  liteCate = models.BooleanField(default=False, blank=True)
-  socieCate = models.BooleanField(default=False, blank=True)
-  naturCate = models.BooleanField(default=False, blank=True)
-  techCate = models.BooleanField(default=False, blank=True)
-  poliCate = models.BooleanField(default=False, blank=True)
-  romanCate = models.BooleanField(default=False, blank=True)
-  enterCate = models.BooleanField(default=False, blank=True)
-  otherCate = models.BooleanField(default=False, blank=True)
+  type = models.IntegerField(choices=typeChoices, null=True, default=0)
+  liteCate = models.BooleanField(default=False, blank=True, null=True)
+  socieCate = models.BooleanField(default=False, blank=True, null=True)
+  naturCate = models.BooleanField(default=False, blank=True, null=True)
+  techCate = models.BooleanField(default=False, blank=True, null=True)
+  poliCate = models.BooleanField(default=False, blank=True, null=True)
+  romanCate = models.BooleanField(default=False, blank=True, null=True)
+  enterCate = models.BooleanField(default=False, blank=True, null=True)
+  otherCate = models.BooleanField(default=False, blank=True, null=True)
   language = models.CharField(max_length=200, null=True, blank=True)
   description = models.TextField(max_length=1500, null=True, blank=True)
   coverImage = models.ImageField(upload_to=getBookImageURL, null=True, blank=True)
@@ -87,8 +87,9 @@ class Book(models.Model):
     (1, "accepted"),
     (2, "rejected")
   )
-  status = models.IntegerField(choices=statusChoices, default=0)
+  status = models.IntegerField(choices=statusChoices, default=0, null=True)
   id = models.AutoField(primary_key=True)
+  manual = models.BooleanField(default=True, null = True, blank = True)
 
   def __str__(self) :
     return str(self.id) + ". " + self.title

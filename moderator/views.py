@@ -4,6 +4,9 @@ from django.contrib import messages
 from .forms import BookForm, CopyForm
 from home.models import *
 from datetime import date
+import csv
+import sqlite3
+from django.db import connections
 
 # Create your views here.
 class modView(View):
@@ -57,10 +60,10 @@ class addCopyView(View):
                              "userID": request.user,
                              "regDate": date.today()})
     context = {
-        "web": "Add Copy",
-        "cssFiles": [],
-        "book": book,
-        "form": form,
+      "web": "Add Copy",
+      "cssFiles": [],
+      "book": book,
+      "form": form,
     }
     return render(request, 'mod/addCopy.html', context)
   
@@ -93,7 +96,6 @@ class editBookView(View):
     if not(request.user.is_authenticated and request.user.role >= 1):
       messages.error(request, "You don't have the right to edit book.")
       return redirect("home:index")
-    
     book = Book.objects.get(id = id)
     form = BookForm(instance=book)
     context = {
@@ -108,7 +110,6 @@ class editBookView(View):
     if not(request.user.is_authenticated and request.user.role >= 1):
       messages.error(request, "You don't have the right to edit book.")
       return redirect("home:index")
-    
     book = Book.objects.get(id = id)
     form = BookForm(request.POST, request.FILES, instance=book)
     if form.is_valid():
@@ -123,3 +124,50 @@ class editBookView(View):
         "form": form,
       }
       return render(request, "mod/editBook.html", context)
+    
+
+class importDataView(View):
+  def get(self, request):
+    # Establish a connection to the SQLite3 database
+    database_path = 'db.sqlite3'
+    connection = sqlite3.connect(database_path)
+
+    # Get the cursor
+    cursor = connection.cursor()
+
+    # Open the CSV file and read its contents
+    csv_file_path = 'books4.csv'
+    with open(csv_file_path, 'r', encoding='cp437') as file:
+      reader = csv.reader(file, delimiter=';')
+      next(reader)  # Skip the header row
+
+      count = 0
+      # Iterate over each row in the CSV file
+      for row in reader:
+        count = count + 1
+        print(count)
+        print(row)
+        row = row[0].replace('"','')
+        row = row.split(";")
+        new_row = []
+        for i in range(0, len(row)):
+          if i not in [5, 6]:
+            new_row.append(row[i])
+        print(new_row[0:6])
+        # Insert the row data into the books table
+        try: 
+          cursor.execute('''
+              INSERT INTO home_book (codeISBN, title, author, publication, publisher, coverImage, type, liteCate, socieCate, naturCate, techCate, poliCate, romanCate, enterCate, otherCate, language, status)
+              VALUES (?, ?, ?, ?, ?, ?, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'English', 1)
+          ''', new_row[0:6])
+        except:
+          print("An exception occured")
+
+
+    # Commit the changes and close the connection
+    connection.commit()
+    connection.close()
+
+    # Optional: Refresh Django's database connections
+    connections.close_all()
+    return HttpResponse("Finished")
