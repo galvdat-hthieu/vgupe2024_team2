@@ -126,6 +126,49 @@ class editBookView(View):
       return render(request, "mod/editBook.html", context)
     
 
+class editCopyView(View):
+  def get(self, request, id):
+    copy = Copy.objects.get(id = id)
+    if not(request.user.is_authenticated and request.user.role >= 1
+           and request.user == copy.userID):
+      messages.error(request, "You don't have the right to edit copy.")
+      return redirect("home:index")
+    form = CopyForm(instance=copy)
+    context = {
+      "web": "Edit Book",
+      "cssFiles": [],
+      "copy": copy,
+      "form": form,
+    }
+    return render(request, "mod/editCopy.html", context)
+
+  def post(self, request, id):
+    if not(request.user.is_authenticated and request.user.role >= 1):
+      messages.error(request, "You don't have the right to edit book.")
+      return redirect("home:index")
+    copy = Copy.objects.get(id = id)
+    data = {
+      "userID": copy.userID,
+      "bookID": copy.bookID,
+      "status": request.POST.get("status"),
+      "note": request.POST.get("note"),
+      "regDate": copy.regDate,
+    }
+    form = CopyForm(data, instance=copy)
+    context = {
+      "web": "Edit Book",
+      "cssFiles": [],
+      "copy": copy,
+      "form": form,
+    }
+    if form.is_valid():
+      form.save()
+      messages.success(request, "The copy has been edited succesfully.")
+      return redirect("mod:editCopy", id)
+    else:
+      return render(request, "mod/editCopy.html", context)
+
+
 class importDataView(View):
   def get(self, request):
     # Establish a connection to the SQLite3 database

@@ -8,9 +8,11 @@ app_name = "mod"
 urlpatterns = [
     path("", modView.as_view(), name='mod'),
     path("addBook", addBookView.as_view(), name='addBook'),
-    path('editBook/<int:id>', editBookView.as_view(), name='editBook'),
-    path('addCopy/<int:id>', addCopyView.as_view(), name='addCopy'),
-
+    path('editBook/bookid=<int:id>', editBookView.as_view(), name='editBook'),
+    path('addCopy/bookid=<int:id>', addCopyView.as_view(), name='addCopy'),
+    path('editCopy/copyid=<int:id>', editCopyView.as_view(), name="editCopy"),
+    
+    
     # Do not uncomment "import"
     # This function is only used to automatically add book
     # path('import', importDataView.as_view(), name="import"),

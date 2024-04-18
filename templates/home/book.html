@@ -44,7 +44,7 @@
 <!-- Container for "See more books" links -->
 <div class="see-more-container">
     {% for mod, count in mods_objects_dict.items %}
-    <a id="seeOption{{ mod.id }}" href="{% url 'home:shelf' mod.username %}" style="display: none;">See more books of {{ mod.first_name }}</a>
+    <a id="seeOption{{ mod.id }}" href="{% url 'home:shelf' mod.id %}" style="display: none;">See more books of {{ mod.first_name }}</a>
     {% endfor %}
 </div>
 <button type="submit" class="btn">Borrow</button>

@@ -107,7 +107,6 @@ class bookView(View):
     mod_ids = mod_counts_dict.keys()
     mods = User.objects.filter(pk__in=mod_ids)
     mods_objects_dict = {mod: mod_counts_dict[mod.id] for mod in mods}
-
     form = ReviewForm(initial={"bookID": Book.objects.get(id=id),"userID": request.user,})
     context = {
       "web": book.title,
@@ -122,9 +121,18 @@ class bookView(View):
     return render(request, "home/book.html", context)
   
   def post(self, request, id):
-    form = ReviewForm(request.POST)
+    data = {
+      "bookID": Book.objects.get(id=id),
+      "userID": request.user,
+      "rating": request.POST.get("rating"),
+      "review": request.POST.get("review"),
+      "created_at": timezone.now(),
+    }
+    form = ReviewForm(data)
     book = Book.objects.get(id=id)
     if form.is_valid():
+      print("User:",form.data["userID"])
+      print("Book",form.data["bookID"])
       form.save()
       messages.success(request, "Your rating and review has been saved.")
       return redirect("home:book", id)

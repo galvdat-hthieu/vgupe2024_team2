@@ -24,7 +24,7 @@
         <span class="badge badge-info float-right m-1">E-book</span>
         {% endif %}
       </p>
-      <h5><a href="{% url 'home:book' 12%}">{{item.0.bookID.title}}</a></h5>
+      <h5><a href="{% url 'home:book' item.0.bookID.id%}">{{item.0.bookID.title}}</a></h5>
       <p>{{item.0.bookID.author}}
       <span style="float: right">
       {% if item.0.bookID.publisher and item.0.bookID.publication %}
@@ -42,15 +42,18 @@
   </div>
   <div class="collapse" id="extension_{{item.0.bookID.id}}" style="width: 100%;">
     {% for copy in item %}
-        <div class="copyContainer">
-          <p>
-            <span class="badge badge-success float-right">{{ copy.get_status_display }}</span>
-            <i class="m-3">Copy ID: {{ copy.id }}</i>
-          </p>
-          <p>
-            {{copy.note}}
-          </p>
-        </div>
+      <div class="copyContainer">
+        <p>
+          {% if copy.userID == request.user %}
+          <span class="float-right"><a href="{% url 'mod:editCopy' copy.id %}">Edit Copy</a></span>
+          {% endif %}
+          <span class="badge badge-success float-left">{{ copy.get_status_display }}</span>
+          <i class="m-3">Copy ID: {{ copy.id }}</i>
+        </p>
+        <p>
+          {{copy.note}}
+        </p>
+      </div>
     {% endfor %}
   </div>
 </div>
