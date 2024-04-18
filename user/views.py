@@ -171,6 +171,8 @@ class profileEditView(LoginRequiredMixin, View):
     
 
 class changePasswordView(LoginRequiredMixin, View):
+  login_url = "user:login"
+  
   def get(self, request):
     form = PasswordChangeForm(request.user)
     context = {

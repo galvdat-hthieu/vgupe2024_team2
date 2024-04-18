@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, resolve_url
 from django.contrib import messages
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,7 +6,7 @@ from home.models import *
 from home.functions import *
 
 class ControlView(LoginRequiredMixin, View):
-  login_url = "home:login"
+  login_url = "user:login"
 
   def get(self, request):
     if not (request.user.role == 2):
@@ -24,7 +24,7 @@ class ControlView(LoginRequiredMixin, View):
     pass
 
 class ModApplyView(LoginRequiredMixin, View):
-  login_url = "home:login"
+  login_url = "user:login"
   template_url = "control/review/modReview.html"
 
   def get(self, request):

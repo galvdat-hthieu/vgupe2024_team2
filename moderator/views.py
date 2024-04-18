@@ -12,7 +12,7 @@ from django.db import connections
 
 # Create your views here.
 class modView(LoginRequiredMixin, View):
-  login_url = "home:login"
+  login_url = "user:login"
   def get(self, request):
     return HttpResponse('Moderator page')
   
@@ -21,7 +21,7 @@ class modView(LoginRequiredMixin, View):
 
 
 class addBookView(LoginRequiredMixin, View):
-  login_url = "home:login"
+  login_url = "user:login"
 
   def get(self, request):
     if (request.user.is_authenticated and request.user.role >= 1):
@@ -56,7 +56,7 @@ class addBookView(LoginRequiredMixin, View):
 
 
 class addCopyView(LoginRequiredMixin, View):
-  login_url = "home:login"
+  login_url = "user:login"
 
   def get(self, request, id):
     if not (request.user.is_authenticated and request.user.role >= 1):
@@ -99,7 +99,7 @@ class addCopyView(LoginRequiredMixin, View):
     
 
 class editBookView(LoginRequiredMixin, View):
-  login_url = "home:login"
+  login_url = "user:login"
 
   def get(self, request, id):
     if not(request.user.is_authenticated and request.user.role >= 1):
@@ -136,7 +136,7 @@ class editBookView(LoginRequiredMixin, View):
     
 
 class editCopyView(LoginRequiredMixin, View):
-  login_url = "home:login"
+  login_url = "user:login"
 
   def get(self, request, id):
     copy = Copy.objects.get(id = id)
@@ -181,7 +181,7 @@ class editCopyView(LoginRequiredMixin, View):
 
 
 class applyModView(LoginRequiredMixin, View):
-  login_url = "home:login"
+  login_url = "user:login"
 
   def get(self, request):
     if (request.user.role > 0):
