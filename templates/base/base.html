@@ -31,9 +31,11 @@
     <a href="{% url 'home:index' %}"><h1>BiblioTech App</h1></a>
     <ul>
       <li><a href="{% url 'home:index' %}">HOME</a></li>
-      <li><a href="{% url 'user:info' %}">INFO</a></li>
       <li><a href="{% url 'home:gallery' %}">GALLERY</a></li>
-      <li><a href="{% url 'home:search' %}">SEARCH</a></li>
+      {% if request.user.is_authenticated %}
+        <li><a href="{% url 'home:shelf' request.user.id %}">BOOKSHELF</a></li>
+        <li><a href="{% url 'user:wall' request.user.id %}">WALL</a></li>
+      {% endif %}
       {% if user.is_authenticated %}
       <li>
         <div class="btn-group" style="text-align: left;">
@@ -50,9 +52,6 @@
             {% endif %}
           </button>
           <div class="dropdown-menu"  style="text-align-last: left;">
-            <a class="dropdown-item" href="{% url 'home:shelf' request.user.id %}">My Bookshelf</a>
-            <a class="dropdown-item" href="{% url 'user:wall' request.user.id %}">My Wall</a>
-            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'user:info' %}">Profile</a>
             <a class="dropdown-item" href="{% url 'user:edit' %}">Edit profile</a>
             <a class="dropdown-item" href="{% url 'user:changePassword' %}">Change password</a>

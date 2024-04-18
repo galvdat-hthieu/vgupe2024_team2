@@ -1,7 +1,7 @@
 <div class="shelfItemContainer">
   <div class="bookContainer">
     <div class="leftColumn">
-      <a href="{% url 'home:book' 12 %}">
+      <a href="{% url 'home:book' item.0.bookID.id %}">
         {% if item.0.bookID.coverImage %}
         <img  src="/media/{{ item.0.bookID.coverImage }}" 
         width="80px" height="100px" alt="image" style="object-fit: cover;">

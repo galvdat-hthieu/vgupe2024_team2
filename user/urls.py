@@ -20,7 +20,7 @@ urlpatterns = [
     path("profile/info/", profileInfoView.as_view(), name="info"),
     path("profile/edit/", profileEditView.as_view(), name="edit"),
     path("activate/<uidb64>/<token>", activate, name="activate"),
-    path('wall/<int:id>/',wallView.as_view(), name="wall"),
+    path('wall/userid=<int:id>/',wallView.as_view(), name="wall"),
 ]
 
 if settings.DEBUG:

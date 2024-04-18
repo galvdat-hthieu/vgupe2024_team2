@@ -5,12 +5,16 @@
 {% load static %}
 <div class="container">
   <div class="vendor-info">
-    <h2>Vendor Name: {{vendor.first_name}}</h2>
+    <h4>
+      Shelf owner: {{vendor.last_name}}, {{vendor.first_name}}
+      {% if request.user == vendor %}(You){% endif %}
+    </h4>
     <p>Contact Email: {{vendor.email}}</p>
     <p>Total books: {{books.count}} books ({{copies.count}} copies)</p>
+    <hr>
     {% comment %} <p>Total books: {{totalAmount}}</p> {% endcomment %}
   </div>
-  <div class="galleryView">
+  <div class="book-info">
     {% for item in copies_2 %}
       {% include 'home/shelfItem.html' %}
     {% endfor %}

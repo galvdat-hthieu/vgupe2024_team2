@@ -1,24 +1,20 @@
 {% extends 'base/base.html' %}
-{% load static %}
 
 
 {% block content %}
 {% include 'base/message.html' %}
+{% load static %}
+<div class="content">
+  <h4>Search option</h4>
+  {% include 'home/searchbox.html' %}
 
-<div class="container">
-  <h3>Gallery View
-    {% if user.is_authenticated and user.role >= 1 %}
-    <span style="float: right; font-size: medium;">
-      <a href="{% url 'mod:addBook' %}">Add new Book</a>
-    </span>
-    {% endif %}
-  </h3> 
-  
+  <h1>Result</h1> 
+
   <div class="galleryView">
     {% for item in books reversed %}
       {% include 'home/panel.html' %}
     {% endfor %}
   </div>
-</div>
 
+</div>
 {% endblock %}
