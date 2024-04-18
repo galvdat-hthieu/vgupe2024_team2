@@ -35,6 +35,7 @@ ALLOWED_HOST = ['*']
 
 INSTALLED_APPS = [
     'home',
+    'control',
     'user',
     'moderator',
     'socialplatform',

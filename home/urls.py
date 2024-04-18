@@ -14,6 +14,3 @@ urlpatterns = [
     path('borrow',borrowView.as_view(), name = "borrow"),
 ]
 
-
-
-#urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

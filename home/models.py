@@ -146,3 +146,20 @@ class Review(models.Model):
 
   def __str__(self) :
     return "Review " + str(self.id)
+  
+def getApplicantDocURL(instance, filename):
+  return "user/{}/modApplication.pdf".format(instance.applicant.id)
+
+class ModApplication(models.Model):
+  applicant = models.ForeignKey(User, on_delete=models.CASCADE)
+  applicantDocument = models.FileField(upload_to=getApplicantDocURL,null=True,blank=True)
+  applicantText = models.TextField(max_length=1500, null=True, blank=True)
+  adminComment = models.TextField(max_length=1500, null=True, blank=True)
+  statusChoices = (
+    (0, "applying"),
+    (1, "approved"),
+    (2, "denied"),
+  )
+  status = models.IntegerField(choices=statusChoices, default=0, null=False)
+  created_at = models.DateTimeField(default=timezone.now)
+  

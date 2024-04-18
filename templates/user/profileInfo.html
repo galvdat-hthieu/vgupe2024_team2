@@ -33,7 +33,9 @@
   <p><span><b>Birthdate: </b></span> {{ user.birthdate }}</p>
   <p><span><b>Gender: </b></span> {{ user.get_gender_display }}</p>
   <p><span><b>Role: </b></span> {{ user.get_role_display }}</p>
-  
+  {% if request.user.role < 1 %}
+  <p style="text-align: right;">You are currently not a moderator. <a href="{% url 'mod:modApply' %}">Apply here!</a></p>
+  {% endif %}
   {% endblock %}
 
 </div>

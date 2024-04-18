@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+{% include 'base/message.html' %}
+{% load static %}
+
+<div class="container">
+  <h3>Mod Application Review View</h3>
+  <div class="menu">
+    <a class="btn btn-primary" href="{% url 'control:control' %}">Administration</a>
+    <a class="btn btn-primary" href="{% url 'control:reviewModApp' %}">Mod Review</a>
+  </div>
+  <hr>
+  {% for application in applications %}
+    <div class="person-info">
+      <p>
+        Applicant #{{application.applicant.id}}: {{application.applicant.username}}
+        <span class="float-right">{{application.applicant.email}}</span>
+      </p>
+      <p></p>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

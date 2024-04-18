@@ -42,15 +42,18 @@
           <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Account
             {% if user.avatar %}
-            <img src="/media/{{ user.avatar }}" width=20px height="20px" alt="avatar" class="rounded-circle">
+            <img src="/media/{{ user.avatar }}" width=20px height="20px" alt="avatar" class="rounded-circle" style="object-fit: cover;">
             {% else %}
               {% if socialAccount %}
-              <img src="{{ socialAccount.get_avatar_url }}" width=20px height="20px" alt="avatar" class="rounded-circle">
+              <img src="{{ socialAccount.get_avatar_url }}" width=20px height="20px" alt="avatar" class="rounded-circle" style="object-fit: cover;">
               {% else %}
-              <img src="/media/user/defaultAvatar.jpg"width=20px height="20px" alt="avatar" class="rounded-circle">
+              <img src="/media/user/defaultAvatar.jpg"width=20px height="20px" alt="avatar" class="rounded-circle" style="object-fit: cover;">
               {% endif %}
             {% endif %}
           </button>
+          {% if request.user.role == 2 and request.user.is_authenticated %}
+            <a href="{% url 'control:control' %}" class="btn btn-secondary btn-sm"><i class="fa-solid fa-business-time"></i></a>
+          {% endif %}
           <div class="dropdown-menu"  style="text-align-last: left;">
             <a class="dropdown-item" href="{% url 'user:info' %}">Profile</a>
             <a class="dropdown-item" href="{% url 'user:edit' %}">Edit profile</a>

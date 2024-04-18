@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+{% include 'base/message.html' %}
+{% load static %}
+
+<div class="container">
+  <h3>Control View</h3>
+  <div class="menu">
+    <a class="btn btn-primary" href="{% url 'control:control' %}">Administration</a>
+    <a class="btn btn-primary" href="{% url 'control:reviewModApp' %}">Mod Review</a>
+  </div>
+  <hr>
+  <p>Below is the list of all users:</p>
+  {% for person in persons %}
+    <div class="person-info">
+      <p>
+        User #{{person.id}}: {{person.username}}
+        {% if person.id == request.user.id %} <i> (You) </i>{% endif %}
+        {% if person.role == 0 %}
+          <span class="float-right badge badge-success">{{person.get_role_display}}</span>
+        {% else %}
+          {% if person.role == 1 %}
+          <span class="float-right badge badge-warning">{{person.get_role_display}}</span>
+          {% else %}
+          <span class="float-right badge badge-danger">{{person.get_role_display}}</span>
+          {% endif %}
+        {% endif %}
+      </p>
+      <p></p>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

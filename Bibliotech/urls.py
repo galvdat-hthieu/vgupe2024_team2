@@ -5,12 +5,23 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # Pages for everyone (even guests)
     path('', include('home.urls')),
+
+    # User pages
     path('user/', include('user.urls')),
-    # Moderator page
-    path('mod/', include('moderator.urls')),
+
+    # For login using all-auth (OAuth2)
     path('accounts/', include('socialplatform.urls')),
+
+    # Moderator pages
+    path('mod/', include('moderator.urls')),
+
+    # Admin (Control) pages
+    path('control/', include('control.urls')),
+
+    # Default django admin page
+    path('admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:

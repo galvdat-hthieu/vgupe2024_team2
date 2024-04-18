@@ -1,5 +1,5 @@
 from django import forms
-from home.models import Book, Copy
+from home.models import Book, Copy, ModApplication
 
 # create the form here.
 class BookForm(forms.ModelForm):
@@ -16,3 +16,8 @@ class CopyForm(forms.ModelForm):
       "bookID": forms.HiddenInput(),
       "userID": forms.HiddenInput(),
     }
+
+class ModApplicationForm(forms.ModelForm):
+  class Meta:
+    model = ModApplication
+    fields = "__all__"

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Book, User, Review, Borrowance, Copy
+from .models import *
 
 # Register your models here.
 class BookAdmin(admin.ModelAdmin):
@@ -17,8 +17,12 @@ class BorrowanceAdmin(admin.ModelAdmin):
 class CopyAdmin(admin.ModelAdmin):
     list_display = ('id', "bookID", "userID")
 
+class ModAppAdmin(admin.ModelAdmin):
+    list_display = ("applicant", "status", "created_at")
+
 admin.site.register(Book, BookAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(Borrowance, BorrowanceAdmin)
 admin.site.register(Copy, CopyAdmin)
+admin.site.register(ModApplication, ModAppAdmin)

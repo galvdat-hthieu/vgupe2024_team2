@@ -26,6 +26,9 @@
     {{ form.as_p }}
     <input type="submit" value="SAVE">
   </form>
+  {% if request.user.role < 1 %}
+  <p style="text-align: right;">You are currently not a moderator. <a href="{% url 'mod:modApply' %}">Apply here!</a></p>
+  {% endif %}
 </div>
 
 {% endblock %}

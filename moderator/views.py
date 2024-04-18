@@ -1,15 +1,18 @@
 from django.shortcuts import render, HttpResponse, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.contrib import messages
-from .forms import BookForm, CopyForm
+from .forms import BookForm, CopyForm, ModApplicationForm
 from home.models import *
+from home.functions import *
 from datetime import date
 import csv
 import sqlite3
 from django.db import connections
 
 # Create your views here.
-class modView(View):
+class modView(LoginRequiredMixin, View):
+  login_url = "home:login"
   def get(self, request):
     return HttpResponse('Moderator page')
   
@@ -17,7 +20,9 @@ class modView(View):
     pass
 
 
-class addBookView(View):
+class addBookView(LoginRequiredMixin, View):
+  login_url = "home:login"
+
   def get(self, request):
     if (request.user.is_authenticated and request.user.role >= 1):
       form = BookForm()
@@ -50,7 +55,9 @@ class addBookView(View):
       return render(request, 'mod/addBook.html', context)
 
 
-class addCopyView(View):
+class addCopyView(LoginRequiredMixin, View):
+  login_url = "home:login"
+
   def get(self, request, id):
     if not (request.user.is_authenticated and request.user.role >= 1):
       messages.error(request, "You don't have the right to add copy.")
@@ -91,7 +98,9 @@ class addCopyView(View):
       return render(request, 'mod/addCopy.html', context)
     
 
-class editBookView(View):
+class editBookView(LoginRequiredMixin, View):
+  login_url = "home:login"
+
   def get(self, request, id):
     if not(request.user.is_authenticated and request.user.role >= 1):
       messages.error(request, "You don't have the right to edit book.")
@@ -126,7 +135,9 @@ class editBookView(View):
       return render(request, "mod/editBook.html", context)
     
 
-class editCopyView(View):
+class editCopyView(LoginRequiredMixin, View):
+  login_url = "home:login"
+
   def get(self, request, id):
     copy = Copy.objects.get(id = id)
     if not(request.user.is_authenticated and request.user.role >= 1
@@ -168,6 +179,52 @@ class editCopyView(View):
     else:
       return render(request, "mod/editCopy.html", context)
 
+
+class applyModView(LoginRequiredMixin, View):
+  login_url = "home:login"
+
+  def get(self, request):
+    if (request.user.role > 0):
+      messages.warning(request, "You are already a moderator.")
+      return redirect("home:index")
+    form = ModApplicationForm(
+      initial={
+        "applicant": request.user,
+        "status": 0,
+        "created_at": timezone.now(),
+      }
+    )
+    context = {
+      "web": "Mod Apply",
+      "form": form,
+      "socialAccount": getSocialAccount(request),
+    }
+    return render(request, "mod/modApply.html", context)
+
+  def post(self, request):
+    if (request.user.role > 0):
+      messages.warning(request, "You are already a moderator.")
+      return redirect("home:index")
+    data = {
+      "applicant": request.user,
+      "status": 0,
+      "created_at": timezone.now(),
+      "applicantText": request.POST.get("applicantText"),
+      "applicantDocument": request.POST.get("applicantDocument"),
+      "adminComment": None,
+    }
+    form = ModApplicationForm(data, request.FILES)
+    if form.is_valid():
+      form.save()
+      messages.success(request, "Your application has been sent. Please wait for the judgement.")
+      return redirect("home:index")
+    else:
+      context = {
+      "web": "Mod Apply",
+      "form": form,
+      "socialAccount": getSocialAccount(request),
+    }
+    return render(request, "mod/modApply.html", context)
 
 class importDataView(View):
   def get(self, request):
