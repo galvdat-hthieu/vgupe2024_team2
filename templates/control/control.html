@@ -7,17 +7,17 @@
 
 <div class="container">
   <h3>Control View</h3>
-  <div class="menu">
-    <a class="btn btn-primary" href="{% url 'control:control' %}">Administration</a>
-    <a class="btn btn-primary" href="{% url 'control:reviewModApp' %}">Mod Review</a>
-  </div>
+  {% include "control/menu.html" %}
   <hr>
   <p>Below is the list of all users:</p>
   {% for person in persons %}
-    <div class="person-info">
+    <div class="person-info m-bottom-4">
       <p>
         User #{{person.id}}: {{person.username}}
         {% if person.id == request.user.id %} <i> (You) </i>{% endif %}
+        
+        <a href="" class="btn btn-secondary float-right">ban</a>
+        
         {% if person.role == 0 %}
           <span class="float-right badge badge-success">{{person.get_role_display}}</span>
         {% else %}
@@ -27,9 +27,11 @@
           <span class="float-right badge badge-danger">{{person.get_role_display}}</span>
           {% endif %}
         {% endif %}
+
       </p>
       <p></p>
     </div>
+    <hr>
   {% endfor %}
 </div>
 

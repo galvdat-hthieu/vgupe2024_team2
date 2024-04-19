@@ -25,7 +25,7 @@ class indexView(View):
 
 class galleryView(View):
   def get(self, request):
-    books = search(request)
+    books = search(request)[1:20]
     context = {
       "web":"Search",
       "books": books,
@@ -33,7 +33,6 @@ class galleryView(View):
                    "/static/home/search.css"],
       "socialAccount": getSocialAccount(request),
     }
-
     return render(request, 'home/gallery.html',context)
 
 
