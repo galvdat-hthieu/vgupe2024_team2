@@ -97,8 +97,11 @@
                     <div class="popup-box" id="popupBox" style="display: none;">
                         <button class="closeButton" onclick="closePopup()">&#x2716;</button>
                         <h6 class="contentBox"> Create Post </h6>
-                        <textarea class='textarea-no-border' placeholder="Write something..."></textarea>
+                        <form method="post">
+                        {% csrf_token %}
+                        <textarea class='textarea-no-border' placeholder="Write something..." name="thought"></textarea>
                         <button type="submit" class="postButton submit" style="margin-top: 10px;">Post</button>
+                        </form>
                     </div>
                 </div>
             </div>

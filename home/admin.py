@@ -20,9 +20,13 @@ class CopyAdmin(admin.ModelAdmin):
 class ModAppAdmin(admin.ModelAdmin):
     list_display = ("applicant", "status", "created_at")
 
+class ThoughtAdmin(admin.ModelAdmin):
+    list_display = ("userID", "thought", "created_at")
+
 admin.site.register(Book, BookAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(Borrowance, BorrowanceAdmin)
 admin.site.register(Copy, CopyAdmin)
 admin.site.register(ModApplication, ModAppAdmin)
+admin.site.register(Thought, ThoughtAdmin)

@@ -1,21 +1,23 @@
-from django.shortcuts import render, HttpResponse, redirect
-from django.urls import reverse_lazy
-from django.views import View
+from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
-from django.template.loader import render_to_string
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.utils.encoding import force_bytes, force_str
-from django.core.mail import EmailMessage
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth import (authenticate, login, logout,
+                                 update_session_auth_hash)
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from user.forms import *
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.shortcuts import HttpResponse, redirect, render
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.views import View
+
 from home.models import *
-from user.tokens import *
 from home.views import getSocialAccount
-from allauth.socialaccount.models import SocialAccount
+from user.forms import *
+from user.tokens import *
 
 
 class loginView(View):
@@ -210,9 +212,32 @@ class wallView(LoginRequiredMixin, View):
       "web": "Wall",
       'wallOwner': user,
       "socialAccount": getSocialAccount(request),
+      "form": ThoughtForm(),
       'cssFiles': ["/static/user/wall.css",],
     }
     return render(request, "user/wall.html", context)
+  
+  def post(self, request, id):
+    data = {
+      "userID": request.user,
+      "thought": request.POST.get("thought"),
+      "created_at": timezone.now(),
+    }
+    form = ThoughtForm(data)
+    if form.is_valid():
+      form.save()
+      messages.success(request, "Your thought has been posted.")
+      return redirect("user:wall", id)
+    else:
+      context = {
+        "web": "Wall",
+        'wallOwner': User.objects.get(id=id),
+        "socialAccount": getSocialAccount(request),
+        'cssFiles': ["/static/user/wall.css",],
+        "form": form,
+      }
+      messages.error(request, "Your thought is too long.")
+      return render(request, "user/wall.html", context)
   
 
 class recoverAccountView(auth_views.PasswordResetView):

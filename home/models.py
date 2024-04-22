@@ -163,3 +163,7 @@ class ModApplication(models.Model):
   status = models.IntegerField(choices=statusChoices, default=0, null=False)
   created_at = models.DateTimeField(default=timezone.now)
   
+class Thought(models.Model):
+  userID = models.ForeignKey(User, on_delete=models.CASCADE)
+  thought = models.TextField(max_length=1500, null=False)
+  created_at = models.DateTimeField(default=timezone.now)

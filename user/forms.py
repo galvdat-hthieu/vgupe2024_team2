@@ -1,7 +1,8 @@
-from home.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
+
+from home.models import Thought, User
 
 
 class LoginForm(AuthenticationForm):
@@ -31,3 +32,7 @@ class ProfileEditForm(forms.ModelForm):
     fields = ["avatar", "first_name", "last_name", "birthdate", "gender",
               "address", "phoneNum"]
     
+class ThoughtForm(forms.ModelForm):
+  class Meta:
+    model = Thought
+    fields = "__all__"
