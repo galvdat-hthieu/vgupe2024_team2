@@ -22,6 +22,24 @@ class indexView(View):
     }
     return render(request, 'home/index.html',context)
 
+class faqView(View):
+  def get(self, request):
+    context = {
+      "web":"FAQ",
+      "cssFiles": [],
+      "socialAccount": getSocialAccount(request),
+    }
+    return render(request, 'home/faq.html',context)
+
+class contactView(View):
+  def get(self, request):
+    context = {
+      "web":"Contact",
+      "cssFiles": [],
+      "socialAccount": getSocialAccount(request),
+    }
+    return render(request, 'home/contact.html',context)
+
 
 class galleryView(View):
   def get(self, request):

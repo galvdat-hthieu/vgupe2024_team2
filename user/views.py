@@ -18,6 +18,7 @@ from home.models import *
 from home.views import getSocialAccount
 from user.forms import *
 from user.tokens import *
+import json
 
 
 class loginView(View):
@@ -77,15 +78,29 @@ def activate(request, uidb64, token):
 
 class registerView(View):
   def get(self, request):
-    form = RegisterForm()
+    usernames = list(User.objects.values_list('username', flat=True))
     context = {
       "web": "Register",
-      "form": form,
+      "usernames":usernames,
     }
     return render(request, "user/register.html", context)
   
   def post(self, request):
-    form = RegisterForm(request.POST)
+
+    email = request.POST.get('Email')
+
+    form_data = {
+          'username': request.POST.get('Username'),
+          'email': request.POST.get('Email'),
+          'password1': request.POST.get('New-password'),
+          'password2': request.POST.get('Repeat-new-password'),
+          'first_name': request.POST.get('firstname'),
+          'last_name': request.POST.get('lastname'),
+          'gender':2,
+        }
+
+    form = RegisterForm(form_data)
+    
     if form.is_valid():
       user = form.save(commit=False)
       user.is_active = False
@@ -93,11 +108,24 @@ class registerView(View):
       print(user.username)
       registerView.activateEmail(request, user, form.cleaned_data.get('email'))
       # user.save()
-      return redirect("/user/login")
-    else:
+      request.session['form_submitted'] = True
+      usernames = list(User.objects.values_list('username', flat=True))
       context = {
         "web": "Register",
-        "form": form,
+        "usernames":usernames,
+        "email":email,
+      }
+      return render(request, "user/register.html", context)
+    else:
+      print("Form is invalid. Errors:")
+      for field, errors in form.errors.items():
+          for error in errors:
+              print(f"Error in {field}: {error}")
+
+      usernames = list(User.objects.values_list('username', flat=True))
+      context = {
+        "web": "Register",
+        "usernames":usernames,
       }
       return render(request, "user/register.html", context)
 
@@ -105,14 +133,14 @@ class registerView(View):
     mail_subject = "Activate your user account."
     message = render_to_string("user/template_activate_account.html", {
       "user": user.username,
-      "domain": get_current_site(),
+      "domain": get_current_site(request),
       "uid": urlsafe_base64_encode(force_bytes(user.username)),
       "token": account_activation_token.make_token(user),
       "protocol": "https" if request.is_secure() else "http"
     })
     print("Username:", user.username)
     print("Code:", urlsafe_base64_encode(force_bytes(user.pk)))
-    print("Current site:", get_current_site())
+    print("Current site:", get_current_site(request))
     email = EmailMessage(mail_subject, message, to=[to_email])
     if email.send():
       messages.success(request, f'Dear <b>{user}</b>, please go to your email <b>{to_email}</b>.')
