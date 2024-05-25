@@ -11932,13 +11932,25 @@ figcaption {
     margin-bottom: 15px;
   }
 
-  .page-wrapper-8, .paragraph-62 {
+  .page-wrapper-8 {
     width: 250px;
   }
 
+  .paragraph-62 {
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+    display: flex;
+  }
+
   .div-block-81 {
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
     width: 200px;
-    height: 200px;
+    height: 250px;
+    display: flex;
   }
 
   .div-block-82 {
@@ -12265,6 +12277,17 @@ figcaption {
     padding-bottom: 0;
     padding-right: 0;
     display: flex;
+  }
+
+  .div-block-92 {
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+  }
+
+  .become-a-book-mod-block {
+    margin-top: 8px;
   }
 }
 

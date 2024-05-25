@@ -6,7 +6,12 @@
 {% include 'base/message.html' %}
 
 {% block content %}
-<div class="container">
+<br>
+<br>
+
+
+
+<div class="container" style="margin-left: 130px;">
     {% if process == "connect" %}
         {% element h1 %}
             {% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}
@@ -31,5 +36,5 @@
         {% endslot %}
     {% endelement %}
 </div>
-<br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 {% endblock content %}

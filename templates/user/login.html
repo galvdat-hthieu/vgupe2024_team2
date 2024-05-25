@@ -1,42 +1,12 @@
 {% extends 'base/base.html' %}
-
 {% block content %}
 {% load socialaccount %}
 {% load static %}
 {% include 'base/message.html' %}
-{% comment %} 
-<div class="container">
-    <h3 style="text-align: center;">Login View</h3> 
-    
-    <form action="" method="post">  
-        {% csrf_token %}
-        {% for key, value in form.error.items %}
-            {{value}}
-        {% endfor %}
-    
-        <div class="container">
-            {{form.as_p}}
-            <button type="submit">Login</button>   
-            <input type="checkbox" checked="checked" name="remember_me"> Remember me     
-            <span style="float: right">
-                Forgot <a href="{% url 'user:recover' %}"> password? </a>   
-            </span>
-        </div>   
-        <script src="//accounts.google.com/gsi/client" async></script>
-    </form>
-    <form action="{% provider_login_url 'google' %}" method="get">
-        {% csrf_token %}
-        <button type="submit">
-            Log in with Google
-            <i class="fa-brands fa-google"></i>
-        </button>
-    </form>
-</div> {% endcomment %}
 
 
 
-
-<div class="w-nav-overlay" data-wf-ignore="" id="w-nav-overlay-0"></div></div>
+<div class="w-nav-overlay" data-wf-ignore="" id="w-nav-overlay-0"></div>
       <div class="main-section pd-bottom-64px">
         <div class="background---login">
           <div class="container-default---login w-container">

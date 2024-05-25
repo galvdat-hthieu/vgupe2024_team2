@@ -1,5 +1,6 @@
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
+import os
 from django.contrib.auth import (authenticate, login, logout,
                                  update_session_auth_hash)
 from django.contrib.auth import views as auth_views
@@ -7,13 +8,14 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
-from django.shortcuts import HttpResponse, redirect, render
+from django.shortcuts import HttpResponse, redirect, render,get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
 
+from home.util import Notification
 from home.models import *
 from home.views import getSocialAccount
 from user.forms import *
@@ -47,14 +49,26 @@ class loginView(View):
       password = request.POST.get('password')
       user = authenticate(username=username, password=password)
       if user is None:
+        print("Wrong login1")
         return redirect("user:login")
       else:
+        print("Good login")
         login(request=request, user=user)
         remember_me = request.POST.get('remember_me')
         if not remember_me:
           request.session.set_expiry(0)
         return redirect("home:index")
     else:
+      print("Wrongdsdsd login")
+      notification = Notification("Login Unsuccessful","Incorrect username or password. Please try again.","error")
+      messages.success(request, " ")
+      context = {
+      "web": "Login",
+      "cssFiles": ["/static/user/login.css",
+                   ],
+      "form": form,
+      "notification": notification,
+     }
       return render(request, "user/login.html", context)
     
 
@@ -79,9 +93,11 @@ def activate(request, uidb64, token):
 class registerView(View):
   def get(self, request):
     usernames = list(User.objects.values_list('username', flat=True))
+    emails = list(User.objects.values_list('email', flat=True))
     context = {
       "web": "Register",
       "usernames":usernames,
+      "emails":emails,
     }
     return render(request, "user/register.html", context)
   
@@ -108,12 +124,17 @@ class registerView(View):
       print(user.username)
       registerView.activateEmail(request, user, form.cleaned_data.get('email'))
       # user.save()
-      request.session['form_submitted'] = True
+
+      notification = Notification("Your account is almost ready","Please check your email to activate your account.","success")
+      
       usernames = list(User.objects.values_list('username', flat=True))
+      emails = list(User.objects.values_list('email', flat=True))
       context = {
         "web": "Register",
         "usernames":usernames,
         "email":email,
+        "emails":emails,
+        "notification": notification,
       }
       return render(request, "user/register.html", context)
     else:
@@ -123,9 +144,11 @@ class registerView(View):
               print(f"Error in {field}: {error}")
 
       usernames = list(User.objects.values_list('username', flat=True))
+      emails = list(User.objects.values_list('email', flat=True))
       context = {
         "web": "Register",
         "usernames":usernames,
+        "emails":emails,
       }
       return render(request, "user/register.html", context)
 
@@ -143,7 +166,7 @@ class registerView(View):
     print("Current site:", get_current_site(request))
     email = EmailMessage(mail_subject, message, to=[to_email])
     if email.send():
-      messages.success(request, f'Dear <b>{user}</b>, please go to your email <b>{to_email}</b>.')
+      messages.success(request, f'Dear <b>{user.username}</b>, please go to your email <b>{to_email}</b>.')
     else:
       messages.error(request, f'Problem sending email to {to_email}, check if you typed correctly')
 
@@ -162,10 +185,15 @@ class logoutView(View):
 
 class profileInfoView(LoginRequiredMixin, View):
   login_url = "user:login"
+  
   def get(self, request):
+    date_join = str(request.user.date_joined.strftime("%d/%m/%Y"))
+    date_active = str(request.user.last_login.strftime("%d/%m/%Y"))
     context = {
       "web": "Info",
       "socialAccount": getSocialAccount(request),
+      "date_join": date_join,
+      "date_active": date_active,
     }
     return render(request, "user/profileInfo.html", context)
   
@@ -177,18 +205,50 @@ class profileEditView(LoginRequiredMixin, View):
   login_url = "user:login"
   def get(self, request):
     form = ProfileEditForm(instance=request.user)
+    user = User.objects.get(id=request.user.id)
+    birthdate = str(user.birthdate)
     context = {
       "web": "Edit profile",
       "cssFiles": [],
       "form": form,
       "socialAccount": getSocialAccount(request),
+      "user":user,
+      "birthdate":birthdate,
     }
     return render(request, "user/profileEdit.html", context)
   
   def post(self, request):
+    
+    
+  
     form = ProfileEditForm(request.POST, request.FILES, instance=request.user)
     if form.is_valid():
-      form.save()
+      user = User.objects.get(id=request.user.id)
+      cleaned_data = form.cleaned_data
+      old_avatar = user.avatar.path if user.avatar else None
+      print(old_avatar)
+      
+      if cleaned_data.get('first_name') != '':
+        user.first_name = cleaned_data['first_name']
+      if cleaned_data.get('last_name') != '':
+        user.last_name = cleaned_data['last_name']
+      if cleaned_data.get('birthdate'):
+        user.birthdate = cleaned_data['birthdate']
+      if cleaned_data.get('phoneNum'):
+        user.phoneNum = cleaned_data['phoneNum']
+      if cleaned_data.get('address'):
+        user.address = cleaned_data['address']
+      if cleaned_data.get('gender') != '':
+        user.gender = cleaned_data['gender']
+      if request.FILES.get('avatar'):
+        user.avatar = request.FILES['avatar']
+        
+        
+      user.save()
+      if request.FILES.get('avatar') and old_avatar:
+        print("Removing old avatar")
+        if os.path.exists(old_avatar):
+          os.remove(old_avatar)
       return redirect("user:info")
     else:
       context = {
@@ -214,6 +274,13 @@ class changePasswordView(LoginRequiredMixin, View):
     return render(request, "user/passwordChange.html", context)
   
   def post(self, request):
+
+    old_password = request.POST.get("old_password")
+    new_password1 = request.POST.get("new_password1")
+    new_password2 = request.POST.get("new_password2")
+
+    print(old_password, new_password1, new_password2)
+
     form = PasswordChangeForm(request.user, request.POST)
     context = {
       "web": "Change password",
@@ -223,12 +290,25 @@ class changePasswordView(LoginRequiredMixin, View):
       "socialAccount": getSocialAccount(request),
     }
     if form.is_valid():
+      messages.success(request, 'Your password was successfully updated!')
+      notification = Notification("Password Changed Successfully","Your password has been updated successfully. Please use your new password the next time you log in.","success")
       user = form.save()
       update_session_auth_hash(request, user)  # Important!
-      messages.success(request, 'Your password was successfully updated!')
-      return redirect("/")
+      context["notification"] = notification
+      return render(request, "user/passwordChange.html", context)
     else:
       messages.error(request, 'Please correct the error below.')
+      content = form.errors.as_data()
+
+      if 'old_password' in content:
+          content = content["old_password"][0].messages[0]
+      elif 'new_password2' in content:
+          content = content["new_password2"][0].messages[0]
+      else:
+          content = "An unknown error occurred."
+
+      notification = Notification("A problem has occured",content,"error")
+      context["notification"] = notification
       return render(request, "user/passwordChange.html", context)
 
 

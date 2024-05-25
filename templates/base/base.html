@@ -92,11 +92,10 @@
     <meta content="summary_large_image" name="twitter:card">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href="{% static 'base/final-teamplate.webflow.126693b58.css' %}" rel="stylesheet" type="text/css"> 
-    {% comment %} <link href="{% static 'user/login/final-teamplate.webflow.126693b58.css' %}" rel="stylesheet" type="text/css">  
- {% endcomment %}
     <script src="{% static 'base/webfont.js.download' %}" type="text/javascript"></script>
     {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   {% endcomment %}  <link rel="stylesheet" href="{% static 'base/css' %}" media="all"><script type="text/javascript">
+   {% endcomment %}  
+    <link rel="stylesheet" href="{% static 'base/css' %}" media="all"><script type="text/javascript">
       WebFont.load({
         google: {
           families: ["Inter:regular,500,700,800"]
@@ -116,8 +115,11 @@
 
   </head>
   <body>
+    <div style="opacity: 1;" class="page-wrapper"></div>
+
     <div class="page-wrapper full-page-wrapper" style="opacity: 1;">
       <div data-w-id="da732deb-5db6-156b-08c9-e9fd059bc49f" data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="header-wrapper w-nav">
+        
         <div class="container-default w-container">
           <div class="header-content-wrapper"><a href="{% url 'home:index' %}" class="logo-link-wrapper w-nav-brand"><img src="{% static 'base/logo.svg' %}" loading="eager" alt="Dashflow X Webflow Template - Logo"></a>
             <nav role="navigation" class="header-nav-menu-wrapper-2 w-nav-menu">
@@ -127,14 +129,11 @@
                 <li class="header-nav-list-item"><a href="{% url 'home:index' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">My Books</a></li>
                 <li class="header-nav-list-item"><a href="{% url 'home:faq' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">FAQs</a></li>
                 <li class="header-nav-list-item"><a href="{% url 'home:contact' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Contact</a></li>
-              </ul>
-              
-              
+              </ul>              
             </nav>
             <div class="header-right-side-container">
               <div class="hidden-on-mbl">
-                {% if user.is_authenticated %}
-            
+                {% if user.is_authenticated %}    
                   <div class="buttons-row gap-column-12px">
                     <ul role="list" class="header-nav-menu-list">
                       <li class="header-nav-list-item">
@@ -144,11 +143,9 @@
                             <img src="/media/{{ user.avatar }}"  alt="AA - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px" class="avatar-circle _48px" />
                             {% else %}
                               {% if socialAccount %}
-                              <img src="{{ socialAccount.get_avatar_url }}" loading="eager" alt="AB - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px"  class="avatar-circle _48px" />
-                          
+                              <img src="{{ socialAccount.get_avatar_url }}" loading="eager" alt="AB - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px"  class="avatar-circle _48px" />        
                               {% else %}
                               <img src="/media/user/defaultAvatar.jpg" loading="eager" alt="AC - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px" class="avatar-circle _48px" />
-                          
                               {% endif %}
                             {% endif %}
                             <div>{{user.first_name}}</div>
@@ -156,7 +153,17 @@
                           </div>
                           <nav class="dropdown-list w-dropdown-list">
                             <div class="card header-dropdown-card">
-                              <div class="grid-1-column gap-row-12px"><a href="{% url 'user:info' %}" class="dropdown-link-single w-dropdown-link">View Profile</a><a href="/changelog" class="dropdown-link-single w-dropdown-link">Setting</a><a href="/licenses" class="dropdown-link-single w-dropdown-link">Notifications</a><a href="{% url 'user:logout' %}" id="w-node-_73d23224-b21d-29e3-9be0-c0265a137951-9648506f" class="dropdown-link-single w-dropdown-link">Logout</a></div>
+                              <div class="grid-1-column gap-row-12px">
+                                <a href="{% url 'user:info' %}" class="dropdown-link-single w-dropdown-link">View Profile</a>
+                                <a href="{% url 'user:edit' %}" class="dropdown-link-single w-dropdown-link">Edit Profile</a>
+                                {% if not socialAccount %}
+                                <a href="{% url 'user:changePassword' %}" class="dropdown-link-single w-dropdown-link">Change Password</a>
+                                {% endif %}
+                                {% if request.user.role == 2 and request.user.is_authenticated %}
+                                <a href="{% url 'control:control' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
+                                {% endif %}
+                                <a href="{% url 'user:logout' %}" id="w-node-_73d23224-b21d-29e3-9be0-c0265a137951-9648506f" class="dropdown-link-single w-dropdown-link">Logout</a>
+                              </div>
                             </div>
                           </nav>
                         </div>
@@ -177,10 +184,7 @@
               </div>
             </div>
           </div>
-           
-
-
-
+        </div>
     <script src="{% static 'base/jquery-3.5.1.min.dc5e7f18c8.js.download' %}" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="{% static 'base/webflow.e4f0c82ff.js.download'%}" type="text/javascript"></script>
     {% for file in jsFiles %}

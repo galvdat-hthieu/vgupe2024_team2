@@ -1,4 +1,33 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static "base/message/notifications.css" %}"  type="text/css">
+<script src="{% static "base/message/notifications.js" %}"  type="text/javascript"></script>
+
+
 {% if messages %}
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            {% for message in messages %}
+                createNotification({
+                    closeOnClick: true,
+                    displayCloseButton: true,
+                    positionClass: "nfc-top-right",
+                    showDuration: 4000,
+                    theme: "{{notification.status}}",
+                })({
+                    title: "{{notification.title}}",
+                    message: "{{notification.content }}"
+                });
+            {% endfor %}
+        });
+    </script>
+{% endif %}
+
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
+
+{% comment %} {% if messages %}
 <ul class="messages">
     {% for message in messages %}
     <div class="container-fluid p-0">
@@ -15,4 +44,4 @@
 
 {% if error %}
     <p> {{ error }} </p>
-{% endif %}
+{% endif %} {% endcomment %}
