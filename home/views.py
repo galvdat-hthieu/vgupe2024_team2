@@ -43,7 +43,7 @@ class contactView(View):
 
 class galleryView(View):
   def get(self, request):
-    books = search(request)[1:20]
+    books = search(request)[1:50]
     context = {
       "web":"Search",
       "books": books,

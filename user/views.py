@@ -369,7 +369,7 @@ class recoverAccountView(auth_views.PasswordResetView):
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     context['notification'] = Notification(
-        "Password recovery received",
+        "Password recover email sent",
         "If your email is associated with an account, you will get a reset link shortly. Please check your inbox.",
         "info"
     )
