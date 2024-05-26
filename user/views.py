@@ -349,19 +349,48 @@ class wallView(LoginRequiredMixin, View):
   
 
 class recoverAccountView(auth_views.PasswordResetView):
-  success_url = reverse_lazy("user:recover_done")
+  success_url = reverse_lazy("user:recover")
   email_template_name = "user/recover/recoverEmail.html"
   template_name = "user/recover/recoverForm.html"
   subject_template_name = "user/recover/recoverEmailSubject.txt"
+  
+  def form_valid(self, form):
+    messages.success(self.request, "email sent")
+    return super().form_valid(form)
 
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['notification'] = Notification(
+        "Password recovery received",
+        "If your email is associated with an account, you will get a reset link shortly. Please check your inbox.",
+        "info"
+    )
+    return context
 
 class recoverDoneView(auth_views.PasswordResetDoneView):
   template_name = "user/recover/recoverDone.html"
 
 
 class recoverConfirmView(auth_views.PasswordResetConfirmView):
-  success_url=reverse_lazy("user:recover_complete")
+  success_url=reverse_lazy("user:login")
   template_name = "user/recover/recoverConfirm.html"
+  
+  def form_valid(self, form):
+    print("run form valid")
+    messages.success(self.request, "password reset done")
+    return super().form_valid(form)
+
+  def get_context_data(self, **kwargs):
+    print("run get context data")
+    context = super().get_context_data(**kwargs)
+    context['uidb64'] = self.kwargs['uidb64']
+    context['token'] = self.kwargs['token']
+    context['notification'] = Notification(
+        "Password reset complete",
+        "You can now log in with your new password.",
+        "success"
+    )
+    return context
 
 
 class recoverCompleteView(auth_views.PasswordResetCompleteView):

@@ -1,18 +1,21 @@
 {% extends 'base/base.html' %}
 
 {% load static %}
-{% include 'base/message.html' %}
+
 {% load i18n %}
 
 {% block title %}{% trans "Reset password" %}{% endblock %}
 
 {% block content %}
+
+{% comment %} {% include 'base/message.html' %} {% endcomment %}
+{% include 'base/message.html' %}
 <div class="w-nav-overlay" data-wf-ignore="" id="w-nav-overlay-0"></div> 
           <div class="container-default---login w-container">
             <div data-w-id="bffbe75b-d95c-3992-bdd3-befc9d0bd453" style="opacity: 1;" class="mg-bottom-48px---login">
               <div class="sign-in-form-block---brix w-form">
 
-                <form action="{% url 'user:recover_done' %}" id="wf-form-Sign-in-V1" name="wf-form-Sign-in-V1" data-name="Sign in V1" method="post" class="sign-in-form-v1---brix" data-wf-page-id="6631019727c76c1f85d4a18f" data-wf-element-id="07381e2a-d17a-38e9-de5c-b7fc4244450c" aria-label="Sign in V1">
+                <form action="{% url 'user:recover' %}" id="wf-form-Sign-in-V1" name="wf-form-Sign-in-V1" data-name="Sign in V1" method="post" class="sign-in-form-v1---brix" data-wf-page-id="6631019727c76c1f85d4a18f" data-wf-element-id="07381e2a-d17a-38e9-de5c-b7fc4244450c" aria-label="Sign in V1">
                   {% csrf_token %} 
                    <div class="title-container---brix">
                     <h2 class="heading-2---sign-in">{% trans "Forgot Password" %}</h2>
