@@ -10,10 +10,11 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.shortcuts import HttpResponse, redirect, render,get_object_or_404
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
+from django.http import HttpResponseRedirect
 
 from home.util import Notification
 from home.models import *
@@ -27,12 +28,19 @@ class loginView(View):
   def get(self, request):
     if (request.user.is_authenticated):
       return redirect("home:index")
+    
+    notification_temp = request.session.pop('password_reset_notification', None)
+    print(notification_temp["title"] if notification_temp else None)
+    print(notification_temp["content"] if notification_temp else None)
+    print(notification_temp["status"] if notification_temp else None)
+    
     form = LoginForm()
     context = {
       "web": "Login",
       "cssFiles": ["/static/user/login.css",
                    ],
       "form": form,
+      "notification":Notification(notification_temp["title"],notification_temp["content"],notification_temp["status"]) if notification_temp else None,
     }
     return render(request, 'user/login.html', context)
   
@@ -365,6 +373,7 @@ class recoverAccountView(auth_views.PasswordResetView):
         "If your email is associated with an account, you will get a reset link shortly. Please check your inbox.",
         "info"
     )
+    context['web'] = "Recover password"
     return context
 
 class recoverDoneView(auth_views.PasswordResetDoneView):
@@ -376,8 +385,14 @@ class recoverConfirmView(auth_views.PasswordResetConfirmView):
   template_name = "user/recover/recoverConfirm.html"
   
   def form_valid(self, form):
-    print("run form valid")
-    messages.success(self.request, "password reset done")
+    # Store the notification data in the session
+    notification = {
+        "title": "Password reset complete",
+        "content": "You can now log in with your new password.",
+        "status": "success"
+    }
+    messages.success(self.request, "Password reset complete")
+    self.request.session['password_reset_notification'] = notification
     return super().form_valid(form)
 
   def get_context_data(self, **kwargs):
@@ -385,6 +400,7 @@ class recoverConfirmView(auth_views.PasswordResetConfirmView):
     context = super().get_context_data(**kwargs)
     context['uidb64'] = self.kwargs['uidb64']
     context['token'] = self.kwargs['token']
+    context['web'] = "Recover password"
     context['notification'] = Notification(
         "Password reset complete",
         "You can now log in with your new password.",

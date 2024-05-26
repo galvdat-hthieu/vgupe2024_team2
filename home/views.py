@@ -167,4 +167,10 @@ class borrowView(View):
               'copy':copy,
           }
           return render(request, "home/borrowance.html", context)
-      
+    
+def handling_404(request, exception):
+  context = {
+    "web":"Page not found",
+    "socialAccount": getSocialAccount(request),
+  }
+  return render(request, '404.html',context)
