@@ -7,8 +7,8 @@
 
 
 <div class="w-nav-overlay" data-wf-ignore="" id="w-nav-overlay-0"></div>
-      <div class="main-section pd-bottom-64px">
-        <div class="background---login">
+    
+ 
           <div class="container-default---login w-container">
             <div data-w-id="bffbe75b-d95c-3992-bdd3-befc9d0bd453" style="opacity: 1;" class="mg-bottom-48px---login">
               <div class="sign-in-form-block---brix w-form">
@@ -18,16 +18,11 @@
                 {% endfor %}
 
 
-                <form action = "{% url 'user:login' %}" id="wf-form-Sign-in-V1" name="wf-form-Sign-in-V1" data-name="Sign in V1" method="post" class="sign-in-form-v1---brix" data-wf-page-id="6635af3e5935deccf38319cc" data-wf-element-id="07381e2a-d17a-38e9-de5c-b7fc4244450c" aria-label="Sign in V1">
-        
+                <form action = "{% url 'user:login' %}" id="wf-form-Sign-in-V1" name="wf-form-Sign-in-V1" data-name="Sign in V1" method="post" class="sign-in-form-v1---brix" data-wf-page-id="6635af3e5935deccf38319cc" data-wf-element-id="07381e2a-d17a-38e9-de5c-b7fc4244450c" aria-label="Sign in V1">       
                   <div class="title-container---brix">
                     <h2 class="heading-2---sign-in">Login</h2>
                     <p class="paragraph-52">Please fill your email and password to login</p>
-                  </div>
-               
-
-                 
-                  
+                  </div>           
                     {% csrf_token %}
                   <div class="input-div---brix"><input class="input---brix name-icon---brix w-input" maxlength="256" name="username" data-name="Username" placeholder="Username" type="text" id="username" required=""></div>
                   <div class="input-div---brix"><input class="input---brix password-icon---brix w-input" maxlength="256" name="password" data-name="Password" placeholder="Password" type="password" id="password" required=""></div>
@@ -56,8 +51,8 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
+   
+   
 
 {% endblock %}
 
