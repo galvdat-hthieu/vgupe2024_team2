@@ -6,15 +6,31 @@
     <div class="component-section hero-v3 preview-page">
       <div class="container-default-3">
         <div class="hero-v3-wrapper">
-          <div class="split-content hero-v3-left---brix">
+          <div class="split-content hero-v3-left---brix" >
             <div class="subtitle hero-v3">Random book for you</div>
-            <h1 class="title hero-v3 home-title"><span class="text-span home-text-span">The Book Cover</span>By Unnamed Author</h1>
-            <p class="paragraph---description hero-v3">This book is fantastic. I can&#x27;t help but become one with the Sand Worm. So fantastic. I have never felt so alive.</p>
-            <div class="multiple-buttons"><a href="#" target="_blank" class="button-primary w-button">Read now</a></div>
+            <h3 class="title hero-v3 home-title">
+              <span class="text-span home-text-span" style="text-overflow: ellipsis; overflow: hidden; width: 600px; white-space: nowrap; padding-bottom: 50px;">{{ books.random.title }}</span>
+              {{ books.random.author }}
+            </h3>
+            <p class="paragraph---description hero-v3">
+              {% if books.random.description %}
+              {% endif %}
+            </p>
+            <div class="multiple-buttons"><a href="/gallery/bookid={{books.random.id}}/detail" target="_blank" class="button-primary w-button">Read now</a></div>
           </div>
         </div>
       </div>
-      <div class="split-content hero-v3-right"><img src="images/book-cover-placeholder.jpg" alt="" sizes="(max-width: 767px) 100vw, (max-width: 991px) 451.7749938964844px, (max-width: 1439px) 46vw, (max-width: 1919px) 47vw, 20vw" srcset="images/book-cover-placeholder-p-500.jpg 500w, images/book-cover-placeholder.jpg 683w" class="hero-image hero-v3 full-display" /></div>
+      <div class="split-content hero-v3-right">
+        {% if books.random.coverImage %}
+          {% if books.random.manual == True  %}
+          <img src="/media/{{ books.random.coverImage }}" alt="imaging" sizes="(max-width: 767px) 100vw, (max-width: 991px) 451.7749938964844px, (max-width: 1439px) 46vw, (max-width: 1919px) 47vw, 20vw" class="hero-image hero-v3 full-display" />
+          {% else %}
+          <img src="{{ books.random.coverImage }}" alt="imaging" sizes="(max-width: 767px) 100vw, (max-width: 991px) 451.7749938964844px, (max-width: 1439px) 46vw, (max-width: 1919px) 47vw, 20vw" class="hero-image hero-v3 full-display" />
+          {% endif %}
+        {% else %}
+          <img src="/media/book/defaultCover.png" alt="imaging" sizes="(max-width: 767px) 100vw, (max-width: 991px) 451.7749938964844px, (max-width: 1439px) 46vw, (max-width: 1919px) 47vw, 20vw" class="hero-image hero-v3 full-display" />
+        {% endif %}
+      </div>
     </div>
   </div>
   <div class="section cloneables-listing home-book-listings">
@@ -30,16 +46,28 @@
               </div>
               <div data-delay="4000" data-animation="slide" class="slider---brix testimonial-v1---brix w-slider" data-autoplay="false" data-easing="ease" data-hide-arrows="true" data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="3" data-duration="500" data-infinite="true">
                 <div class="mask---brix testimonial-v1---brix w-slider-mask">
+                  {% for item in books.literature %}
                   <div class="book-slide-item book-carousel first-item-carousel w-slide">
                     <div class="book-card testimonial-v1---brix first---brix">
                       <div class="split-content---brix testimonials-client-info---brix">
                         <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
+                          <div class="image-wrapper---brix testimonial-v1---brix">
+                            {% if item.coverImage %}
+                              {% if item.manual == True  %}
+                              <img src="/media/{{ item.coverImage }}" alt="imaging" />
+                              {% else %}
+                              <img src="{{ item.coverImage }}" alt="imaging" />
+                              {% endif %}
+                            {% else %}
+                              <img src="/media/book/defaultCover.png" alt="imaging" />
+                            {% endif %}
+                          </div>
                           <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
+                            <h2 class="title-2 avatar-name-v1---brix">{{ item.title }}</h2>
+                            <div class="text-block-6">by {{ item.author }}</div>
+                            <p class="paragraph---brix testimonial-v1---brix">
+                            </p>
+                            <div class="multiple-buttons"><a href="/gallery/bookid={{item.id}}/detail" class="btn-primary-4 w-inline-block">
                                 <div class="flex-horizontal gap-column-4px">
                                   <div>See more</div>
                                 </div>
@@ -49,253 +77,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  {% endfor %}
                 </div>
                 <div class="slider-arrow---brix small---brix left---brix w-slider-arrow-left">
                   <div class="image---brix slider-arrow-icon---brix w-icon-slider-left"></div>
@@ -317,16 +99,29 @@
               </div>
               <div data-delay="4000" data-animation="slide" class="slider---brix testimonial-v1---brix w-slider" data-autoplay="false" data-easing="ease" data-hide-arrows="true" data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="3" data-duration="500" data-infinite="true">
                 <div class="mask---brix testimonial-v1---brix w-slider-mask">
+                  {% for item in books.trending %}
                   <div class="book-slide-item book-carousel first-item-carousel w-slide">
                     <div class="book-card testimonial-v1---brix first---brix">
                       <div class="split-content---brix testimonials-client-info---brix">
                         <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
+                          <div class="image-wrapper---brix testimonial-v1---brix">
+                            {% if item.coverImage %}
+                              {% if item.manual == True  %}
+                              <img src="/media/{{ item.coverImage }}" alt="imaging" />
+                              {% else %}
+                              <img src="{{ item.coverImage }}" alt="imaging" />
+                              {% endif %}
+                            {% else %}
+                              <img src="/media/book/defaultCover.png" alt="imaging" />
+                            {% endif %}
+                          </div>
                           <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
+                            <h2 class="title-2 avatar-name-v1---brix">{{ item.title }}</h2>
+                            <div class="text-block-6">by {{ item.author }}</div>
+                            <p class="paragraph---brix testimonial-v1---brix">
+
+                            </p>
+                            <div class="multiple-buttons"><a href="/gallery/bookid={{item.id}}/detail" class="btn-primary-4 w-inline-block">
                                 <div class="flex-horizontal gap-column-4px">
                                   <div>See more</div>
                                 </div>
@@ -336,253 +131,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  {% endfor %}
                 </div>
                 <div class="slider-arrow---brix small---brix left---brix w-slider-arrow-left">
                   <div class="image---brix slider-arrow-icon---brix w-icon-slider-left"></div>
@@ -604,16 +153,29 @@
               </div>
               <div data-delay="4000" data-animation="slide" class="slider---brix testimonial-v1---brix w-slider" data-autoplay="false" data-easing="ease" data-hide-arrows="true" data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="3" data-duration="500" data-infinite="true">
                 <div class="mask---brix testimonial-v1---brix w-slider-mask">
+                  {% for item in books.favorite %}
                   <div class="book-slide-item book-carousel first-item-carousel w-slide">
                     <div class="book-card testimonial-v1---brix first---brix">
                       <div class="split-content---brix testimonials-client-info---brix">
                         <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
+                          <div class="image-wrapper---brix testimonial-v1---brix">
+                            {% if item.coverImage %}
+                              {% if item.manual == True  %}
+                              <img src="/media/{{ item.coverImage }}" alt="imaging" />
+                              {% else %}
+                              <img src="{{ item.coverImage }}" alt="imaging" />
+                              {% endif %}
+                            {% else %}
+                              <img src="/media/book/defaultCover.png" alt="imaging" />
+                            {% endif %}
+                          </div>
                           <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
+                            <h2 class="title-2 avatar-name-v1---brix">{{ item.title }}</h2>
+                            <div class="text-block-6">by {{ item.author }}</div>
+                            <p class="paragraph---brix testimonial-v1---brix">
+                              {% if item.description %} {{item.description}} {% endif %}
+                            </p>
+                            <div class="multiple-buttons"><a href="/gallery/bookid={{item.id}}/detail" class="btn-primary-4 w-inline-block">
                                 <div class="flex-horizontal gap-column-4px">
                                   <div>See more</div>
                                 </div>
@@ -623,253 +185,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="book-slide-item book-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
-                      <div class="split-content---brix testimonials-client-info---brix">
-                        <div class="grid-card-wrapper">
-                          <div class="image-wrapper---brix testimonial-v1---brix"></div>
-                          <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">Book title</h2>
-                            <div class="text-block-6">by Author Name</div>
-                            <p class="paragraph---brix testimonial-v1---brix">Small description about the book content. Just to get the hang of it.</p>
-                            <div class="multiple-buttons"><a href="#" class="btn-primary-4 w-inline-block">
-                                <div class="flex-horizontal gap-column-4px">
-                                  <div>See more</div>
-                                </div>
-                              </a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  {% endfor %}
                 </div>
                 <div class="slider-arrow---brix small---brix left---brix w-slider-arrow-left">
                   <div class="image---brix slider-arrow-icon---brix w-icon-slider-left"></div>

@@ -7,7 +7,7 @@ from django.utils import timezone
 from home.forms import *
 from home.models import *
 from home.functions import *
-import os
+import os, random, time
 
 # Create your views here.
 
@@ -19,6 +19,12 @@ class indexView(View):
       "web":"Home",
       "cssFiles": [],
       "socialAccount": getSocialAccount(request),
+      "books": {
+        "random": Book.objects.get(id = random.randint(1, len(Book.objects.all()))),
+        "literature": random.sample(list(Book.objects.filter(liteCate = 1)), 6),
+        "trending": random.sample(list(Book.objects.all()), 6),
+        "favorite": random.sample(list(Book.objects.all()), 6),
+      }
     }
     return render(request, 'home/index.html',context)
 
