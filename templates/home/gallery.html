@@ -111,7 +111,7 @@
       <div class="w-layout-grid brix---grid-3-columns-3">
         
         {% for book in books %}
-        <a id="w-node-_8d38f56c-7f89-ee87-4c5a-740504701bb3-4ae55b9a" href="#" class="brix---product-card-wrapper-v1 w-inline-block">
+        <a id="w-node-_8d38f56c-7f89-ee87-4c5a-740504701bb3-4ae55b9a" href="{% url 'home:book' book.id%}" class="brix---product-card-wrapper-v1 w-inline-block">
           <div class="brix---product-card-image-inside-card">          
             {% if book.coverImage %}          
               {% if book.manual == True  %} 
