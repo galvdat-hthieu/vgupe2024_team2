@@ -28,11 +28,13 @@
                 <div class="block-of-your-avatar">
                   <div class="div-block-10">
 
-                    {% if user.avatar %}
-                    <img src="/media/{{ user.avatar }}" loading="eager" sizes="(max-width: 1439px) 48px, 81px"  alt="Avatar - Dashflow X Webflow Template" class="avatar-circle _81px">
+                    {% if socialAccount %}
+                    <img src="{{ socialAccount.get_avatar_url }}" loading="eager" sizes="(max-width: 1439px) 48px, 81px"  alt="Avatar - Dashflow X Webflow Template" class="avatar-circle _81px">
                     {% else %}
-                      {% if socialAccount %}
-                      <img src="{{ socialAccount.get_avatar_url }}" loading="eager" sizes="(max-width: 1439px) 48px, 81px"  alt="Avatar - Dashflow X Webflow Template" class="avatar-circle _81px">
+                      
+                      {% if user.avatar %}
+                      <img src="/media/{{ user.avatar }}" loading="eager" sizes="(max-width: 1439px) 48px, 81px"  alt="Avatar - Dashflow X Webflow Template" class="avatar-circle _81px">
+                     
                       {% else %}
                       <img src="/media/user/defaultAvatar.jpg" loading="eager" sizes="(max-width: 1439px) 48px, 81px"  alt="Avatar - Dashflow X Webflow Template" class="avatar-circle _81px">
                       {% endif %}

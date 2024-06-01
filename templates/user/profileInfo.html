@@ -11,15 +11,16 @@
           <h2 class="text-500 bold mg-bottom-12px">User Profiles</h2>
           <div class="div-block-91">
             <div class="div-block-81">
-              {% if user.avatar %}
+              {% if socialAccount %}
               <img class="image-14" alt="John Carter - Dashly X Webflow Template"
                 loading="eager"
-                src="/media/{{ user.avatar }}">
+                src="{{ socialAccount.get_avatar_url }}">
               {% else %}
-                {% if socialAccount %}
+                {% if user.avatar %}
                 <img class="image-14" alt="John Carter - Dashly X Webflow Template"
                 loading="eager"
-                src="{{ socialAccount.get_avatar_url }}">
+                src="/media/{{ user.avatar }}">
+                
                 {% else %}
                 <img class="image-14" alt="John Carter - Dashly X Webflow Template"
                 loading="eager"

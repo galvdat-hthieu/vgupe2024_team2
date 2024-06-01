@@ -61,11 +61,12 @@
                       <li class="header-nav-list-item">
                         <div data-hover="true" data-delay="0" class="position-relative---z-index-2 w-dropdown">
                           <div class="header-nav-link dropdown-header-link w-dropdown-toggle">
-                            {% if user.avatar %}
-                            <img src="/media/{{ user.avatar }}"  alt="AA - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px" class="avatar-circle _48px" />
+                            {% if socialAccount %}
+                            <img src="{{ socialAccount.get_avatar_url }}" loading="eager" alt="AB - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px"  class="avatar-circle _48px" />        
                             {% else %}
-                              {% if socialAccount %}
-                              <img src="{{ socialAccount.get_avatar_url }}" loading="eager" alt="AB - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px"  class="avatar-circle _48px" />        
+                              {% if user.avatar %}
+                              <img src="/media/{{ user.avatar }}"  alt="AA - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px" class="avatar-circle _48px" />
+                              
                               {% else %}
                               <img src="/media/user/defaultAvatar.jpg" loading="eager" alt="AC - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px" class="avatar-circle _48px" />
                               {% endif %}
