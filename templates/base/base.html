@@ -7,8 +7,7 @@
     <meta property="og:type" content="website" />
     <meta content="summary_large_image" name="twitter:card" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <link href="{% static 'webflow-style.css' %}"  rel="stylesheet" type="text/css" />
-    
+    <link href="{% static 'webflow-style1.css' %}"  rel="stylesheet" type="text/css" />
 
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     
@@ -72,7 +71,20 @@
                               {% endif %}
                             {% endif %}
                             <div>{{user.first_name}}</div>
-                            <div class="line-rounded-icon header-dropdown-icon"></div>
+                            <style>
+                              @font-face {
+                                  font-family: 'Line Rounded Icons';
+                                  src: url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e99c_line-rounded-icons.woff2') format('woff2'),
+                                       url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e99a_line-rounded-icons.eot') format('embedded-opentype'),
+                                       url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e99e_line-rounded-icons.woff') format('woff'),
+                                       url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e99b_line-rounded-icons.ttf') format('truetype'),
+                                       url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e997_line-rounded-icons.svg') format('svg');
+                                  font-weight: 400;
+                                  font-style: normal;
+                                  font-display: swap;
+                              }
+                          </style>
+                            <div class="line-rounded-icon header-dropdown-icon" style="font-family: 'Line Rounded Icons';"></div>
                           </div>
                           <nav class="dropdown-list w-dropdown-list">
                             <div class="card header-dropdown-card">

@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, FileResponse
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from django.views import View
 from django.utils import timezone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from home.forms import *
 from home.models import *
 from home.functions import *
@@ -49,13 +50,30 @@ class contactView(View):
 
 class galleryView(View):
   def get(self, request):
-    books = search(request)[1:50]
+    books = search(request)
+    print(len(books))
+    
+    page = request.GET.get('page', 1)
+    paginator = Paginator(books, 10)
+    
+    try:
+        books = paginator.page(page)
+    except PageNotAnInteger:
+        books = paginator.page(1)
+    except EmptyPage:
+        books = paginator.page(paginator.num_pages)
+        
+    min = paginator.num_pages - 4
+    max = paginator.num_pages
+    
     context = {
       "web":"Search",
       "books": books,
       "cssFiles": ["/static/home/panel.css",
                    "/static/home/search.css"],
       "socialAccount": getSocialAccount(request),
+      "min":min,
+      "max":max
     }
     return render(request, 'home/gallery.html',context)
 

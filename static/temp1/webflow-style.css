@@ -2887,7 +2887,7 @@ figcaption {
 
 .checkbox.w--redirected-checked {
   background-color: rgba(0, 0, 0, 0);
-  background-image: url("https://uploads-ssl.webflow.com/check-form-brix-templates-webflow.svg"), linear-gradient(#3d7fff, #4b5dff);
+  background-image: url("../images/check-form-brix-templates-webflow.svg"), linear-gradient(#3d7fff, #4b5dff);
   background-position: 50%, 0 0;
   background-repeat: no-repeat, repeat;
   background-size: 8px, auto;
