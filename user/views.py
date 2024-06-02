@@ -197,11 +197,19 @@ class profileInfoView(LoginRequiredMixin, View):
   def get(self, request):
     date_join = str(request.user.date_joined.strftime("%d/%m/%Y"))
     date_active = str(request.user.last_login.strftime("%d/%m/%Y"))
+    
+    mod_app_notification = request.session.pop('mod_app_notification', None)
+    profile_update_notification = request.session.pop('profile_update_notification', None)
+
+    notification_temp = mod_app_notification or profile_update_notification
+
+
     context = {
       "web": "Info",
       "socialAccount": getSocialAccount(request),
       "date_join": date_join,
       "date_active": date_active,
+      "notification":Notification(notification_temp["title"],notification_temp["content"],notification_temp["status"]) if notification_temp else None,
     }
     return render(request, "user/profileInfo.html", context)
   
@@ -236,23 +244,30 @@ class profileEditView(LoginRequiredMixin, View):
       old_avatar = user.avatar.path if user.avatar else None
       print(old_avatar)
       
-      if cleaned_data.get('first_name') != '':
-        user.first_name = cleaned_data['first_name']
-      if cleaned_data.get('last_name') != '':
-        user.last_name = cleaned_data['last_name']
-      if cleaned_data.get('birthdate'):
-        user.birthdate = cleaned_data['birthdate']
-      if cleaned_data.get('phoneNum'):
-        user.phoneNum = cleaned_data['phoneNum']
-      if cleaned_data.get('address'):
-        user.address = cleaned_data['address']
-      if cleaned_data.get('gender') != '':
-        user.gender = cleaned_data['gender']
+ 
+      user.first_name = cleaned_data['first_name']
+
+      user.last_name = cleaned_data['last_name']
+
+      user.birthdate = cleaned_data['birthdate']
+
+      user.phoneNum = cleaned_data['phoneNum']
+
+      user.address = cleaned_data['address']
+
+      user.gender = cleaned_data['gender']
       if request.FILES.get('avatar'):
         user.avatar = request.FILES['avatar']
         
         
       user.save()
+      notification = {
+        "title": "Profile modified successfully",
+        "content": "Your profile has been updated.",
+        "status": "success"
+      }  
+      messages.success(request, "Profile info updated successfully.")
+      request.session['profile_update_notification'] = notification
       if request.FILES.get('avatar') and old_avatar:
         print("Removing old avatar")
         if os.path.exists(old_avatar):

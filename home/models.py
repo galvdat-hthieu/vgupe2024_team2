@@ -54,6 +54,8 @@ class User(AbstractUser):
     (3, "banned")
   )
   role = models.IntegerField(choices=roleChoices, default=0)
+  description = models.CharField(max_length=1500, null=True, blank=True)
+  availableWorkingHours = models.CharField(max_length=300, null=True, blank=True)
 
 class Book(models.Model):
   title = models.CharField(max_length=200, null=False, default="UNTITLED")

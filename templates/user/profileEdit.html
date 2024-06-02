@@ -71,16 +71,24 @@
                   
                   
                   <div class="flex-row_outer">
-                    <div class="input-wrapper _15p-right"><label for="first_name" class="input-label">First Name</label><input class="input-2 w-input" maxlength="256" name="first_name" data-name="First Name 4" placeholder="{{user.first_name}}" type="text" id="id_first_name" data-ms-member="first-name" ></div>
-                    <div class="input-wrapper"><label for="last_name" class="input-label">Last Name</label><input class="input-2 w-input" maxlength="256" name="last_name" data-name="Last Name 4" placeholder="{{user.last_name}}" type="text" id="id_last_name" data-ms-member="last-name" ></div>
+                    <div class="input-wrapper _15p-right"><label for="first_name" class="input-label">First Name</label><input class="input-2 w-input" maxlength="256" name="first_name" data-name="First Name 4" value="{{user.first_name}}" type="text" id="id_first_name" data-ms-member="first-name" placeholder="Your first name"></div>
+                    <div class="input-wrapper"><label for="last_name" class="input-label">Last Name</label><input class="input-2 w-input" maxlength="256" name="last_name" data-name="Last Name 4" value="{{user.last_name}}" placeholder="Your last name" type="text" id="id_last_name" data-ms-member="last-name" ></div>
                   </div>
       
                   <div class="flex-row_outer">
                     <div class="input-wrapper _15p-right"><label for="birthdate" class="input-label">Birthdate</label><input type="date" class="input-2 w-input" maxlength="256" name="birthdate" data-name="birthdate" id="id_birthdate" data-ms-member="first-name" value="{{birthdate}}"></div>
-                    <div class="input-wrapper"><label for="phoneNum" class="input-label">Phone Number</label><input class="input-2 w-input" maxlength="256" name="phoneNum" data-name="Phone Number" placeholder="{{user.phoneNum}}" type="text" id="id_phoneNum" data-ms-member="last-name" ></div>
+                    {% if user.phoneNum != None %}
+                    <div class="input-wrapper"><label for="phoneNum" class="input-label">Phone Number</label><input class="input-2 w-input" maxlength="256" name="phoneNum" data-name="Phone Number" value="{{user.phoneNum}}" placeholder="Your phone number" type="text" id="id_phoneNum" data-ms-member="last-name" ></div>
+                    {% else %}
+                    <div class="input-wrapper"><label for="phoneNum" class="input-label">Phone Number</label><input class="input-2 w-input" maxlength="256" name="phoneNum" data-name="Phone Number"  placeholder="Your phone number" type="text" id="id_phoneNum" data-ms-member="last-name" ></div>
+                    {% endif %}
                   </div>
                   <div class="flex-row_outer">
-                    <div class="input-wrapper _15p-right"><label for="address" class="input-label">Address</label><input class="input-2 w-input" maxlength="256" name="address" data-name="Phone 2" placeholder="{{user.address}}" type="text" id="id_address" data-ms-member="phone"  ></div>
+                    {% if user.address != None %}
+                    <div class="input-wrapper _15p-right"><label for="address" class="input-label">Address</label><input class="input-2 w-input" maxlength="256" name="address" data-name="Phone 2" value="{{user.address}}" placeholder="Your address" type="text" id="id_address" data-ms-member="phone"  ></div>
+                    {% else %}
+                    <div class="input-wrapper _15p-right"><label for="address" class="input-label">Address</label><input class="input-2 w-input" maxlength="256" name="address" data-name="Phone 2"  placeholder="Your address" type="text" id="id_address" data-ms-member="phone"  ></div>
+                    {% endif %}
                     <div class="input-wrapper"><label for="gender" class="input-label">Gender</label><select id="id_gender" name="gender" data-name="Field 2" data-ms-member="select" class="input-2---gender w-select">
                         {% if user.gender == 0 %}
                         <option value="0">Male</option>

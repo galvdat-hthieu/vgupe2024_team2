@@ -205,6 +205,14 @@ class applyModView(LoginRequiredMixin, View):
     if (request.user.role > 0):
       messages.warning(request, "You are already a moderator.")
       return redirect("home:index")
+    
+    userprofile = User.objects.get(id = request.user.id)
+    userprofile.phoneNum = request.POST.get("phone")
+    userprofile.address = request.POST.get("address")
+    userprofile.availableWorkingHours = request.POST.get("working_hours")
+    userprofile.description = request.POST.get("description")
+    userprofile.save()
+    
     data = {
       "applicant": request.user,
       "status": 0,
@@ -213,18 +221,20 @@ class applyModView(LoginRequiredMixin, View):
       "applicantDocument": request.POST.get("applicantDocument"),
       "adminComment": None,
     }
-    form = ModApplicationForm(data, request.FILES)
-    if form.is_valid():
-      form.save()
-      messages.success(request, "Your application has been sent. Please wait for the judgement.")
-      return redirect("home:index")
-    else:
-      context = {
-      "web": "Mod Apply",
-      "form": form,
-      "socialAccount": getSocialAccount(request),
-    }
-    return render(request, "mod/modApply.html", context)
+    application, created = ModApplication.objects.update_or_create(
+      applicant=request.user,
+      defaults=data
+    )
+          
+    notification = {
+        "title": "Application submit successfully",
+        "content": "Your application is being reviewed. Please wait for the approval.",
+        "status": "success"
+    }  
+    messages.success(request, "Your application has been sent. Please wait for the judgement.")
+    request.session['mod_app_notification'] = notification
+    return redirect("user:info")
+    
 
 class importDataView(View):
   def get(self, request):

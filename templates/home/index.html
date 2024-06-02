@@ -63,7 +63,7 @@
                             {% endif %}
                           </div>
                           <div class="split-content---brix avatar-content---brix">
-                            <h2 class="title-2 avatar-name-v1---brix">{{ item.title }}</h2>
+                            <h2 class="title-2 avatar-name-v1---brix">{% if item.title|length > 25 %}{{ item.title|truncatechars:25 }}{% else %}{{ item.title }}{% endif %}</h2>
                             <div class="text-block-6">by {{ item.author }}</div>
                             <p class="paragraph---brix testimonial-v1---brix">
                             </p>
