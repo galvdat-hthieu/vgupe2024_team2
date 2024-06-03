@@ -108,6 +108,9 @@ class bookView(View):
       "review": request.POST.get("review"),
       "created_at": timezone.now(),
     }
+    
+    print(request.POST.get("rating"))
+    print(request.POST.get("review"))
     form = ReviewForm(data)
     book = Book.objects.get(id=id)
     if form.is_valid():

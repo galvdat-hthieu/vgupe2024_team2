@@ -55,9 +55,77 @@
           <div class="divider"></div>
           <h2 class="text-500 bold mg-bottom-12px">Comments</h2>
           <div class="feedback-submission-form-block---brix w-form">
-            <form id="wf-form-Feedback-Submission-Form-Block---Preview-Page" name="wf-form-Feedback-Submission-Form-Block---Preview-Page" data-name="Feedback Submission Form Block - Preview Page" method="get" class="feedback-submission-form---brix" data-wf-page-id="66594a63dd0674ef7467042b" data-wf-element-id="5604945f-401b-156c-35a5-b3ab59810b36">
-              <div class="text-area-div---brix"><textarea placeholder="If you have any additional feedback, please type it in here..." maxlength="5000" id="Additional-Feedback-feedback-submission-form-preview" name="Additional-Feedback" data-name="Additional Feedback" class="text-area---brix w-input"></textarea></div><input type="submit" data-wait="Please wait..." class="submit-button-comment w-button" value="Submit" />
+            <style>
+              .rating {
+                margin-top: 10px; /* Reduced space between "Rating" and stars */
+                margin-bottom: 30px; /* Increased space between stars and text area */
+                border: none;
+                float: left;
+              }
+              
+              .rating > label {
+                color: #90A0A3;
+                float: right;
+              }
+              
+              .rating > label:before {
+                margin: 5px;
+                font-size: 2em;
+                font-family: FontAwesome;
+                content: "\f005";
+                display: inline-block;
+              }
+              
+              .rating > input {
+                display: none;
+              }
+              
+              .rating > input:checked ~ label,
+              .rating:not(:checked) > label:hover,
+              .rating:not(:checked) > label:hover ~ label {
+                color: #F79426;
+              }
+              
+              .rating > input:checked + label:hover,
+              .rating > input:checked ~ label:hover,
+              .rating > label:hover ~ input:checked ~ label,
+              .rating > input:checked ~ label:hover ~ label {
+                color: #FECE31;
+              }
+            </style>
+            
+            
+            <form action="{% url 'home:book' book.id%}" id="wf-form-Feedback-Submission-Form-Block---Preview-Page" name="wf-form-Feedback-Submission-Form-Block---Preview-Page" data-name="Feedback Submission Form Block - Preview Page" method="post" class="feedback-submission-form---brix" data-wf-page-id="66594a63dd0674ef7467042b" data-wf-element-id="5604945f-401b-156c-35a5-b3ab59810b36">
+              {% csrf_token %}
+              <h3>Rating</h3>
+              <div class="rating">
+                <input type="radio" id="star5" name="rating" value="5" />
+                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                <input type="radio" id="star4" name="rating" value="4" />
+                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                <input type="radio" id="star3" name="rating" value="3" />
+                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                <input type="radio" id="star2" name="rating" value="2" />
+                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                <input type="radio" id="star1" name="rating" value="1" />
+                <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+              </div>
+              <br>
+              <div class="text-area-div---brix">
+                <br>
+                <textarea placeholder="If you have any additional feedback, please type it in here..." maxlength="5000" id="Additional-Feedback-feedback-submission-form-preview" name="review" data-name="Additional Feedback" class="text-area---brix w-input" required></textarea>
+              </div>
+              <input type="submit" data-wait="Please wait..." class="submit-button-comment w-button" value="Comment" />
             </form>
+            
+          
+          
+          
+          
+    
+        
+            
+            
             
             
           </div>
