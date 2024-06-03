@@ -9,6 +9,7 @@ from home.forms import *
 from home.models import *
 from home.functions import *
 import os, random, time
+from home.util import Notification
 
 # Create your views here.
 
@@ -80,6 +81,9 @@ class galleryView(View):
 
 class bookView(View):
   def get(self, request, id):
+    
+    notification_temp = request.session.pop('review_submit', None)
+    
     book = Book.objects.get(id=id)
     copies = Copy.objects.filter(bookID=book)
     mod_counts = copies.values('userID').annotate(count=Count('id'))
@@ -97,6 +101,7 @@ class bookView(View):
       "form": form,
       "socialAccount": getSocialAccount(request),
       "mods_objects_dict":mods_objects_dict,
+      "notification":Notification(notification_temp["title"],notification_temp["content"],notification_temp["status"]) if notification_temp else None,
     }
     return render(request, "home/book.html", context)
   
@@ -109,15 +114,19 @@ class bookView(View):
       "created_at": timezone.now(),
     }
     
-    print(request.POST.get("rating"))
-    print(request.POST.get("review"))
+
     form = ReviewForm(data)
     book = Book.objects.get(id=id)
     if form.is_valid():
-      print("User:",form.data["userID"])
-      print("Book",form.data["bookID"])
+
       form.save()
-      messages.success(request, "Your rating and review has been saved.")
+      notification = {
+        "title": "Review sent successfully.",
+        "content": "Your review has been sent successfully. Thank you for your feedback.",
+        "status": "success"
+      }  
+      messages.success(request, "Profile info updated successfully.")
+      request.session['review_submit'] = notification
       return redirect("home:book", id)
     else:
       context = {
