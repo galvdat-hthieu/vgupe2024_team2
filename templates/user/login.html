@@ -28,6 +28,16 @@
                   <div class="input-div---brix"><input class="input---brix password-icon---brix w-input" maxlength="256" name="password" data-name="Password" placeholder="Password" type="password" id="password" required=""></div>
 
                   <label id="remember-me-preview" class="w-checkbox checkbox-field---brix">
+                    <style>
+                      .w-checkbox-input--inputType-custom.w--redirected-checked {
+                        background-color: #3898ec;
+                        background-image: url("{% static 'base/custom-checkbox-checkmark.589d534424.svg' %}");
+                        background-position: 50%;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        border-color: #3898ec;
+                      }
+                    </style>
                     <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox---brix"></div><input type="checkbox" id="Remember me" name="Remember-me" data-name="Remember me"  style="opacity:0;position:absolute;z-index:-1"><span for="Remember-me" class="w-form-label">Remember me</span>
                   </label>
                   <div class="create-account-box"><a href="{% url 'user:register' %}" class="create-new-account---brix">Don't have an account?&nbsp;Sign Up</a></div><input type="submit" data-wait="Please wait..." class="log-in-button---brix w-button" value="Login">
