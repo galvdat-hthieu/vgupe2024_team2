@@ -14,15 +14,11 @@ from django.urls import reverse_lazy, reverse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
-from django.http import HttpResponseRedirect
-
 from home.util import Notification
 from home.models import *
-from home.views import getSocialAccount
+from home.views import getSocialAccount, getSocialAccountByUser
 from user.forms import *
 from user.tokens import *
-import json
-
 
 class loginView(View):
   def get(self, request):
@@ -189,27 +185,35 @@ class logoutView(View):
   def get(self, request):
     logout(request=request)
     return redirect("/")
+
+
+class profileInfoRedirectView(LoginRequiredMixin, View):
+  login_url = "user:login"
+  def get(self, request):
+    return redirect(f"/user/profile/userID={request.user.id}")
   
 
 class profileInfoView(LoginRequiredMixin, View):
   login_url = "user:login"
   
-  def get(self, request):
-    date_join = str(request.user.date_joined.strftime("%d/%m/%Y"))
-    date_active = str(request.user.last_login.strftime("%d/%m/%Y"))
+  def get(self, request, id):
+    owner = User.objects.get(id = id)
+    date_join = str(owner.date_joined.strftime("%d/%m/%Y"))
+    date_active = str(owner.last_login.strftime("%d/%m/%Y"))
     
-    mod_app_notification = request.session.pop('mod_app_notification', None)
-    profile_update_notification = request.session.pop('profile_update_notification', None)
+    # mod_app_notification = request.session.pop('mod_app_notification', None)
+    # profile_update_notification = request.session.pop('profile_update_notification', None)
 
-    notification_temp = mod_app_notification or profile_update_notification
-
+    # notification_temp = mod_app_notification or profile_update_notification
 
     context = {
       "web": "Info",
+      "owner": owner,
       "socialAccount": getSocialAccount(request),
+      "ownerSocialAccount": getSocialAccountByUser(owner),
       "date_join": date_join,
       "date_active": date_active,
-      "notification":Notification(notification_temp["title"],notification_temp["content"],notification_temp["status"]) if notification_temp else None,
+      # "notification":Notification(notification_temp["title"],notification_temp["content"],notification_temp["status"]) if notification_temp else None,
     }
     return render(request, "user/profileInfo.html", context)
   
@@ -334,42 +338,6 @@ class changePasswordView(LoginRequiredMixin, View):
       context["notification"] = notification
       return render(request, "user/passwordChange.html", context)
 
-
-class wallView(LoginRequiredMixin, View):
-  login_url = "user:login"
-  def get(self, request, id):
-    user = User.objects.get(id=id)
-    context = {
-      "web": "Wall",
-      'wallOwner': user,
-      "socialAccount": getSocialAccount(request),
-      "form": ThoughtForm(),
-      'cssFiles': ["/static/user/wall.css",],
-    }
-    return render(request, "user/wall.html", context)
-  
-  def post(self, request, id):
-    data = {
-      "userID": request.user,
-      "thought": request.POST.get("thought"),
-      "created_at": timezone.now(),
-    }
-    form = ThoughtForm(data)
-    if form.is_valid():
-      form.save()
-      messages.success(request, "Your thought has been posted.")
-      return redirect("user:wall", id)
-    else:
-      context = {
-        "web": "Wall",
-        'wallOwner': User.objects.get(id=id),
-        "socialAccount": getSocialAccount(request),
-        'cssFiles': ["/static/user/wall.css",],
-        "form": form,
-      }
-      messages.error(request, "Your thought is too long.")
-      return render(request, "user/wall.html", context)
-  
 
 class recoverAccountView(auth_views.PasswordResetView):
   success_url = reverse_lazy("user:recover")

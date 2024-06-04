@@ -15,6 +15,13 @@ def getSocialAccount(request):
     socialAccount = None
   return socialAccount
 
+def getSocialAccountByUser(user):
+  try:
+    socialAccount = SocialAccount.objects.get(user = user)
+  except SocialAccount.DoesNotExist:
+    socialAccount = None
+  return socialAccount
+
 
 def search(request):
   booksByKeyword = Book.objects.none()

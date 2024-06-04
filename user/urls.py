@@ -17,10 +17,10 @@ urlpatterns = [
     path("recover/<uidb64>/<token>", recoverConfirmView.as_view(), name="recover_confirm"),
     path("recover/complete", recoverCompleteView.as_view(), name="recover_complete"),
 
-    path("profile/info/", profileInfoView.as_view(), name="info"),
+    path("profile/info/", profileInfoRedirectView.as_view(), name="info"),
+    path("profile/userID=<int:id>/", profileInfoView.as_view(), name="wall"),
     path("profile/edit/", profileEditView.as_view(), name="edit"),
     path("activate/<uidb64>/<token>", activate, name="activate"),
-    path('wall/userid=<int:id>/',wallView.as_view(), name="wall"),
 ]
 
 if settings.DEBUG:
