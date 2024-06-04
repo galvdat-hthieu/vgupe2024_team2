@@ -30,6 +30,7 @@ class indexView(View):
     }
     return render(request, 'home/index.html',context)
 
+
 class faqView(View):
   def get(self, request):
     context = {
@@ -38,6 +39,7 @@ class faqView(View):
       "socialAccount": getSocialAccount(request),
     }
     return render(request, 'home/faq.html',context)
+
 
 class contactView(View):
   def get(self, request):
@@ -106,6 +108,8 @@ class bookView(View):
     return render(request, "home/book.html", context)
   
   def post(self, request, id):
+    if request.user.is_authenticated == False:
+      return redirect("user:login")
     data = {
       "bookID": Book.objects.get(id=id),
       "userID": request.user,
@@ -114,7 +118,6 @@ class bookView(View):
       "created_at": timezone.now(),
     }
     
-
     form = ReviewForm(data)
     book = Book.objects.get(id=id)
     if form.is_valid():
@@ -174,35 +177,34 @@ class shelfView(View):
       'copies_2': copies_2,
       "socialAccount": getSocialAccount(request),
     }
-
     return render(request, self.template, context)
   def post(self, request, username):
 
     return render(request, self.template)
 
 
-class borrowView(View):
+class borrowView(LoginRequiredMixin, View):
+  login_url = "user:login"
   def get(self, request):
     return render(request, "home/borrowance.html")
 
   def post(self, request):
-    if request.method == 'POST':
-        userID = request.POST.get("userID")
-        if userID == "None":
-          return redirect("user:login")
-        else:
-          modName = request.POST.get("source")  
-          mod = User.objects.get(first_name=modName)
-          bookID = request.POST.get("bookID")
-          book = Book.objects.get(id=bookID)
-          copy = Copy.objects.filter(userID_id=mod.id, bookID_id=book.id).first()
+    userID = request.POST.get("userID")
+    if userID == "None":
+      return redirect("user:login")
+    else:
+      modName = request.POST.get("source")  
+      mod = User.objects.get(first_name=modName)
+      bookID = request.POST.get("bookID")
+      book = Book.objects.get(id=bookID)
+      copy = Copy.objects.filter(userID_id=mod.id, bookID_id=book.id).first()
 
-          context = {
-              'mod':mod,
-              'book':book,
-              'copy':copy,
-          }
-          return render(request, "home/borrowance.html", context)
+      context = {
+          'mod':mod,
+          'book':book,
+          'copy':copy,
+      }
+      return render(request, "home/borrowance.html", context)
     
 def handling_404(request, exception):
   context = {
