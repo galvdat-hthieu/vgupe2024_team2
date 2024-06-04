@@ -177,35 +177,34 @@ class shelfView(View):
       'copies_2': copies_2,
       "socialAccount": getSocialAccount(request),
     }
-
     return render(request, self.template, context)
   def post(self, request, username):
 
     return render(request, self.template)
 
 
-class borrowView(View):
+class borrowView(LoginRequiredMixin, View):
+  login_url = "user:login"
   def get(self, request):
     return render(request, "home/borrowance.html")
 
   def post(self, request):
-    if request.method == 'POST':
-        userID = request.POST.get("userID")
-        if userID == "None":
-          return redirect("user:login")
-        else:
-          modName = request.POST.get("source")  
-          mod = User.objects.get(first_name=modName)
-          bookID = request.POST.get("bookID")
-          book = Book.objects.get(id=bookID)
-          copy = Copy.objects.filter(userID_id=mod.id, bookID_id=book.id).first()
+    userID = request.POST.get("userID")
+    if userID == "None":
+      return redirect("user:login")
+    else:
+      modName = request.POST.get("source")  
+      mod = User.objects.get(first_name=modName)
+      bookID = request.POST.get("bookID")
+      book = Book.objects.get(id=bookID)
+      copy = Copy.objects.filter(userID_id=mod.id, bookID_id=book.id).first()
 
-          context = {
-              'mod':mod,
-              'book':book,
-              'copy':copy,
-          }
-          return render(request, "home/borrowance.html", context)
+      context = {
+          'mod':mod,
+          'book':book,
+          'copy':copy,
+      }
+      return render(request, "home/borrowance.html", context)
     
 def handling_404(request, exception):
   context = {
