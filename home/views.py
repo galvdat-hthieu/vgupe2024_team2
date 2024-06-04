@@ -30,6 +30,7 @@ class indexView(View):
     }
     return render(request, 'home/index.html',context)
 
+
 class faqView(View):
   def get(self, request):
     context = {
@@ -38,6 +39,7 @@ class faqView(View):
       "socialAccount": getSocialAccount(request),
     }
     return render(request, 'home/faq.html',context)
+
 
 class contactView(View):
   def get(self, request):
@@ -106,6 +108,8 @@ class bookView(View):
     return render(request, "home/book.html", context)
   
   def post(self, request, id):
+    if request.user.is_authenticated == False:
+      return redirect("user:login")
     data = {
       "bookID": Book.objects.get(id=id),
       "userID": request.user,
@@ -114,7 +118,6 @@ class bookView(View):
       "created_at": timezone.now(),
     }
     
-
     form = ReviewForm(data)
     book = Book.objects.get(id=id)
     if form.is_valid():
