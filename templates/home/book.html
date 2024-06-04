@@ -43,11 +43,19 @@
                     <p class="single-book---author"><strong>Publisher</strong>: {{book.publisher}}</p>
                     <p class="single-book---publish-year"><strong>Publication</strong>: {{book.publication}}</p>
                     <p class="single-book---author"><strong>Language</strong>: {{book.language}}</p>
-                    <p class="single-book---provider"><strong>Provider</strong>: Vietnamese German University (3 copies available)</p>
+                    <p class="single-book---provider"><strong>Provider</strong>: {{mod.first_name}} ({{amount_copies}} copies available)</p>
                     <p class="single-book---author"><strong>Location</strong>: Ring road 4, Quarter 4, Thoi Hoa Ward, Ben Cat Town, Binh Duong Province</p>
                     <p class="single-book---description"><strong>Description</strong>: {{book.description}}</p>
                   </div>
-                  <div class="block-of-check-out-button"><a href="#" class="brix---btn-primary-6 w-button">Check Out</a></div>
+                  <form method="post" action="{% url 'home:borrow' book.id%}">
+                    {% csrf_token %}
+                  <div class="block-of-check-out-button">
+                    <input type="hidden" name="book_id" value="{{book.id}}">
+                    <input type="hidden" name="mod_id" value="{{mod.id}}">
+                    <button class="brix---btn-primary-6 w-button">Check Out</button>
+                </div>
+                
+                  </form>
                 </div>
               </div>
             </div>

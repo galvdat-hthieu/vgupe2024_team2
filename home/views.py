@@ -88,11 +88,9 @@ class bookView(View):
     
     book = Book.objects.get(id=id)
     copies = Copy.objects.filter(bookID=book)
-    mod_counts = copies.values('userID').annotate(count=Count('id'))
-    mod_counts_dict = {item['userID']: item['count'] for item in mod_counts}
-    mod_ids = mod_counts_dict.keys()
-    mods = User.objects.filter(pk__in=mod_ids)
-    mods_objects_dict = {mod: mod_counts_dict[mod.id] for mod in mods}
+    mod = User.objects.get(id=copies[0].userID_id)
+    
+    
     form = ReviewForm(initial={"bookID": Book.objects.get(id=id),"userID": request.user,})
     context = {
       "web": book.title,
@@ -102,7 +100,8 @@ class bookView(View):
       'book': book,
       "form": form,
       "socialAccount": getSocialAccount(request),
-      "mods_objects_dict":mods_objects_dict,
+      "mod":mod,
+      "amount_copies": len(copies),
       "notification":Notification(notification_temp["title"],notification_temp["content"],notification_temp["status"]) if notification_temp else None,
     }
     return render(request, "home/book.html", context)
@@ -185,24 +184,25 @@ class shelfView(View):
 
 class borrowView(LoginRequiredMixin, View):
   login_url = "user:login"
-  def get(self, request):
-    return render(request, "home/borrowance.html")
+  def get(self, request, id):
+    return redirect("home:book",id)
 
-  def post(self, request):
+  def post(self, request, id):
     userID = request.POST.get("userID")
     if userID == "None":
       return redirect("user:login")
     else:
-      modName = request.POST.get("source")  
-      mod = User.objects.get(first_name=modName)
-      bookID = request.POST.get("bookID")
-      book = Book.objects.get(id=bookID)
+      
+      mod = User.objects.get(id=request.POST.get("mod_id"))
+      book = Book.objects.get(id=id)
       copy = Copy.objects.filter(userID_id=mod.id, bookID_id=book.id).first()
 
       context = {
           'mod':mod,
           'book':book,
           'copy':copy,
+          'web':"Checkout",
+          "socialAccount": getSocialAccount(request),
       }
       return render(request, "home/borrowance.html", context)
     
@@ -212,3 +212,17 @@ def handling_404(request, exception):
     "socialAccount": getSocialAccount(request),
   }
   return render(request, '404.html',context)
+
+
+class resultView(LoginRequiredMixin, View):
+  login_url = "user:login"
+  
+  
+  def get(self, request):
+    return redirect("home:index")
+  def post(self, request):
+    context={
+      "web":"Checkout complete",
+      "socialAccount": getSocialAccount(request),
+    }
+    return render(request, "home/checkoutResult.html")

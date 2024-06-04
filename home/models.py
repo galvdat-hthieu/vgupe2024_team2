@@ -107,7 +107,7 @@ class Copy(models.Model):
     (3, "unavailable")
   )
   status = models.IntegerField(choices=statusChoices, default=0)
-  note = models.TextField(max_length=200, null=True, blank=True)
+  copyID = models.TextField(max_length=200, null=True, blank=True)
   regDate = models.DateTimeField(null=False)
 
   def __str__(self) :
