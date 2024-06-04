@@ -29,6 +29,7 @@ SECRET_KEY = 'django-insecure-^)xvokc8x1$wi8%8uo=e5hvtx+%dfu&s9hxeexe&032o@f3497
 DEBUG = True
 
 ALLOWED_HOSTS = ['*'] 
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'https://vgupe2024team2clone-production.up.railway.app']
 
 
 # Application definition
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'whitenoise.runserver_nostatic',
 ]
 
 X_FRAME_OPTIONS = 'ALLOWALL'
@@ -63,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 SITE_ID = 1
@@ -150,11 +153,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-FILE_UPLOAD_HANDLERS = [
-    'django.core.files.uploadhandler.MemoryFileUploadHandler',
-    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
-]
-
 AUTH_USER_MODEL = 'home.User'
 
 # Internationalization
@@ -172,7 +170,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOTER = BASE_DIR / 'static'
 
 STATICFILES_DIRS = [
   os.path.join(BASE_DIR, "static"),
