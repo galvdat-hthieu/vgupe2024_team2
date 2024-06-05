@@ -50,7 +50,7 @@
                   <p class="moderator-profile---text-box"><strong>Address</strong>: {{mod.address}}</p>
                   <p class="moderator-profile---text-box-description"><strong>Desciption</strong>: {{mod.description}}</p>
                   {% if user.role == 1 %}
-                  <div class="block-add-book"><a href="{% url 'home:index' %}" class="brix---btn-primary-6 w-button">Add Book</a></div>
+                  <div class="block-add-book"><a href="{% url 'mod:addBook' %}" class="brix---btn-primary-6 w-button">Add Book</a></div>
                   {% else %}
                   <div class="block-add-book---hidden"></div>
                   {% endif %}
