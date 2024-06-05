@@ -24,7 +24,7 @@ class addBookView(LoginRequiredMixin, View):
   login_url = "user:login"
 
   def get(self, request):
-    if (request.user.is_authenticated and request.user.role >= 1):
+    if (request.user.is_authenticated and request.user.role == 1):
       form = BookForm()
       context = {
         "web": "Add Copy",
