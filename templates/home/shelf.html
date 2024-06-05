@@ -6,6 +6,7 @@
 
 
 <link href="{% static 'mod/webflow-style.css' %}"  rel="stylesheet" type="text/css" />
+<link href="{% static 'mod/webflow-style1.css' %}"  rel="stylesheet" type="text/css" />
 <div class="main-section---user-profile">
   <div class="container-default-5 w-container">
     <div class="block-sticky-top---main-contain">
@@ -48,7 +49,11 @@
                   <p class="moderator-profile---text-box"><strong>Working hours</strong>: {{mod.availableWorkingHours}} </p>
                   <p class="moderator-profile---text-box"><strong>Address</strong>: {{mod.address}}</p>
                   <p class="moderator-profile---text-box-description"><strong>Desciption</strong>: {{mod.description}}</p>
+                  {% if user.role == 1 %}
+                  <div class="block-add-book"><a href="{% url 'home:index' %}" class="brix---btn-primary-6 w-button">Add Book</a></div>
+                  {% else %}
                   <div class="block-add-book---hidden"></div>
+                  {% endif %}
                 </div>
               </div>
             </div>

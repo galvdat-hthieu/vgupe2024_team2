@@ -46,7 +46,7 @@
                 <li class="header-nav-list-item"><a href="{% url 'home:index' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Home</a></li>
                 <li class="header-nav-list-item"><a href="{% url 'home:gallery' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">All books</a></li>
                 {% if user.role == 1 %}
-                <li class="header-nav-list-item"><a href="{% url 'home:index' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">My library</a></li>
+                <li class="header-nav-list-item"><a href="{% url 'home:shelf' user.id%}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">My library</a></li>
                 {% endif %}
                 <li class="header-nav-list-item"><a href="{% url 'home:faq' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">FAQs</a></li>
                 <li class="header-nav-list-item"><a href="{% url 'home:contact' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Contact</a></li>
