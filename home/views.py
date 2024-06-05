@@ -161,20 +161,32 @@ class shelfView(View):
   template = "home/shelf.html"
 
   def get(self, request, id):
+    books = search(request)
+    books = books.filter(copy__userID_id=id).distinct()
+    print(len(books))
+    
+    page = request.GET.get('page', 1)
+    paginator = Paginator(books, 10)
+    
+    try:
+        books = paginator.page(page)
+    except PageNotAnInteger:
+        books = paginator.page(1)
+    except EmptyPage:
+        books = paginator.page(paginator.num_pages)
+        
+    min = paginator.num_pages - 4
+    max = paginator.num_pages
+    
+    
     vendor = User.objects.get(id=id)
-    copies_1 = Copy.objects.filter(userID_id=vendor.id)
-    books = Book.objects.filter(id__in=copies_1.values('bookID_id'))
-    copies_2 = []
-    for i in range(0, len(books)):
-      copies_2.append(Copy.objects.filter(userID_id=vendor.id, bookID_id = books[i].id))
     context = {
       "web":vendor.first_name,
-      "cssFiles": ["/static/home/shelfItem.css"],
-      'vendor': vendor,
-      'books': books,
-      'copies': copies_1,
-      'copies_2': copies_2,
+      "mod":vendor,
       "socialAccount": getSocialAccount(request),
+      "min":min,
+      "max":max,
+      "books":books,
     }
     return render(request, self.template, context)
   def post(self, request, username):
