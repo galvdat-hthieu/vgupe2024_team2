@@ -35,7 +35,6 @@ class faqView(View):
   def get(self, request):
     context = {
       "web":"FAQ",
-      "cssFiles": [],
       "socialAccount": getSocialAccount(request),
     }
     return render(request, 'home/faq.html',context)
@@ -161,6 +160,9 @@ class shelfView(View):
   template = "home/shelf.html"
 
   def get(self, request, id):
+    
+    owner = User.objects.get(id = id)
+    
     books = search(request)
     books = books.filter(copy__userID_id=id).distinct()
     print(len(books))
@@ -187,6 +189,7 @@ class shelfView(View):
       "min":min,
       "max":max,
       "books":books,
+      "ownerSocialAccount": getSocialAccountByUser(owner),
     }
     return render(request, self.template, context)
   def post(self, request, username):
@@ -233,8 +236,28 @@ class resultView(LoginRequiredMixin, View):
   def get(self, request):
     return redirect("home:index")
   def post(self, request):
+    
+    borrowedDate = timezone.now()
+    expiredDate = timezone.now() + timezone.timedelta(days=14)
+    status = 0
+    deposit = None
+    
+    copy = Copy.objects.filter(bookID_id=request.POST.get("copyID"))[0]
+    copyID_id = copy.id
+    userID_id = request.user.id
+    
+    new_borrowance = Borrowance(
+      borrowDate=borrowedDate,
+      expiredDate=expiredDate,
+      status=status,
+      deposit=deposit,
+      copyID_id=copyID_id,
+      userID_id=userID_id
+    )
+    new_borrowance.save()
+    
     context={
       "web":"Checkout complete",
       "socialAccount": getSocialAccount(request),
     }
-    return render(request, "home/checkoutResult.html")
+    return render(request, "home/checkoutResult.html",context)

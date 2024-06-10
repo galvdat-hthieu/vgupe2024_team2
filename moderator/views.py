@@ -66,17 +66,20 @@ class addCopyView(LoginRequiredMixin, View):
     form = CopyForm(initial={"bookID": book,
                              "userID": request.user,
                              "regDate": date.today()})
+    copies = Copy.objects.filter(bookID = book.id)
     context = {
       "web": "Add Copy",
       "cssFiles": [],
       "book": book,
       "form": form,
+      "copies":copies,
     }
     return render(request, 'mod/addCopy.html', context)
   
   def post(self, request, id):
     form = CopyForm(request.POST)
     book = Book.objects.get(id = id)
+    copies = Copy.objects.filter(bookID = book.id)
     if not (request.user.is_authenticated and request.user.role >= 1):
       messages.error(request, "You don't have the right to add copy.")
       return redirect("home:index")
@@ -93,6 +96,7 @@ class addCopyView(LoginRequiredMixin, View):
         "cssFiles": [],
         "book": book,
         "form": form,
+        "copies":copies,
       }
       messages.error(request, "There is a problem with adding your copy.")
       return render(request, 'mod/addCopy.html', context)
@@ -124,7 +128,7 @@ class editBookView(LoginRequiredMixin, View):
     if form.is_valid():
       form.save()
       messages.success(request, "The book has been edited succesfully.")
-      return redirect("home:book", id)
+      return redirect("mod:addCopy", id)
     else:
       context = {
         "web": "Edit Book",

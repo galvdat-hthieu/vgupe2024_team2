@@ -3,47 +3,6 @@
 {% block content %}
 {% include 'base/message.html' %}
 
-{% comment %} <div class="container">
-<h1> Add Book View </h1>
-<form action = "#" method = "post" enctype="multipart/form-data">
-  {% csrf_token %}
-
-  <p>Title: {{ form.title }}</p>
-  <p>Author: {{ form.author }}</p>
-  <p>Type: {{ form.type }} </p>
-
-  <legend>Categories:</legend>
-  <label><input type="checkbox" id="liteCate" name="liteCate"> Literature</label><br>
-  <label><input type="checkbox" id="socieCate" name="socieCate"> Social Sciences</label><br>
-  <label><input type="checkbox" id="naturCate" name="naturCate"> Natural Sciences</label><br>
-  <label><input type="checkbox" id="techCate" name="techCate"> Technology</label><br>
-  <label><input type="checkbox" id="poliCate" name="poliCate"> Politics</label><br>
-  <label><input type="checkbox" id="romanCate" name="romanCate"> Romantic</label><br>
-  <label><input type="checkbox" id="enterCate" name="enterCate"> Entertainment</label><br>
-  <label><input type="checkbox" id="otherCate" name="otherCate"> Other</label><br>
-
-  <p>Language:
-    <select id="language" name="language">
-        <option value="">----------</option>
-    </select>
-    <!-- Add option in addBook.js -->
-  </p>
-<p>Description: {{ form.description }}</p>
-<p>CoverImage: {{ form.coverImage }}</p>
-<p>Publisher: {{ form.publisher }}</p>
-<p>Publication Year:
-  <select id="publication" name="publication">
-    <option value="">Select Year</option>
-  </select>
-  <!-- Add option in addBook.js -->
-</p>
-<p>Code ISBN: {{ form.codeISBN }}</p>
-<p>Status: {{ form.status }} </p>
-  
-<input type = "submit" value = "Submit">
-</form>
-</div> {% endcomment %}
-
 <div class="main-section">
   <div class="container-default w-container">
     <div class="block-sticky-top---main-contain">
