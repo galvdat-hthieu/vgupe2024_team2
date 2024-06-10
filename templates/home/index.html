@@ -2,16 +2,16 @@
 
 
 {% block content %}
-<div class="section cloneables-listing">
+<div class="section cloneables-listing" style="padding-bottom: 0px;">
     <div class="component-section hero-v3 preview-page">
-      <div class="container-default-3">
+      <div class="container-default-3" style="width: 50vw; display: inline-block;">
         <div class="hero-v3-wrapper">
           <div class="split-content hero-v3-left---brix" >
             <div class="subtitle hero-v3">Random book for you</div>
-            <h3 class="title hero-v3 home-title">
-              <span class="text-span home-text-span" style="text-overflow: ellipsis; overflow: hidden; width: 600px; white-space: nowrap; padding-bottom: 50px;">{{ books.random.title }}</span>
-              {{ books.random.author }}
-            </h3>
+            <h4 class="home-title">
+              <span class="text-span home-text-span" style="text-overflow: ellipsis; overflow: hidden; width: 35vw; white-space: nowrap; padding-bottom: 50px; line-height: 50px;">{{ books.random.title }}</span>
+              <i class="author-text">{{ books.random.author }}</i>
+            </h4>
             <p class="paragraph---description hero-v3">
               {% if books.random.description %}
               {% endif %}
@@ -20,12 +20,12 @@
           </div>
         </div>
       </div>
-      <div class="split-content hero-v3-right">
+      <div class="split-content hero-v3-right" style="display: inline-block; width: 40vw">
         {% if books.random.coverImage %}
           {% if books.random.manual == True  %}
-          <img src="/media/{{ books.random.coverImage }}" alt="imaging" sizes="(max-width: 767px) 100vw, (max-width: 991px) 451.7749938964844px, (max-width: 1439px) 46vw, (max-width: 1919px) 47vw, 20vw" class="hero-image hero-v3 full-display" />
+          <img src="/media/{{ books.random.coverImage }}" alt="imaging" sizes="(max-width: 767px) 100vw, (max-width: 991px) 451.7749938964844px, (max-width: 1439px) 46vw, (max-width: 1919px) 47vw, 20vw" class="hero-image hero-v3 full-display" style="display: inline-block;" />
           {% else %}
-          <img src="{{ books.random.coverImage }}" alt="imaging" sizes="(max-width: 767px) 100vw, (max-width: 991px) 451.7749938964844px, (max-width: 1439px) 46vw, (max-width: 1919px) 47vw, 20vw" class="hero-image hero-v3 full-display" />
+          <img src="{{ books.random.coverImage }}" alt="imaging" sizes="(max-width: 767px) 100vw, (max-width: 991px) 451.7749938964844px, (max-width: 1439px) 46vw, (max-width: 1919px) 47vw, 20vw" class="hero-image hero-v3 full-display" style="display: inline-block;"/>
           {% endif %}
         {% else %}
           <img src="/media/book/defaultCover.png" alt="imaging" sizes="(max-width: 767px) 100vw, (max-width: 991px) 451.7749938964844px, (max-width: 1439px) 46vw, (max-width: 1919px) 47vw, 20vw" class="hero-image hero-v3 full-display" />
@@ -33,7 +33,7 @@
       </div>
     </div>
   </div>
-  <div class="section cloneables-listing home-book-listings">
+  <div class="section cloneables-listing home-book-listings" style="padding-bottom: 50px;">
     <div class="container-default-2 w-container">
       <div class="cloneable-container-default-2">
         <h1 class="heading-3 section-title">Explore our library</h1>
@@ -48,7 +48,7 @@
                 <div class="mask---brix testimonial-v1---brix w-slider-mask">
                   {% for item in books.literature %}
                   <div class="book-slide-item book-carousel first-item-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
+                    <div class="book-card testimonial-v1---brix first---brix" style="min-height: 270px;">
                       <div class="split-content---brix testimonials-client-info---brix">
                         <div class="grid-card-wrapper">
                           <div class="image-wrapper---brix testimonial-v1---brix">
@@ -101,7 +101,7 @@
                 <div class="mask---brix testimonial-v1---brix w-slider-mask">
                   {% for item in books.trending %}
                   <div class="book-slide-item book-carousel first-item-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
+                    <div class="book-card testimonial-v1---brix first---brix" style="min-height: 270px;">
                       <div class="split-content---brix testimonials-client-info---brix">
                         <div class="grid-card-wrapper">
                           <div class="image-wrapper---brix testimonial-v1---brix">
@@ -155,7 +155,7 @@
                 <div class="mask---brix testimonial-v1---brix w-slider-mask">
                   {% for item in books.favorite %}
                   <div class="book-slide-item book-carousel first-item-carousel w-slide">
-                    <div class="book-card testimonial-v1---brix first---brix">
+                    <div class="book-card testimonial-v1---brix first---brix" style="min-height: 270px;">
                       <div class="split-content---brix testimonials-client-info---brix">
                         <div class="grid-card-wrapper">
                           <div class="image-wrapper---brix testimonial-v1---brix">

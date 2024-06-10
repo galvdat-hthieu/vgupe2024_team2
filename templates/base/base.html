@@ -29,7 +29,7 @@
     <link href="https://cdn.prod.website-files.com/661a3f3af51abcb8bec1e922/665e8bf8a2bca604e75905fa_logo_bibliothek.png" rel="shortcut icon" type="image/x-icon">
     <link href="https://cdn.prod.website-files.com/661a3f3af51abcb8bec1e922/665e8afcb7ebaf53919eb2d3_logo_bibliothek.png" rel="apple-touch-icon">
     <style>
-      @media (max-width: 991px) {
+      @media (max-width: 1000px) {
         .header-wrapper{
           padding-top: 0;
           padding-bottom:0;
@@ -60,6 +60,18 @@
         .dropdown-list{
           left: -100px;
         }
+        .hero-v3{
+          font-size: 12px;
+        }
+        .home-title{
+          font-size: 20px;
+        }
+        .author-text{
+          font-size: 12px;
+        }
+        .hero-image.hero-v3.full-display{
+          min-height: 300px;
+        }
       }
     </style>
   </head>
@@ -70,14 +82,14 @@
           <div class="header-content-wrapper"><a href="/" class="logo-link-wrapper w-nav-brand"><img src="{% static 'base/logo1.svg' %}" style="width:150px; max-width: 20vw;" loading="eager" alt="Dashflow X Webflow Template - Logo" /></a>
             <nav role="navigation" class="header-nav-menu-wrapper-2 w-nav-menu">
               <ul role="list" class="header-nav-menu-list w-list-unstyled" style="display: inline-block;">
-                <li class="header-nav-list-item" style="display: inline-block;"><a href="{% url 'home:index' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Home</a></li>
-                <li class="header-nav-list-item" style="display: inline-block;"><a href="{% url 'home:dashboard' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Dashboard</a></li>
-                <li class="header-nav-list-item" style="display: inline-block;"><a href="{% url 'home:gallery' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">All books</a></li>
+                <li class="header-nav-list-item" style="display: inline-block; min-width: 7vw;"><a href="{% url 'home:index' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Home</a></li>
+                <li class="header-nav-list-item" style="display: inline-block; min-width: 7vw;"><a href="{% url 'home:dashboard' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Dashboard</a></li>
+                <li class="header-nav-list-item" style="display: inline-block; min-width: 7vw;"><a href="{% url 'home:gallery' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">All books</a></li>
                 {% if user.role == 1 %}
-                <li class="header-nav-list-item" style="display: inline-block;"><a href="{% url 'home:shelf' user.id%}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">My library</a></li>
+                <li class="header-nav-list-item" style="display: inline-block; min-width: 7vw;"><a href="{% url 'home:shelf' user.id%}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">My library</a></li>
                 {% endif %}
-                <li class="header-nav-list-item" style="display: inline-block;"><a href="{% url 'home:faq' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">FAQs</a></li>
-                <li class="header-nav-list-item" style="display: inline-block;"><a href="{% url 'home:contact' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Contact</a></li>
+                <li class="header-nav-list-item" style="display: inline-block; min-width: 7vw;"><a href="{% url 'home:faq' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">FAQs</a></li>
+                <li class="header-nav-list-item" style="display: inline-block; min-width: 7vw;"><a href="{% url 'home:contact' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Contact</a></li>
               </ul>              
             </nav>
             <div class="header-right-side-container">
@@ -89,13 +101,13 @@
                         <div data-hover="true" data-delay="0" class="position-relative---z-index-2 w-dropdown">
                           <div class="header-nav-link dropdown-header-link w-dropdown-toggle">
                             {% if socialAccount %}
-                            <img src="{{ socialAccount.get_avatar_url }}" loading="eager" alt="AB - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px"  class="avatar-circle _48px" />        
+                            <img src="{{ socialAccount.get_avatar_url }}" loading="eager" alt="AB - Dashflow X Webflow Template" sizes="(max-width: 1439px) 40px, (max-width: 1919px) 3vw, 40px"  class="avatar-circle _48px" />        
                             {% else %}
                               {% if user.avatar %}
-                              <img src="/media/{{ user.avatar }}"  alt="AA - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px" class="avatar-circle _48px" />
+                              <img src="/media/{{ user.avatar }}"  alt="AA - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 40px" class="avatar-circle _40px" />
                               
                               {% else %}
-                              <img src="/media/user/defaultAvatar.jpg" loading="eager" alt="AC - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px" class="avatar-circle _48px" />
+                              <img src="/media/user/defaultAvatar.jpg" loading="eager" alt="AC - Dashflow X Webflow Template" sizes="(max-width: 1439px) 40px, (max-width: 1919px) 3vw, 40px" class="avatar-circle _48px" />
                               {% endif %}
                             {% endif %}
                             <div class="hidden-when-tight">{{user.first_name}}</div>
@@ -124,10 +136,10 @@
                                 <a href="{% url 'user:changePassword' %}" class="dropdown-link-single w-dropdown-link">Change Password</a>
                                 {% endif %}
                                 {% if request.user.role == 1 and request.user.is_authenticated %}
-                                <a href="{% url 'control:control' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
+                                <a href="{% url 'mod:modManage' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
                                 {% endif %}
                                 {% if request.user.role == 2 and request.user.is_authenticated %}
-                                <a href="{% url 'control:control' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
+                                <a href="{% url 'mod:adminManage' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
                                 {% endif %}
                                 <a href="{% url 'user:logout' %}" id="w-node-_73d23224-b21d-29e3-9be0-c0265a137951-9648506f" class="dropdown-link-single w-dropdown-link">Logout</a>
                               </div>
