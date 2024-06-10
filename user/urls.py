@@ -19,7 +19,7 @@ urlpatterns = [
 
     path("profile/info/", profileInfoRedirectView.as_view(), name="info"),
     path("profile/userID=<int:id>/", profileInfoView.as_view(), name="wall"),
-    path("profile/borrow/", BorrowanceManagerView.as_view(), name="borrow"),
+    path("profile/borrow/", userBorrowanceManagerView.as_view(), name="borrow"),
     path("profile/edit/", profileEditView.as_view(), name="edit"),
     path("activate/<uidb64>/<token>", activate, name="activate"),
 ]

@@ -396,7 +396,7 @@ class recoverCompleteView(auth_views.PasswordResetCompleteView):
   login_url = "user:login"
   
   
-class BorrowanceManagerView(LoginRequiredMixin,View):
+class userBorrowanceManagerView(LoginRequiredMixin,View):
   login_url = "user:login"
   
   def get(self, request):

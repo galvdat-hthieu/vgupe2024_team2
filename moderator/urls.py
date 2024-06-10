@@ -12,7 +12,9 @@ urlpatterns = [
     path('addCopy/bookid=<int:id>', addCopyView.as_view(), name='addCopy'),
     path('editCopy/copyid=<int:id>', editCopyView.as_view(), name="editCopy"),
     path('apply', applyModView.as_view(), name="modApply"),
+    path('modManage',modManageView.as_view(), name="modManage"),
     
+    path('adminManage',adminManageView.as_view(), name="adminManage"),
     
     # Do not uncomment "import"
     # This function is only used to automatically add book

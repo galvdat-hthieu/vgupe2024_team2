@@ -45,97 +45,95 @@
     <link href="https://cdn.prod.website-files.com/661a3f3af51abcb8bec1e922/665e8afcb7ebaf53919eb2d3_logo_bibliothek.png" rel="apple-touch-icon">
   </head>
   <body>
-    <div class="page-wrapper">
-      
-        <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="header-wrapper w-nav">
-            <div class="container-default w-container">
-              <div class="header-content-wrapper"><a href="/" class="logo-link-wrapper w-nav-brand"><img src="{% static 'base/logo1.svg' %}" style="width:150px" loading="eager" alt="Dashflow X Webflow Template - Logo" /></a>
-                <nav role="navigation" class="header-nav-menu-wrapper-2 w-nav-menu">
-                  <ul role="list" class="header-nav-menu-list w-list-unstyled">
-                    <li class="header-nav-list-item"><a href="{% url 'home:index' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Home</a></li>
-                    <li class="header-nav-list-item"><a href="{% url 'home:gallery' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">All books</a></li>
-                    {% if user.role == 1 %}
-                    <li class="header-nav-list-item"><a href="{% url 'home:index' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">My library</a></li>
-                    {% endif %}
-                    <li class="header-nav-list-item"><a href="{% url 'home:faq' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">FAQs</a></li>
-                    <li class="header-nav-list-item"><a href="{% url 'home:contact' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Contact</a></li>
-                  </ul>              
-                </nav>
-                
-                
-                <div class="header-right-side-container">
-                  <div class="hidden-on-mbl">
-                    {% if user.is_authenticated %}    
-                      <div class="buttons-row gap-column-12px">
-                        <ul role="list" class="header-nav-menu-list">
-                          <li class="header-nav-list-item">
-                            <div data-hover="true" data-delay="0" class="position-relative---z-index-2 w-dropdown">
-                              <div class="header-nav-link dropdown-header-link w-dropdown-toggle">
-                                {% if socialAccount %}
-                                <img src="{{ socialAccount.get_avatar_url }}" loading="eager" alt="AB - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px"  class="avatar-circle _48px" />        
-                                {% else %}
-                                  {% if user.avatar %}
-                                  <img src="/media/{{ user.avatar }}"  alt="AA - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px" class="avatar-circle _48px" />
-                                  
-                                  {% else %}
-                                  <img src="/media/user/defaultAvatar.jpg" loading="eager" alt="AC - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px" class="avatar-circle _48px" />
-                                  {% endif %}
+    
+      <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="header-wrapper w-nav">
+        <div class="container-default w-container">
+          <div class="header-content-wrapper"><a href="/" class="logo-link-wrapper w-nav-brand"><img src="{% static 'base/logo1.svg' %}" style="width:150px" loading="eager" alt="Dashflow X Webflow Template - Logo" /></a>
+            <nav role="navigation" class="header-nav-menu-wrapper-2 w-nav-menu">
+              <ul role="list" class="header-nav-menu-list w-list-unstyled">
+                <li class="header-nav-list-item"><a href="{% url 'home:index' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Home</a></li>
+                <li class="header-nav-list-item"><a href="{% url 'home:dashboard' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Dashboard</a></li>
+                <li class="header-nav-list-item"><a href="{% url 'home:gallery' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">All books</a></li>
+                {% if user.role == 1 %}
+                <li class="header-nav-list-item"><a href="{% url 'home:shelf' user.id%}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">My library</a></li>
+                {% endif %}
+                <li class="header-nav-list-item"><a href="{% url 'home:faq' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">FAQs</a></li>
+                <li class="header-nav-list-item"><a href="{% url 'home:contact' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Contact</a></li>
+              </ul>              
+            </nav>
+            <div class="header-right-side-container">
+              <div class="hidden-on-mbl">
+                {% if user.is_authenticated %}    
+                  <div class="buttons-row gap-column-12px">
+                    <ul role="list" class="header-nav-menu-list">
+                      <li class="header-nav-list-item">
+                        <div data-hover="true" data-delay="0" class="position-relative---z-index-2 w-dropdown">
+                          <div class="header-nav-link dropdown-header-link w-dropdown-toggle">
+                            {% if socialAccount %}
+                            <img src="{{ socialAccount.get_avatar_url }}" loading="eager" alt="AB - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px"  class="avatar-circle _48px" />        
+                            {% else %}
+                              {% if user.avatar %}
+                              <img src="/media/{{ user.avatar }}"  alt="AA - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px" class="avatar-circle _48px" />
+                              
+                              {% else %}
+                              <img src="/media/user/defaultAvatar.jpg" loading="eager" alt="AC - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px" class="avatar-circle _48px" />
+                              {% endif %}
+                            {% endif %}
+                            <div>{{user.first_name}}</div>
+                            <style>
+                              @font-face {
+                                  font-family: 'Line Rounded Icons';
+                                  src: url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e99c_line-rounded-icons.woff2') format('woff2'),
+                                       url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e99a_line-rounded-icons.eot') format('embedded-opentype'),
+                                       url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e99e_line-rounded-icons.woff') format('woff'),
+                                       url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e99b_line-rounded-icons.ttf') format('truetype'),
+                                       url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e997_line-rounded-icons.svg') format('svg');
+                                  font-weight: 400;
+                                  font-style: normal;
+                                  font-display: swap;
+                              }
+                          </style>
+                            <div class="line-rounded-icon header-dropdown-icon" style="font-family: 'Line Rounded Icons';"></div>
+                          </div>
+                          <nav class="dropdown-list w-dropdown-list">
+                            <div class="card header-dropdown-card">
+                              <div class="grid-1-column gap-row-12px">
+                                <a href="{% url 'user:info' %}" class="dropdown-link-single w-dropdown-link">View Profile</a>
+                                <a href="{% url 'user:edit' %}" class="dropdown-link-single w-dropdown-link">Edit Profile</a>
+                                <a href="{% url 'user:borrow' %}" class="dropdown-link-single w-dropdown-link">My Borrowings</a> 
+                                {% if request.user.role == 1 and request.user.is_authenticated %}
+                                <a href="{% url 'mod:modManage' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
                                 {% endif %}
-                                <div>{{user.first_name}}</div>
-                                <style>
-                                  @font-face {
-                                      font-family: 'Line Rounded Icons';
-                                      src: url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e99c_line-rounded-icons.woff2') format('woff2'),
-                                           url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e99a_line-rounded-icons.eot') format('embedded-opentype'),
-                                           url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e99e_line-rounded-icons.woff') format('woff'),
-                                           url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e99b_line-rounded-icons.ttf') format('truetype'),
-                                           url('https://uploads-ssl.webflow.com/661a3f3af51abcb8bec1e922/661a3f3af51abcb8bec1e997_line-rounded-icons.svg') format('svg');
-                                      font-weight: 400;
-                                      font-style: normal;
-                                      font-display: swap;
-                                  }
-                              </style>
-                                <div class="line-rounded-icon header-dropdown-icon" style="font-family: 'Line Rounded Icons';"></div>
+                                {% if request.user.role == 2 and request.user.is_authenticated %}
+                                <a href="{% url 'mod:adminManage' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
+                                {% endif %}
+                                {% if not socialAccount %}
+                                <a href="{% url 'user:changePassword' %}" class="dropdown-link-single w-dropdown-link">Change Password</a>
+                                {% endif %}
+                                <a href="{% url 'user:logout' %}" id="w-node-_73d23224-b21d-29e3-9be0-c0265a137951-9648506f" class="dropdown-link-single w-dropdown-link">Logout</a>
                               </div>
-                              <nav class="dropdown-list w-dropdown-list">
-                                <div class="card header-dropdown-card">
-                                  <div class="grid-1-column gap-row-12px">
-                                    <a href="{% url 'user:info' %}" class="dropdown-link-single w-dropdown-link">View Profile</a>
-                                    <a href="{% url 'user:edit' %}" class="dropdown-link-single w-dropdown-link">Edit Profile</a>
-                                    <a href="{% url 'user:borrow' %}" class="dropdown-link-single w-dropdown-link">My Borrowings</a>
-                                    {% if not socialAccount %}
-                                    <a href="{% url 'user:changePassword' %}" class="dropdown-link-single w-dropdown-link">Change Password</a>
-                                    {% endif %}
-                                    {% if request.user.role == 2 and request.user.is_authenticated %}
-                                    <a href="{% url 'control:control' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
-                                    {% endif %}
-                                    <a href="{% url 'user:logout' %}" id="w-node-_73d23224-b21d-29e3-9be0-c0265a137951-9648506f" class="dropdown-link-single w-dropdown-link">Logout</a>
-                                  </div>
-                                </div>
-                              </nav>
                             </div>
-                          </li>
-                        </ul>
-                      </div>
-                    {% else %}  
-                      <div class="buttons-row---login-signup gap-column-12px"><a href="{% url 'user:login' %}" class="btn-secondary---login w-inline-block">
-                        <div class="flex-horizontal gap-column-4px">
-                          <div>Login</div>
+                          </nav>
                         </div>
-                      </a><a href="{% url 'user:register' %}" class="btn-primary---signup w-inline-block">
-                        <div class="flex-horizontal gap-column-4px">
-                          <div>Sign up</div>
-                        </div>
-                      </a></div>
-                    {% endif %}
+                      </li>
+                    </ul>
                   </div>
-                </div>
-                
-                
-                
+                {% else %}  
+                  <div class="buttons-row---login-signup gap-column-12px"><a href="{% url 'user:login' %}" class="btn-secondary---login w-inline-block">
+                    <div class="flex-horizontal gap-column-4px">
+                      <div>Login</div>
+                    </div>
+                  </a><a href="{% url 'user:register' %}" class="btn-primary---signup w-inline-block">
+                    <div class="flex-horizontal gap-column-4px">
+                      <div>Sign up</div>
+                    </div>
+                  </a></div>
+                {% endif %}
               </div>
-            </div>
+            </div>		
           </div>
+        </div>
+      </div>
 
 
           <div class="main-section---user-profile">
