@@ -90,6 +90,7 @@ class dashboardView(View):
         num_borrow += len(Borrowance.objects.filter(copyID = copy))
         num_copy += 1
       books.append({
+        "id": book.id,
         "title": book.title,
         "number_borrow": num_borrow,
         "number_copy": num_copy
@@ -103,6 +104,7 @@ class dashboardView(View):
       num_borrow += len(Borrowance.objects.filter(userID = user))
       num_copy += len(Copy.objects.filter(userID = user))
       users.append({
+        "id": user.id,
         "name": user.first_name,
         "number_borrow": num_borrow,
         "number_copy": num_copy

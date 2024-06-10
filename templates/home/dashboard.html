@@ -22,7 +22,7 @@
         {% for book in books_borrow %}
           <div style="padding-right: 25px;">
             <span style="display: inline-block; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80%;">
-              {{book.title}}
+              <a href="{% url 'home:book' book.id %}" style="text-decoration: none;">{{book.title}}</a>
             </span><span style="float: right;">: {{book.number_borrow}}</span> <br>
           </div>
         {% endfor %}
@@ -32,7 +32,7 @@
         {% for user in users_borrow %}
           <div>
             <span style="display: inline-block; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80%;">
-              {{user.name}}
+              <a href="{% url 'user:wall' user.id %}" style="text-decoration: none;">{{user.name}}</a>
             </span><span style="float: right;">: {{user.number_borrow}}</span> <br>
           </div>
         {% endfor %}
@@ -48,7 +48,7 @@
         {% for book in books_copy %}
           <div style="padding-right: 25px;">
             <span style="display: inline-block; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80%;">
-              {{book.title}}
+              <a href="{% url 'home:book' book.id %}" style="text-decoration: none;">{{book.title}}</a>
             </span><span style="float: right;">: {{book.number_copy}}</span> <br>
           </div>
         {% endfor %}
@@ -58,7 +58,7 @@
         {% for user in users_copy %}
           <div>
             <span style="display: inline-block; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80%;">
-              {{user.name}}
+              <a href="{% url 'user:wall' user.id %}" style="text-decoration: none;">{{user.name}}</a>
             </span><span style="float: right;">: {{user.number_copy}}</span> <br>
           </div>
         {% endfor %}

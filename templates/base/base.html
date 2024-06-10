@@ -28,22 +28,56 @@
     </script>
     <link href="https://cdn.prod.website-files.com/661a3f3af51abcb8bec1e922/665e8bf8a2bca604e75905fa_logo_bibliothek.png" rel="shortcut icon" type="image/x-icon">
     <link href="https://cdn.prod.website-files.com/661a3f3af51abcb8bec1e922/665e8afcb7ebaf53919eb2d3_logo_bibliothek.png" rel="apple-touch-icon">
+    <style>
+      @media (max-width: 991px) {
+        .header-wrapper{
+          padding-top: 0;
+          padding-bottom:0;
+        }
+        .header-nav-menu-wrapper-2{
+          padding-top: 10px;
+          padding-bottom: 10px;
+          grid-column-gap: 20px;
+          max-width: 60vw;
+          font-size: 12px;
+        }
+        .header-nav-list-item{
+          margin: 10px 5px;
+        }
+        .header-right-side-container{
+          width: 60px;
+          display: inline-block;
+        }
+        .hidden-on-mbl {
+          display: inline-block;
+        }
+        .header-nav-menu-list{
+          display: inline-block;
+        }
+        .hidden-when-tight{
+          display: none;
+        }
+        .dropdown-list{
+          left: -100px;
+        }
+      }
+    </style>
   </head>
   <body>
     <div style="opacity:0" class="page-wrapper">
-      <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="header-wrapper w-nav">
+      <div data-animation="default" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="header-wrapper w-nav">
         <div class="container-default w-container">
-          <div class="header-content-wrapper"><a href="/" class="logo-link-wrapper w-nav-brand"><img src="{% static 'base/logo1.svg' %}" style="width:150px" loading="eager" alt="Dashflow X Webflow Template - Logo" /></a>
+          <div class="header-content-wrapper"><a href="/" class="logo-link-wrapper w-nav-brand"><img src="{% static 'base/logo1.svg' %}" style="width:150px; max-width: 20vw;" loading="eager" alt="Dashflow X Webflow Template - Logo" /></a>
             <nav role="navigation" class="header-nav-menu-wrapper-2 w-nav-menu">
-              <ul role="list" class="header-nav-menu-list w-list-unstyled">
-                <li class="header-nav-list-item"><a href="{% url 'home:index' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Home</a></li>
-                <li class="header-nav-list-item"><a href="{% url 'home:dashboard' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Dashboard</a></li>
-                <li class="header-nav-list-item"><a href="{% url 'home:gallery' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">All books</a></li>
+              <ul role="list" class="header-nav-menu-list w-list-unstyled" style="display: inline-block;">
+                <li class="header-nav-list-item" style="display: inline-block;"><a href="{% url 'home:index' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Home</a></li>
+                <li class="header-nav-list-item" style="display: inline-block;"><a href="{% url 'home:dashboard' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Dashboard</a></li>
+                <li class="header-nav-list-item" style="display: inline-block;"><a href="{% url 'home:gallery' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">All books</a></li>
                 {% if user.role == 1 %}
-                <li class="header-nav-list-item"><a href="{% url 'home:shelf' user.id%}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">My library</a></li>
+                <li class="header-nav-list-item" style="display: inline-block;"><a href="{% url 'home:shelf' user.id%}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">My library</a></li>
                 {% endif %}
-                <li class="header-nav-list-item"><a href="{% url 'home:faq' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">FAQs</a></li>
-                <li class="header-nav-list-item"><a href="{% url 'home:contact' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Contact</a></li>
+                <li class="header-nav-list-item" style="display: inline-block;"><a href="{% url 'home:faq' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">FAQs</a></li>
+                <li class="header-nav-list-item" style="display: inline-block;"><a href="{% url 'home:contact' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Contact</a></li>
               </ul>              
             </nav>
             <div class="header-right-side-container">
@@ -64,7 +98,7 @@
                               <img src="/media/user/defaultAvatar.jpg" loading="eager" alt="AC - Dashflow X Webflow Template" sizes="(max-width: 1439px) 48px, (max-width: 1919px) 3vw, 48px" class="avatar-circle _48px" />
                               {% endif %}
                             {% endif %}
-                            <div>{{user.first_name}}</div>
+                            <div class="hidden-when-tight">{{user.first_name}}</div>
                             <style>
                               @font-face {
                                   font-family: 'Line Rounded Icons';
