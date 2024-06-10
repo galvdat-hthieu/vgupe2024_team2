@@ -314,3 +314,8 @@ class adminManageView(LoginRequiredMixin, View):
   def post(self, request):
     pass
   
+  
+def deleteBook(request,id):
+  book = Book.objects.get(id = id)
+  book.delete()
+  return redirect("home:shelf", request.user.id)

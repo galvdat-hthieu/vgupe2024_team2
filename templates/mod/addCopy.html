@@ -46,7 +46,7 @@
                 <p class="single-book---author"><strong>Location</strong>: Ring road 4, Quarter 4, Thoi Hoa Ward, Ben Cat Town, Binh Duong Province</p>
                 <p class="single-book---description"><strong>Description</strong>: {{book.description}}</p>
               </div>
-              <div class="block-of-edit---remove-book"><a href="{% url 'mod:editBook' book.id%}" class="brix---btn-primary-6 w-button">Modify Book</a><a href="#" class="brix---btn-secondary-6 w-button">Delete Book</a></div>
+              <div class="block-of-edit---remove-book"><a href="{% url 'mod:editBook' book.id%}" class="brix---btn-primary-6 w-button">Modify Book</a><a href="{% url 'mod:deleteBook' book.id%}" class="brix---btn-secondary-6 w-button">Delete Book</a></div>
             </div>
           </div>
         </div>
