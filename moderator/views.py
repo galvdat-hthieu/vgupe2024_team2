@@ -285,3 +285,32 @@ class importDataView(View):
     # Optional: Refresh Django's database connections
     connections.close_all()
     return HttpResponse("Finished")
+  
+  
+class modManageView(LoginRequiredMixin, View):
+  login_url = "user:login"
+  
+  
+  def get(self, request):
+    context = {
+      "socialAccount": getSocialAccount(request),
+    }
+    return render(request, "mod/modManageBorrowing.html", context)
+    
+  def post(self, request):
+    pass
+  
+  
+class adminManageView(LoginRequiredMixin, View):
+  login_url = "user:login"
+  
+  
+  def get(self, request):
+    context = {
+      "socialAccount": getSocialAccount(request),
+    }
+    return render(request, "mod/adminManageBorrowing.html", context)
+    
+  def post(self, request):
+    pass
+  

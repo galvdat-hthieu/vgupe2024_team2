@@ -30,7 +30,7 @@
     <link href="https://cdn.prod.website-files.com/661a3f3af51abcb8bec1e922/665e8afcb7ebaf53919eb2d3_logo_bibliothek.png" rel="apple-touch-icon">
   </head>
   <body>
-    <div style="opacity:0" class="page-wrapper">
+    
       <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="header-wrapper w-nav">
         <div class="container-default w-container">
           <div class="header-content-wrapper"><a href="/" class="logo-link-wrapper w-nav-brand"><img src="{% static 'base/logo1.svg' %}" style="width:150px" loading="eager" alt="Dashflow X Webflow Template - Logo" /></a>
@@ -85,15 +85,15 @@
                               <div class="grid-1-column gap-row-12px">
                                 <a href="{% url 'user:info' %}" class="dropdown-link-single w-dropdown-link">View Profile</a>
                                 <a href="{% url 'user:edit' %}" class="dropdown-link-single w-dropdown-link">Edit Profile</a>
-                                <a href="{% url 'user:borrow' %}" class="dropdown-link-single w-dropdown-link">My Borrowings</a>
-                                {% if not socialAccount %}
-                                <a href="{% url 'user:changePassword' %}" class="dropdown-link-single w-dropdown-link">Change Password</a>
-                                {% endif %}
+                                <a href="{% url 'user:borrow' %}" class="dropdown-link-single w-dropdown-link">My Borrowings</a> 
                                 {% if request.user.role == 1 and request.user.is_authenticated %}
-                                <a href="{% url 'control:control' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
+                                <a href="{% url 'mod:modManage' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
                                 {% endif %}
                                 {% if request.user.role == 2 and request.user.is_authenticated %}
-                                <a href="{% url 'control:control' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
+                                <a href="{% url 'mod:adminManage' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
+                                {% endif %}
+                                {% if not socialAccount %}
+                                <a href="{% url 'user:changePassword' %}" class="dropdown-link-single w-dropdown-link">Change Password</a>
                                 {% endif %}
                                 <a href="{% url 'user:logout' %}" id="w-node-_73d23224-b21d-29e3-9be0-c0265a137951-9648506f" class="dropdown-link-single w-dropdown-link">Logout</a>
                               </div>
@@ -138,7 +138,7 @@
       </div>
     </div>
   </div>
-</div>
+
 <script src= "{% static 'jquery.js' %}" type="text/javascript"  ></script>
 <script src= "{% static 'webflow-script.js' %}"  type="text/javascript"></script>
 </body>
