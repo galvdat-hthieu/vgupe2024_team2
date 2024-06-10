@@ -53,6 +53,7 @@
         z-index: 2222 !important;
       }
     </style>
+    
     <link href="https://cdn.prod.website-files.com/661a3f3af51abcb8bec1e922/665e8bf8a2bca604e75905fa_logo_bibliothek.png" rel="shortcut icon" type="image/x-icon">
     <link href="https://cdn.prod.website-files.com/661a3f3af51abcb8bec1e922/665e8afcb7ebaf53919eb2d3_logo_bibliothek.png" rel="apple-touch-icon">
     <link href="https://cdn.prod.website-files.com/661a3f3af51abcb8bec1e922/665e8bf8a2bca604e75905fa_logo_bibliothek.png" rel="shortcut icon" type="image/x-icon">
@@ -194,13 +195,13 @@
                     </ul>
                   </div>
                 {% else %}  
-                  <div class="buttons-row---login-signup gap-column-12px"><a href="{% url 'user:login' %}" class="btn-secondary---login w-inline-block">
+                  <div class="buttons-row---login-signup gap-column-12px" style="margin: 0 auto;"><a href="{% url 'user:login' %}" class="btn-secondary---login w-inline-block">
                     <div class="flex-horizontal gap-column-4px">
                       <div>Login</div>
                     </div>
                   </a><a href="{% url 'user:register' %}" class="btn-primary---signup w-inline-block">
                     <div class="flex-horizontal gap-column-4px">
-                      <div>Sign up</div>
+                      <div>Register</div>
                     </div>
                   </a></div>
                 {% endif %}
