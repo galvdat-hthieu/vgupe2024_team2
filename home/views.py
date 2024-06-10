@@ -8,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from home.forms import *
 from home.models import *
 from home.functions import *
-import os, random, time
+import os, random, time, operator
 from home.util import Notification
 
 # Create your views here.
@@ -79,6 +79,50 @@ class galleryView(View):
     }
     return render(request, 'home/gallery.html',context)
 
+
+class dashboardView(View):
+  def get(self, request):
+    books = []
+    for book in Book.objects.all():
+      num_borrow = 0
+      num_copy = 0
+      for copy in Copy.objects.filter(bookID = book):
+        num_borrow += len(Borrowance.objects.filter(copyID = copy))
+        num_copy += 1
+      books.append({
+        "title": book.title,
+        "number_borrow": num_borrow,
+        "number_copy": num_copy
+      })
+    sorted_books_borrow = sorted(books, key=lambda x: x['number_borrow'], reverse=True)
+    sorted_books_copy = sorted(books, key=lambda x: x['number_copy'], reverse=True)
+    users = []
+    for user in User.objects.all():
+      num_borrow = 0
+      num_copy = 0
+      num_borrow += len(Borrowance.objects.filter(userID = user))
+      num_copy += len(Copy.objects.filter(userID = user))
+      users.append({
+        "name": user.first_name,
+        "number_borrow": num_borrow,
+        "number_copy": num_copy
+      })
+    sorted_users_borrow = sorted(users, key=lambda x: x['number_borrow'], reverse=True)
+    sorted_users_copy = sorted(users, key=lambda x: x['number_copy'], reverse=True)
+    context = {
+      "web":"Dashboard",
+      "cssFiles": [],
+      "socialAccount": getSocialAccount(request),
+      "books": books,
+      "books_borrow": sorted_books_borrow[:5],
+      "books_copy": sorted_books_copy[:5],
+      "users": users,
+      "users_borrow": sorted_users_borrow[:5],
+      "users_copy": sorted_users_copy[:5],
+      "copies": Copy.objects.all(),
+      "borrowances": Borrowance.objects.all()
+    }
+    return render(request, 'home/dashboard.html', context)
 
 class bookView(View):
   def get(self, request, id):
