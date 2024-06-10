@@ -1,15 +1,40 @@
-# vgupe2024_team2
-### Team members:
-- Huỳnh Lê An Phú
-- Đỗ Minh Quang
-- Lê Công Nguyên
-- Dương Thiên Hương
-- Phan Tâm Như
-- Nguyễn Minh Anh
+# Bibliotech. Online Library Management
+***vgupe2024_team2***
 
-## Project: Online Library Management
-Online Library Management includes a webpage that allows users to access library resources such as books, journals, and multimedia materials over the internet. The website allows users to quickly and conveniently search for, checkout, reserve and return books, articles, journals,...
-This system makes it simpler for the administrator to manage the users' accounts as well as keep track of books, articles, and journals,... and it is also include maintaining a database for entering new books and recording borrowed books with their due dates.
+## Team members
+| Full Name    | Student's ID  |
+| ------------ | ------------- |
+| [Huỳnh Lê An Phú](@TheFabulousP) | 10421100   |
+| [Đỗ Minh Quang](@minWang916) | 10421051     |
+| [Lê Công Nguyên](@lcnguyencs) | 10421043    |
+| [Dương Thiên Hương](@dxd1019) | 10421019 |
+| [Phan Tâm Như](@nhuhuynh1508) | 10421122      |
+| [Nguyễn Minh Anh](@sumirez) | 10421068   |
+
+
+## Project Description
+### Overview
+The Online Library Management Application is a comprehensive system designed to facilitate the rental, review, and management of books through a user-friendly interface. The application supports three primary roles: Users, Moderators, and Admins.
+
+### Features
+- **User Interface**:
+    - **Browse and Filter**: Users can browse books, filter them by categories, authors, publications, etc.
+    - **Rent Books**: Users can rent books for a specified duration.
+    - **Review and Like**: Users can like and review books.
+    - **Moderator Application**: Users can apply to become moderators.
+
+- **Moderator Interface**:
+    - **Book Management**: Moderators can list and manage books, track their availability, and send notifications when leases expire.
+    - **Approval Process**: Moderators submit books for admin approval before they become available to users.
+
+- **Admin Role**:
+    - **Approval**: Admins approve books submitted by moderators, ensuring quality and compliance.
+
+### Technologies Used
+- **Backend**:
+    - **Django and Python**: Chosen for their robustness, scalability, and the extensive online resources available for development support. Django's built-in admin interface simplifies administrative tasks, making it an ideal choice for managing complex database operations and user roles.
+- **Frontend**:
+    - **Webflow**: Utilized to streamline the design-to-production process, allowing for rapid prototyping and a polished user interface. Webflow's visual editor makes it easy to create responsive designs without extensive front-end coding.
 
 ----
 
