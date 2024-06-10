@@ -8,7 +8,7 @@
 
 
   <div class="brix---section-4">
-    <div class="brix---container-default-5 w-container">
+    <div class="brix---container-default-5 w-container" >
       <div class="brix---inner-container-640px---center">
         <div class="brix---text-center-3">
           <div class="brix---color-neutral-809">
@@ -96,10 +96,10 @@
       <br><br><br>
       
 
-      <div class="w-layout-grid brix---grid-3-columns-3">
+      <div class="w-layout-grid brix---grid-3-columns-3" style="padding-bottom: 30px;">
         
         {% for book in books %}
-        <a id="w-node-_8d38f56c-7f89-ee87-4c5a-740504701bb3-4ae55b9a" href="{% url 'home:book' book.id%}" class="brix---product-card-wrapper-v1 w-inline-block">
+        <a id="w-node-_8d38f56c-7f89-ee87-4c5a-740504701bb3-4ae55b9a" href="{% url 'home:book' book.id%}" class="brix---product-card-wrapper-v1 w-inline-block" style="max-width: 35vw; margin: auto;">
           <div class="brix---product-card-image-inside-card">          
             {% if book.coverImage %}          
               {% if book.manual == True  %} 
@@ -111,7 +111,7 @@
               <img src="/media/book/defaultCover.jpg" alt="" class="brix---product-card-image" />
             {% endif %}     
           </div>
-          <div class="brix---product-card-content">
+          <div class="brix---product-card-content" style="padding: 5px">
             <div class="brix---mg-bottom-16px-5">
               <div class="brix---color-neutral-809---book-name">
                 <div class="text-100---book-name bold color-neutral-800">{{book.title}}</div>
@@ -135,10 +135,10 @@
         {% if books.has_other_pages %}
         <div class="block-of-next---previous-button">
           {% if books.has_previous %}
-            <div class="previous-button-block">
+            <div class="previous-button-block" style="display: inline-block;">
               <a href="?page={{ books.previous_page_number }}{% for key, value_list in request.GET.lists %}{% for value in value_list %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}{% endfor %}" class="btn-primary w-inline-block">
                 <div class="flex-horizontal gap-column-4px">
-                  <div>Previous</div>
+                  <div>Prev</div>
                 </div>
               </a>
             </div>
@@ -147,7 +147,7 @@
           {% for i in books.paginator.page_range %}
             {% if min <= books.number and books.number <= max and min <= i and i <= max %}
                 {% if books.number == i %}
-                <div class="one-button">
+                <div class="one-button" style="display: inline-block;">
                   <a href="?page={{ i }}{% for key, value_list in request.GET.lists %}{% for value in value_list %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}{% endfor %}" class="btn-primary w-inline-block">
                     <div class="flex-horizontal gap-column-4px">
                       <div>{{ i }}</div>
@@ -155,7 +155,7 @@
                   </a>
                 </div>
                 {% else %}
-                <div class="second-button">
+                <div class="second-button" style="display: inline-block;">
                   <a href="?page={{ i }}{% for key, value_list in request.GET.lists %}{% for value in value_list %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}{% endfor %}" class="btn-secondary w-inline-block">
                     <div class="flex-horizontal gap-column-4px">
                       <div>{{ i }}</div>
@@ -167,7 +167,7 @@
 
 
               {% if books.number == i %}
-                <div class="one-button">
+                <div class="one-button" style="display: inline-block;">
                   <a href="?page={{ i }}{% for key, value_list in request.GET.lists %}{% for value in value_list %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}{% endfor %}" class="btn-primary w-inline-block">
                     <div class="flex-horizontal gap-column-4px">
                       <div>{{ i }}</div>
@@ -177,7 +177,7 @@
               {% else %}
                 {% with sum_books_number=books.number|add:4 %}
                 {% if i >= books.number and i <= sum_books_number%}
-                <div class="second-button">
+                <div class="second-button" style="display: inline-block;">
                   <a href="?page={{ i }}{% for key, value_list in request.GET.lists %}{% for value in value_list %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}{% endfor %}" class="btn-secondary w-inline-block">
                     <div class="flex-horizontal gap-column-4px">
                       <div>{{ i }}</div>
@@ -193,7 +193,7 @@
             {% endfor %}
         
             {% if books.has_next %}
-              <div class="next-button-block">
+              <div class="next-button-block" style="display: inline-block;">
                 <a href="?page={{ books.next_page_number }}{% for key, value_list in request.GET.lists %}{% for value in value_list %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}{% endfor %}" class="btn-primary w-inline-block">
                   <div class="flex-horizontal gap-column-4px">
                     <div>Next</div>
