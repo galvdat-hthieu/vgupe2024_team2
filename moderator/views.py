@@ -133,16 +133,21 @@ class editBookView(LoginRequiredMixin, View):
     return render(request, "mod/editBook.html", context)
 
   def post(self, request, id):
+    print("POST to edit book", id)
     if not(request.user.is_authenticated and request.user.role >= 1):
       messages.error(request, "You don't have the right to edit book.")
       return redirect("home:index")
     book = Book.objects.get(id = id)
-    form = BookForm(request.POST, request.FILES, instance=book)
+    data = request.POST.dict()
+    data["status"] = book.status
+    form = BookForm(data, request.FILES, instance=book)
     if form.is_valid():
+      print("valid")
       form.save()
       messages.success(request, "The book has been edited succesfully.")
       return redirect("mod:addCopy", id)
     else:
+      print("invalid")
       context = {
         "web": "Edit Book",
         "cssFiles": [],

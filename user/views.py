@@ -53,19 +53,15 @@ class loginView(View):
       password = request.POST.get('password')
       user = authenticate(username=username, password=password)
       if user is None:
-        print("Wrong login1")
         return redirect("user:login")
       else:
-        print("Good login")
         login(request=request, user=user)
         remember_me = request.POST.get('remember_me')
         if not remember_me:
           request.session.set_expiry(0)
         return redirect("home:index")
     else:
-      print("Wrongdsdsd login")
       notification = Notification("Login Unsuccessful","Incorrect username or password. Please try again.","error")
-      messages.success(request, " ")
       context = {
       "web": "Login",
       "cssFiles": ["/static/user/login.css",
