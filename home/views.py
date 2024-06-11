@@ -206,8 +206,8 @@ class shelfView(View):
   template = "home/shelf.html"
 
   def get(self, request, id):
-    
     owner = User.objects.get(id = id)
+    copies = Copy.objects.filter(userID =id)
     
     books = search(request)
     books = books.filter(copy__userID_id=id).distinct()
@@ -235,6 +235,7 @@ class shelfView(View):
       "min":min,
       "max":max,
       "books":books,
+      "copies": copies,
       "ownerSocialAccount": getSocialAccountByUser(owner),
     }
     return render(request, self.template, context)

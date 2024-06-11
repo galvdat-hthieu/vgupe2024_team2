@@ -90,16 +90,19 @@ class addCopyView(LoginRequiredMixin, View):
     return render(request, 'mod/addCopy.html', context)
   
   def post(self, request, id):
-    form = CopyForm(request.POST)
-    book = Book.objects.get(id = id)
-    copies = Copy.objects.filter(bookID = book.id)
     if not (request.user.is_authenticated and request.user.role >= 1):
       messages.error(request, "You don't have the right to add copy.")
       return redirect("home:index")
+    book = Book.objects.get(id = id)
+    data = {
+      "bookID": book,
+      "userID": request.user,
+      "regDate": date.today(),
+      "note": request.POST.get('note'),
+      "status": 1
+    }
+    form = CopyForm(data)
     if form.is_valid():
-      form.bookID = book
-      form.userID = request.user
-      form.regDate = date.today()
       form.save()
       messages.success(request, "Your copy has been added successfully.")
       return redirect("home:book", id)
@@ -109,7 +112,6 @@ class addCopyView(LoginRequiredMixin, View):
         "cssFiles": [],
         "book": book,
         "form": form,
-        "copies":copies,
       }
       messages.error(request, "There is a problem with adding your copy.")
       return render(request, 'mod/addCopy.html', context)
