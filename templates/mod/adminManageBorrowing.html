@@ -94,7 +94,7 @@
                                 <a href="{% url 'user:edit' %}" class="dropdown-link-single w-dropdown-link">Edit Profile</a>
                                 <a href="{% url 'user:borrow' %}" class="dropdown-link-single w-dropdown-link">My Borrowings</a> 
                                 {% if request.user.role == 1 and request.user.is_authenticated %}
-                                <a href="{% url 'mod:modManage' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
+                                <a href="{% url 'mod:modManage_get' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
                                 {% endif %}
                                 {% if request.user.role == 2 and request.user.is_authenticated %}
                                 <a href="{% url 'mod:adminManage' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
@@ -156,44 +156,36 @@
                                   <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3be-eb07c9ab" class="text-50 bold color-neutral-700">Status</div>
                                 </div>
                                 <div class="rows">
+
+                                  {% for book in books %}
                                   <div class="data-block">
-                                    <div class="data-table-row"><img src="images/screenshot-202024-04-15-20203148.png" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c3-eb07c9ab" alt="" class="book-images-size" />
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c4-eb07c9ab" class="text-100---book-title bold color-neutral-800">Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow 3nd Edition</div>
+                                    <div class="data-table-row">
+                                      {% if book.coverImage %}          
+                                        {% if book.manual == True  %}                                    
+                                        <img src="{{ book.coverImage.url }}" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c3-eb07c9ab" alt="" class="book-images-size" />                
+                                        {% else %}   
+                                        <img src="{{ book.coverImage }}" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c3-eb07c9ab" alt="" class="book-images-size" />                                
+                                        {% endif %}                 
+                                      {% else %}   
+                                      <img src="/media/book/defaultCover.jpg" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c3-eb07c9ab" alt="" class="book-images-size" />                                  
+                                      {% endif %}               
+                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c4-eb07c9ab" class="text-100---book-title bold color-neutral-800">{{book.title}}</div>
                                       <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c6-eb07c9ab" class="text-100---provider medium">Vietnamese - German University</div>
                                       <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c8-eb07c9ab" class="text-100---time medium">05/05/24</div>
                                       <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3ca-eb07c9ab" class="combo-button">
-                                        <div class="btn-primary">
-                                          <div class="flex-horizontal gap-column-4px">
-                                            <div>Accept</div>
-                                          </div>
-                                        </div>
-                                        <div class="btn-secondary">
-                                          <div class="flex-horizontal gap-column-4px">
-                                            <div>Reject</div>
-                                          </div>
-                                        </div>
+                                        <form action="" method="post">
+                                          {% csrf_token %}
+                                        <input type="submit" value="Approve" class="btn-primary flex-horizontal gap-column-4px" />
+                                        </form>
+                                        <form action="" method="post">
+                                          {% csrf_token %}
+                                        <input type="submit" value="Decline" class="btn-secondary flex-horizontal gap-column-4px" />
+                                        </form>
                                       </div>
                                     </div>
                                   </div>
-                                  <div class="data-block">
-                                    <div class="data-table-row"><img src="images/screenshot-202024-04-16-20203339.png" loading="lazy" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3d9-eb07c9ab" alt="" class="book-images-size" />
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3da-eb07c9ab" class="text-100---book-title bold color-neutral-800">Deep Learning with TensorFlow, Keras, and PyTorch</div>
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3dc-eb07c9ab" class="text-100---provider medium">University of Science - HCM</div>
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3de-eb07c9ab" class="text-100---time medium">06/06/24</div>
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3e0-eb07c9ab" class="combo-button">
-                                        <div class="btn-primary">
-                                          <div class="flex-horizontal gap-column-4px">
-                                            <div>Accept</div>
-                                          </div>
-                                        </div>
-                                        <div class="btn-secondary">
-                                          <div class="flex-horizontal gap-column-4px">
-                                            <div>Reject</div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
+                                  {% endfor %}
+                                  
                                 </div>
                               </div>
                               <div class="overflow-auto">

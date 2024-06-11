@@ -12,7 +12,8 @@ urlpatterns = [
     path('addCopy/bookid=<int:id>', addCopyView.as_view(), name='addCopy'),
     path('editCopy/copyid=<int:id>', editCopyView.as_view(), name="editCopy"),
     path('apply', applyModView.as_view(), name="modApply"),
-    path('modManage',modManageView.as_view(), name="modManage"),
+    path('modManage',modManageView.as_view(), name="modManage_get"),
+    path('modManage/<int:id>',modManageView.as_view(), name="modManage_post"),
     path('adminManage',adminManageView.as_view(), name="adminManage"),
     path('deleteBook/bookid=<int:id>',deleteBook,name='deleteBook'),
     # Do not uncomment "import"

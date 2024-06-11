@@ -80,7 +80,7 @@ class BookDecideView(LoginRequiredMixin, View):
       book.save()
     else:
       messages.error("There is an error")
-    return redirect("control:bookReview")
+    return redirect("mod:adminManage")
 
 class ModDecideView(LoginRequiredMixin, View):
   login_url = "user:login"

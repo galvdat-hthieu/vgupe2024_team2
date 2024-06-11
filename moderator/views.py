@@ -309,16 +309,35 @@ class importDataView(View):
   
 class modManageView(LoginRequiredMixin, View):
   login_url = "user:login"
-  
-  
+   
   def get(self, request):
+    if request.user.role != 1:
+      return redirect("home:index") 
+    user_copies = Copy.objects.filter(userID_id=request.user.id)
+    borrowancesRequests = Borrowance.objects.filter(copyID__in=user_copies,status=0).order_by('-borrowDate')
+    borrowancesHistory = Borrowance.objects.filter(copyID__in=user_copies,status__in=[1,3]).order_by('-borrowDate')
     context = {
       "socialAccount": getSocialAccount(request),
+      "borrowancesRequests": borrowancesRequests,
+      "borrowancesHistory": borrowancesHistory,
     }
     return render(request, "mod/modManageBorrowing.html", context)
+  
+  def post(self, request,id):
+    action = request.POST.get("action")
+    borrowance = Borrowance.objects.get(id=id)
+    if action == "Approve":
+      borrowance.status = 2
+      borrowance.save()
     
-  def post(self, request):
-    pass
+    if action == "Decline":
+      borrowance.status = 1
+      borrowance.save()
+    
+    return redirect("mod:modManage_get")
+
+    
+
   
   
 class adminManageView(LoginRequiredMixin, View):
@@ -327,6 +346,9 @@ class adminManageView(LoginRequiredMixin, View):
   
   def get(self, request):
 
+    if request.user.role != 2:
+      return redirect("home:index")
+    
     context = {
       "socialAccount": getSocialAccount(request),
       "applications": ModApplication.objects.select_related('applicant').all()
@@ -334,7 +356,7 @@ class adminManageView(LoginRequiredMixin, View):
     return render(request, "mod/adminManageBorrowing.html", context)
     
   def post(self, request):
-    pass
+    return redirect("mod:adminManage")
   
   
 def deleteBook(request,id):

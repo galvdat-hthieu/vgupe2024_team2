@@ -289,7 +289,7 @@ class resultView(LoginRequiredMixin, View):
     status = 0
     deposit = None
     
-    copy = Copy.objects.filter(bookID_id=request.POST.get("copyID"))[0]
+    copy = Copy.objects.filter(bookID_id=request.POST.get("copyID"),status=1)[0]
     copyID_id = copy.id
     userID_id = request.user.id
     
@@ -303,6 +303,8 @@ class resultView(LoginRequiredMixin, View):
     )
     new_borrowance.save()
     
+    copy.status = 2
+    copy.save()
     context={
       "web":"Checkout complete",
       "socialAccount": getSocialAccount(request),
