@@ -306,8 +306,10 @@ class adminManageView(LoginRequiredMixin, View):
   
   
   def get(self, request):
+
     context = {
       "socialAccount": getSocialAccount(request),
+      "applications": ModApplication.objects.select_related('applicant').all()
     }
     return render(request, "mod/adminManageBorrowing.html", context)
     

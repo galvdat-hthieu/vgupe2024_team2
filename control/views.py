@@ -105,7 +105,7 @@ class ModDecideView(LoginRequiredMixin, View):
       application.save()
     else:
       messages.error("There is an error")
-    return redirect("control:modReview")
+    return redirect("mod:adminManage")
 
       
     
