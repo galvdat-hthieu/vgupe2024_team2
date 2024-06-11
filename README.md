@@ -4,7 +4,7 @@
 ## Team members
 | Full Name    | Student's ID  |
 | ------------ | ------------- |
-| [Huỳnh Lê An Phú](https://github.com/TheFabulousP) | 1042110 |
+| [Huỳnh Lê An Phú](https://github.com/TheFabulousP) | 10421100 |
 | [Đỗ Minh Quang](https://github.com/minWang916) | 10421051 |
 | [Lê Công Nguyên](https://github.com/lcnguyencs) | 10421043 |
 | [Dương Thiên Hương](https://github.com/dxd1019) | 10421019 |
@@ -45,11 +45,8 @@ The Online Library Management Application is a comprehensive system designed to 
 
 ## How to install and run the package
 ### Prequisites
-- **Python 3.9 or higher:** Ensure Python is installed on your system. We use Python 3.9.1 for development
-- **sqlite3:** Required for database view and management.
-
-### Installation Steps
-The issue with your MD file could be related to indentation and formatting of code blocks. Here's a refined version:
+- **Python 3.9 or higher:** Ensure Python is installed on your system. Our team use Python 3.9 to implement this project.
+- **sqlite3:** Required for database view and management (optional).
 
 ### Installation Steps
 1. **Clone the Repository:**
@@ -59,7 +56,8 @@ The issue with your MD file could be related to indentation and formatting of co
    ```
 
 2. **Install Required Packages:**
-   Install all necessary packages listed in `requirements.txt`:
+   Our team has already included a file named 'requirements.txt' that contained all packages needed to run this project smoothly. To install
+the file, execute the following command in the terminal:
    ```sh
    pip install -r requirements.txt
    ```
@@ -71,9 +69,7 @@ python manage.py runserver
 ```
 
 ## File Structure
-/.document: include all of the necessary documentation of this project
-/Bibliotech:
-/...: list all of the folder and what are their uses
+
 
 ## Design and Architectures
 
