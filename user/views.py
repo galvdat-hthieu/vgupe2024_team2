@@ -316,14 +316,12 @@ class changePasswordView(LoginRequiredMixin, View):
       "socialAccount": getSocialAccount(request),
     }
     if form.is_valid():
-      messages.success(request, 'Your password was successfully updated!')
       notification = Notification("Password Changed Successfully","Your password has been updated successfully. Please use your new password the next time you log in.","success")
+      context["notification"] = notification
       user = form.save()
       update_session_auth_hash(request, user)  # Important!
-      context["notification"] = notification
       return render(request, "user/passwordChange.html", context)
     else:
-      messages.error(request, 'Please correct the error below.')
       content = form.errors.as_data()
 
       if 'old_password' in content:

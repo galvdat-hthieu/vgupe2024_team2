@@ -5,6 +5,7 @@ from django.contrib import messages
 from .forms import BookForm, CopyForm, ModApplicationForm
 from home.models import *
 from home.functions import *
+from home.util import *
 from datetime import date
 import csv
 import sqlite3
@@ -24,10 +25,10 @@ class addBookView(LoginRequiredMixin, View):
   login_url = "user:login"
 
   def get(self, request):
-    if (request.user.is_authenticated and request.user.role == 1):
-      form = BookForm()
+    if (request.user.is_authenticated and request.user.role > 0):
+      form = BookForm(initial={"status": 1})
       context = {
-        "web": "Add Copy",
+        "web": "Add Book",
         "cssFiles": [],
         "jsFiles": ["/static/mod/addBook.js",
                   ],
@@ -39,7 +40,12 @@ class addBookView(LoginRequiredMixin, View):
       return redirect("home:index")
 
   def post(self, request):
-    form = BookForm(request.POST, request.FILES)
+    data = request.POST.dict()
+    if (request.user.role > 1):
+      data["status"] = 1
+    else:
+      data["status"] = 0
+    form = BookForm(data, request.FILES)
     context = {
       "web": "Add Copy",
       "cssFiles": [],
@@ -48,10 +54,17 @@ class addBookView(LoginRequiredMixin, View):
       "form": form,
     }
     if form.is_valid():
+      print(form.cleaned_data)
       form.save()
-      messages.success(request,f"Book is added successfylly.")
+      if (request.user.role == 2):
+        messages.success(request, 'Your book has been added')
+      else:
+        messages.info(request, "Your book will need approval from admin before added.")
       return redirect("home:gallery")
     else:
+      print(form.cleaned_data)
+      notification = Notification("Action failed","Your form is not valid.","error")
+      context["notification"] = notification
       return render(request, 'mod/addBook.html', context)
 
 

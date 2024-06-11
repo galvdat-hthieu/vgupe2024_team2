@@ -47,15 +47,24 @@
                     <p class="single-book---author"><strong>Location</strong>: Ring road 4, Quarter 4, Thoi Hoa Ward, Ben Cat Town, Binh Duong Province</p>
                     <p class="single-book---description"><strong>Description</strong>: {{book.description}}</p>
                   </div>
-                  <form method="post" action="{% url 'home:borrow' book.id%}">
-                    {% csrf_token %}
-                  <div class="block-of-check-out-button">
-                    <input type="hidden" name="book_id" value="{{book.id}}">
-                    <input type="hidden" name="mod_id" value="{{mod.id}}">
-                    <button class="brix---btn-primary-6 w-button">Check Out</button>
-                </div>
-                
-                  </form>
+                  <div class="button-container" style="padding-top: 2vw;">
+                    <form method="post" action="{% url 'home:borrow' book.id%}" style="display: inline-block;">
+                      {% csrf_token %}
+                          <div class="block-of-check-out-button" >
+                            <input type="hidden" name="book_id" value="{{book.id}}">
+                          <input type="hidden" name="mod_id" value="{{mod.id}}">
+                        <button class="brix---btn-primary-6 w-button" >Check Out</button>
+                      </div>
+                    </form>
+                    {% if request.user.role > 0 %}
+                    <button class="brix---btn-primary-6 w-button" style="float: right; width: 80px; text-align: center; margin-left: 3px; padding-left: 5px; padding-right: 5px;">
+                      <a href="{% url 'mod:editBook' book.id %}" style="color: white;"><i class="fas fa-edit"></i></a>
+                    </button>
+                    <button class="brix---btn-primary-6 w-button" style="float: right; width: 80px; text-align: center; margin-left: 3px; padding-left: 5px; padding-right: 5px;">
+                      <a href="{% url 'mod:addCopy' book.id %}" style="color: white;"><i class="fa-solid fa-plus"></i></a>
+                    </button>
+                    {% endif %}
+                   </div>
                 </div>
               </div>
             </div>
@@ -159,7 +168,7 @@
           </div>
         {% endfor %}
       {% else %}
-        <p>There are no reviews at the moment. Be the first one to review!!!</p>
+        <p style="white-space: wrap;">There are no reviews at the moment. Be the first one to review!!!</p>
       {% endif %}
 			  
       <div aria-live="polite" aria-atomic="true" class="w-slider-aria-label" data-wf-ignore="">Slide 3 of 5.</div></div>

@@ -3,13 +3,21 @@
 {% block content %}
 {% include 'base/message.html' %}
 
-<div class="main-section">
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <p> {{ error }} </p>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+<div class="main-section" style="padding-top: 3vw;">
   <div class="container-default w-container">
     <div class="block-sticky-top---main-contain">
       <div id="w-node-_5b7b5ab1-6d00-c7e0-62e6-f29490555c22-9a24b53f" class="dashboard-main-content---user-profiles">
         <div id="cards" class="pd-top-24px---activities">
 
-          <div class="card component-card card-one-line">
+          <div class="card component-card card-one-line" style="max-width: 95vw;">
             <div class="w-form">
 
 
@@ -25,21 +33,23 @@
               </style>
 
 
-              <form id="wf-form-signup" name="wf-form-signup" data-name="signup" method="post" data-ms-form="profile" class="container_profile-form-2" data-wf-page-id="66304d01b2d8ae4b9a24b53f" data-wf-element-id="42ebedb0-94f6-ae4e-e956-e07ffc90504a">
+              <form id="wf-form-signup" name="wf-form-signup" data-name="signup" method="post" action="{% url 'mod:addBook' %}" data-ms-form="profile" class="container_profile-form-2" data-wf-page-id="66304d01b2d8ae4b9a24b53f" data-wf-element-id="42ebedb0-94f6-ae4e-e956-e07ffc90504a">
+                {% csrf_token %}
                 <h1 class="h1_small">Book General Information</h1>
                 <div class="spacer_xs"></div>
                 <div>Use the form below to upload new book to your bookshelf. </div>
                 <div class="spacer_m"></div>
-                <div class="input-wrapper _15p-right"><label for="First-Name-4" class="input-label">Title</label><input class="input-2 w-input" maxlength="256" name="Title" data-name="Title" placeholder="Untitled" type="text" id="Title" data-ms-member="first-name" required="" /></div>
-                <div class="input-wrapper"><label for="Author" class="input-label">Author</label><input class="input-2 w-input" maxlength="256" name="Author" data-name="Author" placeholder="Unknow" type="text" id="Author" data-ms-member="last-name" required="" /></div>
+                <div class="input-wrapper _15p-right"><label for="First-Name-4" class="input-label">Title</label><input class="input-2 w-input" maxlength="256" name="title" data-name="title" placeholder="Untitled" type="text" id="title" data-ms-member="first-name" required="" /></div>
+                <div class="input-wrapper"><label for="Author" class="input-label">Author</label><input class="input-2 w-input" maxlength="256" name="author" data-name="author" placeholder="Unknow" type="text" id="author" data-ms-member="last-name" required="" /></div>
                 <div class="flex-row_outer---custom">
-                  <div class="input-wrapper"><label for="Type" class="input-label">Type</label><select id="Type" name="Type" data-name="Type" data-ms-member="select" class="input-2 w-select">
-                      <option value="">Select a type...</option>
-                      <option value="First">First choice</option>
-                      <option value="Second">Second choice</option>
-                      <option value="Third">Third choice</option>
+                  <div class="input-wrapper"><label for="Type" class="input-label">Type</label><select id="type" name="type" data-name="type" data-ms-member="select" class="input-2 w-select">
+                      <option value="5">Select a type...</option>
+                      <option value="0">article</option>
+                      <option value="1">book</option>
+                      <option value="2">magazine</option>
                     </select></div>
-                  <div class="input-wrapper"><label for="Language" class="input-label">Language</label><select id="Language" name="Language" data-name="Language" class="input-2 w-select">
+                  <div class="input-wrapper"><label for="Language" class="input-label">Language</label>
+                    <select id="Language" name="Language" data-name="Language" data-ms-member="select" class="input-2 w-select">
                       <option value="">Select a language...</option>
                       <option value="Afghanistan">Afghanistan</option>
                       <option value=" Albania"> Albania</option>
@@ -239,14 +249,6 @@
                       <option value=" Zambia"> Zambia</option>
                       <option value=" Zimbabwe"> Zimbabwe</option>
                     </select>
-                    <div class="w-embed">
-                      <style>
-                        /*Cover up the default arrow and prevent click*/
-                        .ms-select-svg {
-                          pointer-events: none;
-                        }
-                      </style>
-                    </div>
                   </div>
                 </div>
                 <div>
@@ -277,7 +279,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="input-wrapper"><label for="Phone-2" class="input-label">Publisher</label><input class="input-2 w-input" maxlength="256" name="Publisher" data-name="Publisher" placeholder="Unknow" type="text" id="Publisher" data-ms-member="phone" required="" /></div>
+                <div class="input-wrapper"><label for="Phone-2" class="input-label">Publisher</label><input class="input-2 w-input" maxlength="256" name="publisher" data-name="publisher" placeholder="Unknow" type="text" id="publisher" data-ms-member="phone" required="" /></div>
                 <div class="flex-row_outer---custom">
                   <div class="input-wrapper"><label for="Phone-2" class="input-label">Code ISBN</label><input class="input-2 w-input" maxlength="256" name="Phone-2" data-name="Phone 2" placeholder="" type="text" id="Phone-2" data-ms-member="phone" required="" /></div>
                   <div class="input-wrapper"><label for="Publication-Year" class="input-label">Publication Year</label><input class="input-2 w-input" maxlength="256" name="Publication-Year" data-name="Publication Year" placeholder="" type="number" id="Publication-Year" data-ms-member="phone" required="" /></div>

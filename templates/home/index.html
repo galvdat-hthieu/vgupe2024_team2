@@ -12,10 +12,6 @@
               <span class="text-span home-text-span" style="text-overflow: ellipsis; overflow: hidden; width: 35vw; white-space: nowrap; padding-bottom: 50px; line-height: 50px;">{{ books.random.title }}</span>
               <i class="author-text">{{ books.random.author }}</i>
             </h4>
-            <p class="paragraph---description hero-v3">
-              {% if books.random.description %}
-              {% endif %}
-            </p>
             <div class="multiple-buttons"><a href="/gallery/bookid={{books.random.id}}/detail" target="_blank" class="button-primary w-button">Read now</a></div>
           </div>
         </div>
@@ -35,7 +31,7 @@
   </div>
   <div class="section cloneables-listing home-book-listings" style="padding-bottom: 50px;">
     <div class="container-default-2 w-container">
-      <div class="cloneable-container-default-2">
+      <div class="cloneable-container-default-2" style="padding-top: 3vw">
         <h1 class="heading-3 section-title">Explore our library</h1>
         <div class="sliding-box-2">
           <div class="container-default---brix adjust-container-max-w">
@@ -172,9 +168,6 @@
                           <div class="split-content---brix avatar-content---brix">
                             <h2 class="title-2 avatar-name-v1---brix">{{ item.title }}</h2>
                             <div class="text-block-6">by {{ item.author }}</div>
-                            <p class="paragraph---brix testimonial-v1---brix">
-                              {% if item.description %} {{item.description}} {% endif %}
-                            </p>
                             <div class="multiple-buttons"><a href="/gallery/bookid={{item.id}}/detail" class="btn-primary-4 w-inline-block">
                                 <div class="flex-horizontal gap-column-4px">
                                   <div>See more</div>

@@ -137,6 +137,44 @@
           width: 40vw;
           margin: auto;
         }
+        .avatar-name-v1---brix{
+          font-size: 14px;
+        }
+      }
+      .alert-success {
+        padding: 20px;
+        background-color: green; /* Red */
+        color: white;
+        margin-bottom: 15px;
+      }
+      .alert-danger {
+        padding: 20px;
+        background-color: red; /* Red */
+        color: white;
+        margin-bottom: 15px;
+      }
+      .alert-info {
+        padding: 20px;
+        background-color: blue; /* Red */
+        color: white;
+        margin-bottom: 15px;
+      }
+
+      /* The close button */
+      .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      /* When moving the mouse over the close button */
+      .closebtn:hover {
+        color: black;
       }
     </style>
   </head>
@@ -229,6 +267,14 @@
           </div>
         </div>
       </div>
+    {% if messages %}
+      {% for message in messages %}
+      <div class="{{message.tags}}">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        {{message}}
+      </div>
+      {% endfor %}
+    {% endif %}
 
   {% block content %}
   {% endblock %}
