@@ -135,11 +135,11 @@
                   <h2 class="text-500 bold mg-bottom-12px">Admin Notification</h2>
                   <div class="card component-card card-one-line">
                     <div data-current="Tab 1" data-easing="ease" data-duration-in="300" data-duration-out="100" class="tabs---brix---user-notification w-tabs">
-                      <div data-w-id="308a0b60-35ec-8a25-4891-bdffe6f648a6" style="opacity:0" class="tabs-menu---brix w-tab-menu"><a data-w-tab="Tab 1" class="tab-link-v1---brix w-inline-block w-tab-link w--current"><img loading="eager" src="images/placeholder-icon-tabs-1.svg" alt="" class="icon-tabs---brix" />
-                          <div>Pending</div>
-                        </a><a data-w-tab="Tab 2" class="tab-link-v1---brix w-inline-block w-tab-link"><img loading="eager" src="images/placeholder-icon-tabs-2.svg" alt="" class="icon-tabs---brix" />
+                      <div data-w-id="308a0b60-35ec-8a25-4891-bdffe6f648a6" style="opacity:0" class="tabs-menu---brix w-tab-menu"><a data-w-tab="Tab 1" class="tab-link-v1---brix w-inline-block w-tab-link w--current"><img loading="eager" src="{% static 'noti/admin/images/placeholder-icon-tabs-1.svg' %}" alt="" class="icon-tabs---brix" />
                           <div>Action</div>
-                        </a><a data-w-tab="Tab 3" class="tab-link-v1---brix w-inline-block w-tab-link"><img loading="eager" src="images/placeholder-icon-tabs-3.svg" alt="" class="icon-tabs---brix" />
+                        </a>{% comment %} <a data-w-tab="Tab 2" class="tab-link-v1---brix w-inline-block w-tab-link"><img loading="eager" src="{% static 'noti/admin/images/placeholder-icon-tabs-2.svg' %}" alt="" class="icon-tabs---brix" />
+                          <div>Action</div>
+                        </a> {% endcomment %}<a data-w-tab="Tab 3" class="tab-link-v1---brix w-inline-block w-tab-link"><img loading="eager" src="{% static 'noti/admin/images/placeholder-icon-tabs-3.svg' %}" alt="" class="icon-tabs---brix" />
                           <div>History</div>
                         </a></div>
                       <div data-w-id="308a0b60-35ec-8a25-4891-bdffe6f648b3" style="opacity:0" class="tabs-content---brix w-tab-content">
@@ -206,44 +206,34 @@
                                   <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3f9-eb07c9ab" class="text-50 bold color-neutral-700">Status</div>
                                 </div>
                                 <div class="rows">
+                                {% for application in applications %}     
+                                  {% if application.status == 0 %}
                                   <div class="data-block">
-                                    <div class="data-table-row"><img src="images/vgu_logo.jpg" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3fe-eb07c9ab" alt="" srcset="images/vgu_logo-p-500.jpg 500w, images/vgu_logo.jpg 701w" sizes="(max-width: 1439px) 76px, (max-width: 1919px) 90px, 95px" class="avatar-image-size" />
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3ff-eb07c9ab" class="text-100---name bold color-neutral-800">Vietnamese-German University</div>
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a401-eb07c9ab" class="text-100---address medium">Ring road 4, Quarter 4, Thoi Hoa Ward, Ben Cat Town, Binh Duong Province</div>
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a403-eb07c9ab" class="text-100---time medium">05/05/24</div>
+                                    <div class="data-table-row">
+                                      {% if application.applicant.avatar %}
+                                      <img src="/media/{{ application.applicant.avatar }}" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3fe-eb07c9ab" alt=""  sizes="(max-width: 1439px) 76px, (max-width: 1919px) 90px, 95px" class="avatar-image-size" />
+                                      {% else %}
+                                      <img src="/media/user/defaultAvatar.jpg" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3fe-eb07c9ab" alt=""  sizes="(max-width: 1439px) 76px, (max-width: 1919px) 90px, 95px" class="avatar-image-size" />
+                                      {% endif %}
+                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3ff-eb07c9ab" class="text-100---name bold color-neutral-800">{{application.applicant.last_name}} {{application.applicant.first_name}}</div>
+                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a401-eb07c9ab" class="text-100---address medium">{{application.applicant.address}}</div>
+                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a403-eb07c9ab" class="text-100---time medium">{{application.applicant.availableWorkingHours}}</div>
                                       <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a405-eb07c9ab" class="combo-button">
-                                        <div class="btn-primary">
-                                          <div class="flex-horizontal gap-column-4px">
-                                            <div>Accept</div>
-                                          </div>
-                                        </div>
-                                        <div class="btn-secondary">
-                                          <div class="flex-horizontal gap-column-4px">
-                                            <div>Reject</div>
-                                          </div>
-                                        </div>
+                                        <form action="{% url 'control:modDecide' 'approve' application.id %}" method="post">
+                                          {% csrf_token %}
+                                        <input type="submit" value="Approve" class="btn-primary flex-horizontal gap-column-4px" />
+                                        </form>
+                                        <form action="{% url 'control:modDecide' 'decline' application.id %}" method="post">
+                                          {% csrf_token %}
+                                        <input type="submit" value="Decline" class="btn-secondary flex-horizontal gap-column-4px" />
+                                        </form>
                                       </div>
                                     </div>
                                   </div>
-                                  <div class="data-block">
-                                    <div class="data-table-row"><img src="images/vnu_logo.jpg" loading="lazy" width="75" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a414-eb07c9ab" alt="" srcset="images/vnu_logo-p-500.jpg 500w, images/vnu_logo.jpg 813w" sizes="(max-width: 1439px) 75px, (max-width: 1919px) 90px, 95px" class="avatar-image-size" />
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a415-eb07c9ab" class="text-100---name bold color-neutral-800">Vietnam National University VNU</div>
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a417-eb07c9ab" class="text-100---address medium">Linh Trung Ward, Thu Duc City, HCM City</div>
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a419-eb07c9ab" class="text-100---time medium">06/06/24</div>
-                                      <div class="combo-button">
-                                        <div class="btn-primary">
-                                          <div class="flex-horizontal gap-column-4px">
-                                            <div>Accept</div>
-                                          </div>
-                                        </div>
-                                        <div class="btn-secondary">
-                                          <div class="flex-horizontal gap-column-4px">
-                                            <div>Reject</div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
+                                  {% endif %}
+                                {% endfor %}
+                                  
+
                                 </div>
                               </div>
                             </div>
@@ -454,18 +444,36 @@
                                   <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393c9-eb07c9ab" class="text-50 bold color-neutral-700">Status</div>
                                 </div>
                                 <div class="rows">
-                                  <div class="data-table-row"><img src="images/vgu_logo.jpg" loading="lazy" width="76" id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393cd-eb07c9ab" alt="" srcset="images/vgu_logo-p-500.jpg 500w, images/vgu_logo.jpg 701w" sizes="(max-width: 1439px) 76px, (max-width: 1919px) 90px, 95px" class="avatar-image-size" />
-                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393ce-eb07c9ab" class="text-100---name bold color-neutral-800">Vietnamese-German University</div>
-                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393d0-eb07c9ab" class="text-100---address medium">Ring road 4, Quarter 4, Thoi Hoa Ward, Ben Cat Town, Binh Duong Province</div>
-                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393d2-eb07c9ab" class="text-100---time medium">05/05/24</div>
-                                    <div class="color-badge red">Rejected</div>
-                                  </div>
-                                  <div class="data-table-row"><img src="images/vnu_logo.jpg" loading="lazy" width="75" id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393d7-eb07c9ab" alt="" srcset="images/vnu_logo-p-500.jpg 500w, images/vnu_logo.jpg 813w" sizes="(max-width: 1439px) 75px, (max-width: 1919px) 90px, 95px" class="avatar-image-size" />
-                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393d8-eb07c9ab" class="text-100---name bold color-neutral-800">Vietnam National University VNU</div>
-                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393da-eb07c9ab" class="text-100---address medium">Linh Trung Ward, Thu Duc City, HCM City</div>
-                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393dc-eb07c9ab" class="text-100---time medium">06/06/24</div>
+								                {% for application in applications %}
+                                  {% if application.status == 1 %}
+                                  <div class="data-table-row">
+                                    {% if application.applicant.avatar %}
+                                      <img src="/media/{{ application.applicant.avatar }}" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3fe-eb07c9ab" alt=""  sizes="(max-width: 1439px) 76px, (max-width: 1919px) 90px, 95px" class="avatar-image-size" />
+                                      {% else %}
+                                      <img src="/media/user/defaultAvatar.jpg" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3fe-eb07c9ab" alt=""  sizes="(max-width: 1439px) 76px, (max-width: 1919px) 90px, 95px" class="avatar-image-size" />
+                                      {% endif %}
+                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393ce-eb07c9ab" class="text-100---name bold color-neutral-800">{{application.applicant.last_name}} {{application.applicant.first_name}}</div>
+                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393d0-eb07c9ab" class="text-100---address medium">{{application.applicant.address}}</div>
+                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393d2-eb07c9ab" class="text-100---time medium">{{application.applicant.availableWorkingHours}}</div>
                                     <div class="color-badge green">Accepted</div>
                                   </div>
+                                  {% else %}
+                                    {% if application.status == 2%}
+                                      <div class="data-table-row">
+                                        {% if application.applicant.avatar %}
+                                        <img src="/media/{{ application.applicant.avatar }}" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3fe-eb07c9ab" alt=""  sizes="(max-width: 1439px) 76px, (max-width: 1919px) 90px, 95px" class="avatar-image-size" />
+                                        {% else %}
+                                        <img src="/media/user/defaultAvatar.jpg" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3fe-eb07c9ab" alt=""  sizes="(max-width: 1439px) 76px, (max-width: 1919px) 90px, 95px" class="avatar-image-size" />
+                                        {% endif %}
+                                        <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393ce-eb07c9ab" class="text-100---name bold color-neutral-800">{{application.applicant.last_name}} {{application.applicant.first_name}}</div>
+                                        <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393d0-eb07c9ab" class="text-100---address medium">{{application.applicant.address}}</div>
+                                        <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393d2-eb07c9ab" class="text-100---time medium">{{application.applicant.availableWorkingHours}}</div>
+                                      <div class="color-badge red">Rejected</div>
+                                      </div>
+                                    {% endif %}
+                                  {% endif %}
+								                {% endfor %}
+                                  
                                 </div>
                               </div>
                             </div>
