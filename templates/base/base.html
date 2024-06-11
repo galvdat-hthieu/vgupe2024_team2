@@ -240,14 +240,14 @@
                                 <a href="{% url 'user:info' %}" class="dropdown-link-single w-dropdown-link">View Profile</a>
                                 <a href="{% url 'user:edit' %}" class="dropdown-link-single w-dropdown-link">Edit Profile</a>
                                 <a href="{% url 'user:borrow' %}" class="dropdown-link-single w-dropdown-link">My Borrowings</a>
-                                {% if not socialAccount %}
-                                <a href="{% url 'user:changePassword' %}" class="dropdown-link-single w-dropdown-link">Change Password</a>
-                                {% endif %}
                                 {% if request.user.role == 1 and request.user.is_authenticated %}
                                 <a href="{% url 'mod:modManage_get' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
                                 {% endif %}
                                 {% if request.user.role == 2 and request.user.is_authenticated %}
                                 <a href="{% url 'mod:adminManage' %}" class="dropdown-link-single w-dropdown-link">Manage</a>
+                                {% endif %}
+                                {% if not socialAccount %}
+                                <a href="{% url 'user:changePassword' %}" class="dropdown-link-single w-dropdown-link">Change Password</a>
                                 {% endif %}
                                 <a href="{% url 'user:logout' %}" id="w-node-_73d23224-b21d-29e3-9be0-c0265a137951-9648506f" class="dropdown-link-single w-dropdown-link">Logout</a>
                               </div>
