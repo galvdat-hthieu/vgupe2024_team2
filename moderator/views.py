@@ -339,8 +339,7 @@ class modManageView(LoginRequiredMixin, View):
         "borrowance": borrowance,
         "action": action,
       })
-      #to_email = borrowance.userID.email
-      to_email = "quangdm999@gmail.com"
+      to_email = borrowance.userID.email
       
       email = EmailMessage(mail_subject, message, to=[to_email])
       email.send()
@@ -357,8 +356,7 @@ class modManageView(LoginRequiredMixin, View):
         "action": action,
         "domain":get_current_site(request),
       })
-      #to_email = borrowance.userID.email
-      to_email = "quangdm999@gmail.com"
+      to_email = borrowance.userID.email
       
       email = EmailMessage(mail_subject, message, to=[to_email])
       email.send()
