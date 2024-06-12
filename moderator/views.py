@@ -1,8 +1,11 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
+from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.sites.shortcuts import get_current_site
 from django.views import View
 from django.contrib import messages
 from .forms import BookForm, CopyForm, ModApplicationForm
+from django.core.mail import EmailMessage
 from home.models import *
 from home.functions import *
 from home.util import *
@@ -325,14 +328,40 @@ class modManageView(LoginRequiredMixin, View):
   
   def post(self, request,id):
     action = request.POST.get("action")
-    borrowance = Borrowance.objects.get(id=id)
+    borrowance = get_object_or_404(Borrowance.objects.select_related('userID','copyID','copyID__userID','copyID__bookID'), id=id)
     if action == "Approve":
       borrowance.status = 2
       borrowance.save()
     
+      #Send approve email
+      mail_subject = 'Biblioteck - Your borrowing request has been approved'
+      message = render_to_string('user/template_borrow_result.html', {
+        "borrowance": borrowance,
+        "action": action,
+      })
+      #to_email = borrowance.userID.email
+      to_email = "quangdm999@gmail.com"
+      
+      email = EmailMessage(mail_subject, message, to=[to_email])
+      email.send()
+    
     if action == "Decline":
       borrowance.status = 1
+      borrowance.expiredDate = timezone.now() + timezone.timedelta(days=14)
       borrowance.save()
+      
+      #Send decline email
+      mail_subject = 'Biblioteck - Your borrowing request has been declined'
+      message = render_to_string('user/template_borrow_result.html', {
+        "borrowance": borrowance,
+        "action": action,
+        "domain":get_current_site(request),
+      })
+      #to_email = borrowance.userID.email
+      to_email = "quangdm999@gmail.com"
+      
+      email = EmailMessage(mail_subject, message, to=[to_email])
+      email.send()
     
     return redirect("mod:modManage_get")
 
