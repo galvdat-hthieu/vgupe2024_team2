@@ -1,6 +1,7 @@
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
 import os
+import hashlib
 from django.db.models import Q
 from django.contrib.auth import (authenticate, login, logout,
                                  update_session_auth_hash)
@@ -91,10 +92,19 @@ def activate(request, uidb64, token):
   return redirect("home:index")
 
 
+def hash_string(input_string):
+  sha256_hash = hashlib.sha256()
+  sha256_hash.update(input_string.encode('utf-8'))
+  return sha256_hash.hexdigest()
+
 class registerView(View):
   def get(self, request):
     usernames = list(User.objects.values_list('username', flat=True))
     emails = list(User.objects.values_list('email', flat=True))
+    
+    usernames = [hash_string(username) for username in usernames]
+    emails = [hash_string(email) for email in emails]
+    
     context = {
       "web": "Register",
       "usernames":usernames,

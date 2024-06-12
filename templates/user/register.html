@@ -89,6 +89,15 @@
             </form>
 
             <script>
+              async function hashString(inputString) {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(inputString);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+                return hashHex;
+              }
+
               var userOK = false
               var passOK = false
               var pass2OK = false
@@ -139,14 +148,16 @@
                 checkSignUpButton()
               })
               
-              document.getElementById('Email-sign-in-1-preview').addEventListener('input', function () {
+              document.getElementById('Email-sign-in-1-preview').addEventListener('input', async function () {
                 const emailInput = this
                 const email = emailInput.value
                 const uniqueEmail = document.getElementById('email2req')
               
                 const emailElements = document.querySelectorAll('#emails .email')
                 const emails = Array.from(emailElements).map((el) => el.textContent)
-                const isUnique = !emails.includes(email)
+
+                const hashedEmail = await hashString(email);
+                const isUnique = !emails.includes(hashedEmail);
               
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
                 emailOK = emailRegex.test(email) && email.length > 0 && isUnique
@@ -166,7 +177,7 @@
                 checkSignUpButton()
               })
               
-              document.getElementById('Username').addEventListener('input', function () {
+              document.getElementById('Username').addEventListener('input', async function () {
                 const usernameInput = this
                 const username = usernameInput.value
                 const unique = document.getElementById('unique')
@@ -175,7 +186,9 @@
               
                 const usernameElements = document.querySelectorAll('#usernames .username')
                 const usernames = Array.from(usernameElements).map((el) => el.textContent)
-                const isUnique = !usernames.includes(username)
+
+                const hashedUsername = await hashString(username)
+                const isUnique = !usernames.includes(hashedUsername)
               
                 const validCharsRegex = /^[a-zA-Z0-9]*$/
               

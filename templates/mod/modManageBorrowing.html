@@ -137,7 +137,7 @@
                     <div data-current="Tab 1" data-easing="ease" data-duration-in="300" data-duration-out="100" class="tabs---brix---user-notification w-tabs">
                       <div data-w-id="9e4dbca2-4feb-0aaf-ab54-67ec2f8ef1da" style="opacity:0" class="tabs-menu---brix w-tab-menu"><a data-w-tab="Tab 1" class="tab-link-v1---brix w-inline-block w-tab-link w--current"><img loading="eager" src="{% static 'noti/mod/images/placeholder-icon-tabs-1.svg' %}" alt="" class="icon-tabs---brix" />
                           <div>Pending</div>
-                        </a><a data-w-tab="Tab 2" class="tab-link-v1---brix w-inline-block w-tab-link"><img loading="eager" src="{% static 'noti/mod/images/placeholder-icon-tabs-2.svg' %}" alt="" class="icon-tabs---brix" />
+                        </a><a data-w-tab="Tab 2" class="tab-link-v1---brix w-inline-block w-tab-link" href="{% url 'home:index' %}"><img loading="eager" src="{% static 'noti/mod/images/placeholder-icon-tabs-2.svg' %}" alt="" class="icon-tabs---brix" />
                           <div>Action</div>
                         </a><a data-w-tab="Tab 3" class="tab-link-v1---brix w-inline-block w-tab-link"><img loading="eager" src="{% static 'noti/mod/images/placeholder-icon-tabs-3.svg' %}" alt="" class="icon-tabs---brix" />
                           <div>History</div>
@@ -160,7 +160,14 @@
                                     <div id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f24d-6eb9ba07" class="text-100---book-title bold color-neutral-800">Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow 3nd Edition</div>
                                     <div id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f24f-6eb9ba07" class="text-100---provider medium">9781491962244</div>
                                     <div id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f251-6eb9ba07" class="text-100---time medium">05/05/24</div>
-                                    <div id="w-node-_2c8e8b56-a313-14a5-0af8-c8a7c3d533a7-6eb9ba07" class="text-100---no-copies medium">5</div>
+                                    <div class="combo-button">
+                                      <form method = "post" action="">
+                                      {% csrf_token %}
+                                      <input type=hidden value="delete" name="action">
+                                      <input type=hidden value="" name="borrowanceId">
+                                      <input data-w-id="e5299775-1334-76e9-3482-8d36132fa2a4" class="btn-primary flex-horizontal gap-column-4px" type="submit" value="Cancel">
+                                      </form>
+                                    </div>
                                   </div>
                                   <div class="data-table-row"><img width="76" id="w-node-_9ff35b46-db72-b47d-e4ae-845a78ce32c6-6eb9ba07" alt="" src="images/screenshot-202024-04-15-20203148.png" loading="lazy" class="book-images-size" />
                                     <div id="w-node-_9ff35b46-db72-b47d-e4ae-845a78ce32c7-6eb9ba07" class="text-100---book-title bold color-neutral-800">Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow 3nd Edition</div>
