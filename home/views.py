@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.http import HttpResponseRedirect, FileResponse
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from django.views import View
@@ -53,6 +53,7 @@ class contactView(View):
 class galleryView(View):
   def get(self, request):
     books = search(request)
+    books = books.annotate(copies_with_status_one=Count('copy', filter=Q(copy__status=1))).filter(copies_with_status_one__gt=0)
     print(len(books))
     
     page = request.GET.get('page', 1)
@@ -132,7 +133,7 @@ class bookView(View):
     notification_temp = request.session.pop('review_submit', None)
     
     book = Book.objects.get(id=id)
-    copies = Copy.objects.filter(bookID=book)
+    copies = Copy.objects.filter(bookID=book,status=1)
     mod = User.objects.get(id=copies[0].userID_id)
     
     
