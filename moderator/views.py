@@ -193,6 +193,7 @@ class editCopyView(LoginRequiredMixin, View):
       messages.error(request, "You don't have the right to edit book.")
       return redirect("home:index")
     copy = Copy.objects.get(id = id)
+    print(request.POST.get("note"))
     data = {
       "userID": copy.userID,
       "bookID": copy.bookID,
