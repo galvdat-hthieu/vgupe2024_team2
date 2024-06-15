@@ -169,3 +169,14 @@ class Thought(models.Model):
   userID = models.ForeignKey(User, on_delete=models.CASCADE)
   thought = models.TextField(max_length=1500, null=False)
   created_at = models.DateTimeField(default=timezone.now)
+  
+class BookApplication(models.Model):
+  bookID = models.ForeignKey(Book, on_delete=models.CASCADE)
+  uploader = models.ForeignKey(User, on_delete=models.CASCADE)
+  statusChoices = (
+    (0, "applying"),
+    (1, "approved"),
+    (2, "denied"),
+  )
+  status = models.IntegerField(choices=statusChoices, default=0, null=False)
+  created_at = models.DateTimeField(default=timezone.now)

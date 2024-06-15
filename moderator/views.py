@@ -58,11 +58,19 @@ class addBookView(LoginRequiredMixin, View):
     }
     if form.is_valid():
       print(form.cleaned_data)
-      form.save()
+      newBook = form.save()
       if (request.user.role == 2):
         messages.success(request, 'Your book has been added')
       else:
         messages.info(request, "Your book will need approval from admin before added.")
+        
+        BookApplication.objects.create(
+          bookID=newBook,
+          uploader=request.user,
+          status=0,
+          created_at=timezone.now(),
+        )
+        
       return redirect("home:gallery")
     else:
       print(form.cleaned_data)
@@ -319,16 +327,26 @@ class modManageView(LoginRequiredMixin, View):
     user_copies = Copy.objects.filter(userID_id=request.user.id)
     borrowancesRequests = Borrowance.objects.filter(copyID__in=user_copies,status=0).order_by('-borrowDate')
     borrowancesHistory = Borrowance.objects.filter(copyID__in=user_copies,status__in=[1,3]).order_by('-borrowDate')
+    
+    bookApplication = BookApplication.objects.filter(status=0, uploader=request.user)
+    bookApplicationHistory = BookApplication.objects.filter(status__in=[1,2], uploader=request.user)
     context = {
       "socialAccount": getSocialAccount(request),
       "borrowancesRequests": borrowancesRequests,
       "borrowancesHistory": borrowancesHistory,
+      "bookApplication": bookApplication,
+      "bookApplicationHistory": bookApplicationHistory,
     }
     return render(request, "mod/modManageBorrowing.html", context)
   
   def post(self, request,id):
     action = request.POST.get("action")
     borrowance = get_object_or_404(Borrowance.objects.select_related('userID','copyID','copyID__userID','copyID__bookID'), id=id)
+    
+    if action == "Cancel":
+      bookApp = BookApplication.objects.get(id=id, uploader=request.user)
+      bookApp.delete()
+    
     if action == "Approve":
       borrowance.status = 2
       borrowance.save()

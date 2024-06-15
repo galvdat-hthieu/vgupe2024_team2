@@ -143,7 +143,7 @@
                           <div>History</div>
                         </a></div>
                       <div data-w-id="9e4dbca2-4feb-0aaf-ab54-67ec2f8ef1e7" style="opacity:0" class="tabs-content---brix w-tab-content">
-                        <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
+                        <div data-w-tab="Tab 2" class="w-tab-pane w--tab-active">
                           <div id="text-cards" class="mg-bottom-16px-tab-1">
                             <div class="card overflow-hidden border-none">
                               <div class="overflow-auto">
@@ -151,91 +151,51 @@
                                 <div class="data-table-row table-header">
                                   <div id="w-node-_98de9544-06a4-e719-72f6-f4fb97fe2ef3-6eb9ba07" class="text-50 bold color-neutral-700 self-central---book">Book</div>
                                   <div id="w-node-_98de9544-06a4-e719-72f6-f4fb97fe2ef5-6eb9ba07" class="text-50 bold color-neutral-700 self-central---book-title">title</div>
-                                  <div id="w-node-_98de9544-06a4-e719-72f6-f4fb97fe2ef7-6eb9ba07" class="text-50 bold color-neutral-700 self-central---code">CODE ISBN</div>
+                                  <div id="w-node-_98de9544-06a4-e719-72f6-f4fb97fe2ef7-6eb9ba07" class="text-50 bold color-neutral-700 self-central---code">Uploader</div>
                                   <div id="w-node-_98de9544-06a4-e719-72f6-f4fb97fe2ef9-6eb9ba07" class="text-50 bold color-neutral-700 self-central---time">Time</div>
-                                  <div id="w-node-_98de9544-06a4-e719-72f6-f4fb97fe2efb-6eb9ba07" class="text-50 bold color-neutral-700 self-central---no-copies">No.copies</div>
+                                  <div id="w-node-_98de9544-06a4-e719-72f6-f4fb97fe2efb-6eb9ba07" class="text-50 bold color-neutral-700 self-central---no-copies"></div>
                                 </div>
                                 <div class="rows">
-                                  <div class="data-table-row"><img width="76" id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f24a-6eb9ba07" alt="" src="images/screenshot-202024-04-15-20203148.png" loading="lazy" class="book-images-size" />
-                                    <div id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f24d-6eb9ba07" class="text-100---book-title bold color-neutral-800">Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow 3nd Edition</div>
-                                    <div id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f24f-6eb9ba07" class="text-100---provider medium">9781491962244</div>
-                                    <div id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f251-6eb9ba07" class="text-100---time medium">05/05/24</div>
+                                  {% if not bookApplication %}
+                                  <br>
+                                  <p>You don't have any book upload requests! Let's upload some books <a href="{% url 'mod:addBook' %}">here</a>.</p>
+                                  {% endif %}
+                                  {% for bookApp in bookApplication %}
+                                  <div class="data-table-row">
+                                    {% if book.coverImage %}          
+                                      {% if book.manual == True  %} 
+                                     
+                                      <img width="76" id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f24a-6eb9ba07" alt="" src="{{ book.coverImage.url }}" loading="lazy" class="book-images-size" />
+                                      {% else %}   
+                              
+                                      <img width="76" id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f24a-6eb9ba07" alt="" src="{{ book.coverImage }}" loading="lazy" class="book-images-size" />
+                                      {% endif %}                 
+                                    {% else %}   
+                                           
+                                    <img width="76" id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f24a-6eb9ba07" alt="" src="/media/book/defaultCover.jpg" loading="lazy" class="book-images-size" />
+                                    {% endif %}  
+                                    
+
+                                    <div id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f24d-6eb9ba07" class="text-100---book-title bold color-neutral-800">{{bookApp.bookID.title}}</div>
+                                    <div id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f24f-6eb9ba07" class="text-100---provider medium">{{bookApp.uploader.first_name}}</div>
+                                    <div id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f251-6eb9ba07" class="text-100---time medium">{{bookApp.created_at}}</div>
                                     <div class="combo-button">
-                                      <form method = "post" action="">
+                                      <form action="{% url 'mod:modManage_post' bookApp.id%}" method="post">
                                       {% csrf_token %}
-                                      <input type=hidden value="delete" name="action">
-                                      <input type=hidden value="" name="borrowanceId">
-                                      <input data-w-id="e5299775-1334-76e9-3482-8d36132fa2a4" class="btn-primary flex-horizontal gap-column-4px" type="submit" value="Cancel">
+                                      <input data-w-id="e5299775-1334-76e9-3482-8d36132fa2a4" class="btn-primary flex-horizontal gap-column-4px" type="submit" value="Cancel" name="action">
                                       </form>
                                     </div>
                                   </div>
-                                  <div class="data-table-row"><img width="76" id="w-node-_9ff35b46-db72-b47d-e4ae-845a78ce32c6-6eb9ba07" alt="" src="images/screenshot-202024-04-15-20203148.png" loading="lazy" class="book-images-size" />
-                                    <div id="w-node-_9ff35b46-db72-b47d-e4ae-845a78ce32c7-6eb9ba07" class="text-100---book-title bold color-neutral-800">Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow 3nd Edition</div>
-                                    <div id="w-node-_9ff35b46-db72-b47d-e4ae-845a78ce32c9-6eb9ba07" class="text-100---provider medium">9781491962244</div>
-                                    <div id="w-node-_9ff35b46-db72-b47d-e4ae-845a78ce32cb-6eb9ba07" class="text-100---time medium">05/05/24</div>
-                                    <div id="w-node-_9ff35b46-db72-b47d-e4ae-845a78ce32cd-6eb9ba07" class="text-100---no-copies medium">5</div>
-                                  </div>
-                                  <div class="data-table-row"><img width="76" id="w-node-c763942a-f772-1f89-999b-2256cf32d1dd-6eb9ba07" alt="" src="images/screenshot-202024-04-15-20203148.png" loading="lazy" class="book-images-size" />
-                                    <div id="w-node-c763942a-f772-1f89-999b-2256cf32d1de-6eb9ba07" class="text-100---book-title bold color-neutral-800">Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow 3nd Edition</div>
-                                    <div id="w-node-c763942a-f772-1f89-999b-2256cf32d1e0-6eb9ba07" class="text-100---provider medium">9781491962244</div>
-                                    <div id="w-node-c763942a-f772-1f89-999b-2256cf32d1e2-6eb9ba07" class="text-100---time medium">05/05/24</div>
-                                    <div id="w-node-c763942a-f772-1f89-999b-2256cf32d1e4-6eb9ba07" class="text-100---no-copies medium">5</div>
-                                  </div>
-                                  <div class="data-table-row"><img id="w-node-bd389145-858f-1127-d6dd-818f9436580a-6eb9ba07" loading="lazy" alt="" src="images/screenshot-202024-04-16-20203339.png" class="book-images-size" />
-                                    <div id="w-node-_67b35488-d4b0-a43b-4401-14923406a20c-6eb9ba07" class="text-100---book-title bold color-neutral-800">Deep Learning with TensorFlow, Keras, and PyTorch</div>
-                                    <div id="w-node-_67b35488-d4b0-a43b-4401-14923406a20e-6eb9ba07" class="text-100---provider medium">9781492045526</div>
-                                    <div id="w-node-_67b35488-d4b0-a43b-4401-14923406a210-6eb9ba07" class="text-100---time medium">06/06/24</div>
-                                    <div id="w-node-a9a2c8b4-260f-d11e-d83f-566c58ec7c3a-6eb9ba07" class="text-100---no-copies medium">7</div>
-                                  </div>
-                                  <div class="data-table-row"><img id="w-node-fc895748-1323-5e6b-a4fe-35d6ea1a30eb-6eb9ba07" loading="lazy" alt="" src="images/screenshot-202024-04-16-20203339.png" class="book-images-size" />
-                                    <div id="w-node-fc895748-1323-5e6b-a4fe-35d6ea1a30ec-6eb9ba07" class="text-100---book-title bold color-neutral-800">Deep Learning with TensorFlow, Keras, and PyTorch</div>
-                                    <div id="w-node-fc895748-1323-5e6b-a4fe-35d6ea1a30ee-6eb9ba07" class="text-100---provider medium">9781492045526</div>
-                                    <div id="w-node-fc895748-1323-5e6b-a4fe-35d6ea1a30f0-6eb9ba07" class="text-100---time medium">06/06/24</div>
-                                    <div id="w-node-fc895748-1323-5e6b-a4fe-35d6ea1a30f2-6eb9ba07" class="text-100---no-copies medium">7</div>
-                                  </div>
+                                  {% endfor %}
+                                  
+                                  
                                 </div>
                               </div>
                             </div>
-                            <div class="block-of-next---previous-button">
-                              <div class="previous-button-block"><a data-w-id="5e397a9b-9a13-79e7-df31-3f01e4b33e57" href="#" class="btn-primary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>Previous</div>
-                                  </div>
-                                </a></div>
-                              <div class="one-button"><a data-w-id="5e397a9b-9a13-79e7-df31-3f01e4b33e5e" href="#" class="btn-primary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>1</div>
-                                  </div>
-                                </a></div>
-                              <div class="second-button"><a data-w-id="5e397a9b-9a13-79e7-df31-3f01e4b33e65" href="#" class="btn-secondary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>2</div>
-                                  </div>
-                                </a></div>
-                              <div class="third-button"><a data-w-id="5e397a9b-9a13-79e7-df31-3f01e4b33e6c" href="#" class="btn-secondary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>3</div>
-                                  </div>
-                                </a></div>
-                              <div class="fourth-button"><a data-w-id="5e397a9b-9a13-79e7-df31-3f01e4b33e73" href="#" class="btn-secondary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>4</div>
-                                  </div>
-                                </a></div>
-                              <div class="fifth-button"><a data-w-id="5e397a9b-9a13-79e7-df31-3f01e4b33e7a" href="#" class="btn-secondary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>5</div>
-                                  </div>
-                                </a></div>
-                              <div class="next-button-block"><a data-w-id="5e397a9b-9a13-79e7-df31-3f01e4b33e81" href="#" class="btn-primary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>   Next   </div>
-                                  </div>
-                                </a></div>
-                            </div>
+                            
                           </div>
                         </div>
-                        <div data-w-tab="Tab 2" class="w-tab-pane">
+                        <div data-w-tab="Tab 1" class="w-tab-pane">
                           <div id="text-cards" class="mg-bottom-16px-tab-2">
                             <div class="card overflow-hidden border-none">
                               <div class="overflow-auto">
@@ -280,52 +240,13 @@
                                     </div>
                                   </div>
                                   {% endfor %}
-                                  
-
                                 </div>
                               </div>
-                            </div>
-                            <div class="block-of-next---previous-button">
-                              <div class="previous-button-block"><a data-w-id="4890b75c-6bb1-37ac-bae5-bff5531264c9" href="#" class="btn-primary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>Previous</div>
-                                  </div>
-                                </a></div>
-                              <div class="one-button"><a data-w-id="4890b75c-6bb1-37ac-bae5-bff5531264d0" href="#" class="btn-primary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>1</div>
-                                  </div>
-                                </a></div>
-                              <div class="second-button"><a data-w-id="4890b75c-6bb1-37ac-bae5-bff5531264d7" href="#" class="btn-secondary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>2</div>
-                                  </div>
-                                </a></div>
-                              <div class="third-button"><a data-w-id="4890b75c-6bb1-37ac-bae5-bff5531264de" href="#" class="btn-secondary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>3</div>
-                                  </div>
-                                </a></div>
-                              <div class="fourth-button"><a data-w-id="4890b75c-6bb1-37ac-bae5-bff5531264e5" href="#" class="btn-secondary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>4</div>
-                                  </div>
-                                </a></div>
-                              <div class="fifth-button"><a data-w-id="4890b75c-6bb1-37ac-bae5-bff5531264ec" href="#" class="btn-secondary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>5</div>
-                                  </div>
-                                </a></div>
-                              <div class="next-button-block"><a data-w-id="4890b75c-6bb1-37ac-bae5-bff5531264f3" href="#" class="btn-primary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>   Next   </div>
-                                  </div>
-                                </a></div>
                             </div>
                           </div>
                         </div>
                         <div data-w-tab="Tab 3" class="w-tab-pane">
-						<div id="text-cards" class="mg-bottom-16px-tab-3">
+						              <div id="text-cards" class="mg-bottom-16px-tab-3">
                             <div class="card overflow-hidden border-none">
                               <div class="overflow-auto">
                                 <div class="text-400 bold color-neutral-800 align-left">Book Borrowed History</div>
@@ -375,59 +296,43 @@
                                 <div class="data-table-row table-header">
                                   <div id="w-node-aeabd816-060e-face-c965-cb800bb44d43-6eb9ba07" class="text-50 bold color-neutral-700 self-central---book">book</div>
                                   <div id="w-node-aeabd816-060e-face-c965-cb800bb44d45-6eb9ba07" class="text-50 bold color-neutral-700 self-central---book-title">Title</div>
-                                  <div id="w-node-aeabd816-060e-face-c965-cb800bb44d47-6eb9ba07" class="text-50 bold color-neutral-700 self-central---no-copies-mod">no.copies</div>
+                                  <div id="w-node-aeabd816-060e-face-c965-cb800bb44d47-6eb9ba07" class="text-50 bold color-neutral-700 self-central---no-copies-mod">Uploader</div>
                                   <div id="w-node-aeabd816-060e-face-c965-cb800bb44d49-6eb9ba07" class="text-50 bold color-neutral-700 self-central---time">Time</div>
                                   <div id="w-node-aeabd816-060e-face-c965-cb800bb44d4b-6eb9ba07" class="text-50 bold color-neutral-700">Status</div>
                                 </div>
                                 <div class="rows">
-
-                                  <div class="data-table-row"><img id="w-node-a6945863-9438-4c90-5d88-0427179685ae-6eb9ba07" loading="lazy" alt="" src="images/screenshot-202024-04-16-20203339.png" class="book-images-size" />
-                                    <div id="w-node-a6945863-9438-4c90-5d88-0427179685af-6eb9ba07" class="text-100---book-title bold color-neutral-800">Deep Learning with TensorFlow, Keras, and PyTorch</div>
-                                    <div id="w-node-a6945863-9438-4c90-5d88-0427179685b1-6eb9ba07" class="text-100---provider medium">7</div>
-                                    <div id="w-node-a6945863-9438-4c90-5d88-0427179685b3-6eb9ba07" class="text-100---time medium">06/06/24</div>
+                                  {% if not bookApplicationHistory %}
+                                    <br>
+                                    <p>You don't have any book upload history! Let's upload some books <a href="{% url 'mod:addBook' %}">here</a>.</p>
+                                  {% endif %}
+                                  {% for bookApp in bookApplicationHistory  %}
+                                  <div class="data-table-row">
+                                    {% if book.coverImage %}          
+                                      {% if book.manual == True  %} 
+                                     
+                                      <img width="76" id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f24a-6eb9ba07" alt="" src="{{ book.coverImage.url }}" loading="lazy" class="book-images-size" />
+                                      {% else %}   
+                              
+                                      <img width="76" id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f24a-6eb9ba07" alt="" src="{{ book.coverImage }}" loading="lazy" class="book-images-size" />
+                                      {% endif %}                 
+                                    {% else %}   
+                                           
+                                    <img width="76" id="w-node-c5909069-d8c1-c610-f91a-0a580dd3f24a-6eb9ba07" alt="" src="/media/book/defaultCover.jpg" loading="lazy" class="book-images-size" />
+                                    {% endif %}  
+                                    <div id="w-node-a6945863-9438-4c90-5d88-0427179685af-6eb9ba07" class="text-100---book-title bold color-neutral-800">{{bookApp.bookID.title}}</div>
+                                    <div id="w-node-a6945863-9438-4c90-5d88-0427179685b1-6eb9ba07" class="text-100---provider medium">{{bookApp.uploader.first_name}}</div>
+                                    <div id="w-node-a6945863-9438-4c90-5d88-0427179685b3-6eb9ba07" class="text-100---time medium">{{bookApp.created_at}}</div>
+                                    {% if bookApp.status == 1%}
+                                    <div id="w-node-a6945863-9438-4c90-5d88-0427179685b5-6eb9ba07" class="color-badge green">Approved</div>
+                                    {% else %}
                                     <div id="w-node-a6945863-9438-4c90-5d88-0427179685b5-6eb9ba07" class="color-badge red">Rejected</div>
+                                    {% endif %}
                                   </div>
-                                  
+                                  {% endfor %}
                                 </div>
                               </div>
                             </div>
-                            <div class="block-of-next---previous-button">
-                              <div class="previous-button-block"><a data-w-id="c66a34c2-f629-06d6-8ab5-760f5a9ae212" href="#" class="btn-primary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>Previous</div>
-                                  </div>
-                                </a></div>
-                              <div class="one-button"><a data-w-id="c66a34c2-f629-06d6-8ab5-760f5a9ae219" href="#" class="btn-primary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>1</div>
-                                  </div>
-                                </a></div>
-                              <div class="second-button"><a data-w-id="c66a34c2-f629-06d6-8ab5-760f5a9ae220" href="#" class="btn-secondary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>2</div>
-                                  </div>
-                                </a></div>
-                              <div class="third-button"><a data-w-id="c66a34c2-f629-06d6-8ab5-760f5a9ae227" href="#" class="btn-secondary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>3</div>
-                                  </div>
-                                </a></div>
-                              <div class="fourth-button"><a data-w-id="c66a34c2-f629-06d6-8ab5-760f5a9ae22e" href="#" class="btn-secondary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>4</div>
-                                  </div>
-                                </a></div>
-                              <div class="fifth-button"><a data-w-id="c66a34c2-f629-06d6-8ab5-760f5a9ae235" href="#" class="btn-secondary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>5</div>
-                                  </div>
-                                </a></div>
-                              <div class="next-button-block"><a data-w-id="c66a34c2-f629-06d6-8ab5-760f5a9ae23c" href="#" class="btn-primary w-inline-block">
-                                  <div class="flex-horizontal gap-column-4px">
-                                    <div>   Next   </div>
-                                  </div>
-                                </a></div>
-                            </div>
+                            
                           </div>
                         </div>
                       </div>
