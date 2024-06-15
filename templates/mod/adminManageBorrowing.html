@@ -45,7 +45,7 @@
             <ul role="list" class="header-nav-menu-list w-list-unstyled" style="display: inline-block;">
               <li class="header-nav-list-item" style="display: inline-block; min-width: 7vw;"><a href="{% url 'home:dashboard' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Dashboard</a></li>
               <li class="header-nav-list-item" style="display: inline-block; min-width: 7vw;"><a href="{% url 'home:gallery' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">All books</a></li>
-              {% if user.role > 0 %}
+              {% if user.role == 1 %}
               <li class="header-nav-list-item" style="display: inline-block; min-width: 7vw;"><a href="{% url 'home:shelf' user.id%}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">Bookshelf</a></li>
               {% endif %}
               <li class="header-nav-list-item" style="display: inline-block; min-width: 7vw;"><a href="{% url 'home:faq' %}" class="header-nav-link-4 w-nav-link" style="max-width: 1268px;">FAQs</a></li>

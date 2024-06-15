@@ -39,20 +39,60 @@
                 </div>
                 <div class="brix---mg-bottom-40px-6">
                   <div class="brix---color-neutral-815">
-                    <p class="single-book---author"><strong>Author</strong>: {{book.author}}</p>
-                    <p class="single-book---author"><strong>Publisher</strong>: {{book.publisher}}</p>
-                    <p class="single-book---publish-year"><strong>Publication</strong>: {{book.publication}}</p>
-                    <p class="single-book---author"><strong>Language</strong>: {{book.language}}</p>
-                    <p class="single-book---provider"><strong>Provider</strong>: <a href="{% url 'home:shelf' mod.id%}">{{mod.first_name}}</a> ({{amount_copies}} copies available)</p>
-                    <p class="single-book---author"><strong>Location</strong>: Ring road 4, Quarter 4, Thoi Hoa Ward, Ben Cat Town, Binh Duong Province</p>
-                    <p class="single-book---description"><strong>Description</strong>: {{book.description}}</p>
+                    <p class="single-book---author"><strong>Author</strong>: {{ book.author }}</p>
+                    <p class="single-book---author"><strong>Publisher</strong>: {{ book.publisher }}</p>
+                    <p class="single-book---publish-year"><strong>Publication</strong>: {{ book.publication }}</p>
+                    <p class="single-book---author"><strong>Language</strong>: {{ book.language }}</p>
+                    <p class="single-book---provider">
+                        <strong>Provider</strong>: 
+                        <span id="selectedProvider">
+                            <a href="#">{{ providers.0.userID__first_name }}</a> 
+                            ({{ providers.0.amount_copies }} copies available)
+                        </span>
+                        <button class="toggle-button" onclick="toggleDropdown()">▼</button>
+                        <div id="providerDropdown" class="dropdown-content">
+                            {% for provider in providers %}
+                                <a href="#" style = "margin-left: 80px;"
+                                   onclick="selectProvider('{{ provider.userID__first_name }}', '{{ provider.amount_copies }}', '{{ provider.userID__id }}', '{{ provider.userID__address }}')">
+                                   {{ provider.userID__first_name }} ({{ provider.amount_copies }} copies)
+                                </a>
+                                <br>
+                            {% endfor %}
+                        </div>
+                    </p>
+                    <p class="single-book---author"><strong>Location</strong>: <span id="providerLocation">{{ providers.0.userID__address }}</span></p>
+                    <p class="single-book---description"><strong>Description</strong>: {{ book.description }}</p>
                   </div>
+                
+                <script>
+                    function toggleDropdown() {
+                        var dropdown = document.getElementById("providerDropdown");
+                        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+                    }
+                
+                    function selectProvider(name, amountCopies, id, location) {
+                        // Update provider name and copies available
+                        var selectedProvider = document.getElementById("selectedProvider");
+                        selectedProvider.innerHTML = '<a href="/home/shelf/' + id + '">' + name + '</a> (' + amountCopies + ' copies available)';
+                
+                        // Update provider location
+                        var providerLocation = document.getElementById("providerLocation");
+                        providerLocation.textContent = location;
+
+                        var modIdInput = document.getElementById("modId");
+                        modIdInput.value = id;
+                
+                        // Hide the dropdown
+                        toggleDropdown();
+                    }
+                </script>
+                
                   <div class="button-container" style="padding-top: 2vw;">
                     <form method="post" action="{% url 'home:borrow' book.id%}" style="display: inline-block;">
                       {% csrf_token %}
                           <div class="block-of-check-out-button" >
                             <input type="hidden" name="book_id" value="{{book.id}}">
-                          <input type="hidden" name="mod_id" value="{{mod.id}}">
+                          <input type="hidden" name="mod_id" id="modId" value="{{ providers.0.userID__id }}">
                         <button class="brix---btn-primary-6 w-button" >Check Out</button>
                       </div>
                     </form>

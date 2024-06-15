@@ -135,7 +135,7 @@ class bookView(View):
     book = Book.objects.get(id=id)
     copies = Copy.objects.filter(bookID=book,status=1)
     mod = User.objects.get(id=copies[0].userID_id)
-    
+    providers = Copy.objects.filter(bookID=book, status=1).values('userID__id', 'userID__first_name', 'userID__address').annotate(amount_copies=Count('id'))
     
     form = ReviewForm(initial={"bookID": Book.objects.get(id=id),"userID": request.user,})
     context = {
@@ -144,6 +144,7 @@ class bookView(View):
                    ],
       "time": timezone.now(),
       'book': book,
+      "providers":providers,
       "form": form,
       "socialAccount": getSocialAccount(request),
       "mod":mod,
@@ -256,6 +257,7 @@ class borrowView(LoginRequiredMixin, View):
       return redirect("user:login")
     else:
       
+      
       mod = User.objects.get(id=request.POST.get("mod_id"))
       book = Book.objects.get(id=id)
       copy = Copy.objects.filter(userID_id=mod.id, bookID_id=book.id).first()
@@ -290,7 +292,7 @@ class resultView(LoginRequiredMixin, View):
     status = 0
     deposit = None
     
-    copy = Copy.objects.filter(bookID_id=request.POST.get("copyID"),status=1)[0]
+    copy = Copy.objects.filter(bookID_id=request.POST.get("bookID"),status=1,userID=request.POST.get("modID"))[0]
     copyID_id = copy.id
     userID_id = request.user.id
     

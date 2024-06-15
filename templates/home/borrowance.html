@@ -54,7 +54,8 @@
               <form method="post" action="{% url 'home:result' %}">
                 {% csrf_token %}
                 <div class="block-of-check-out-button---checkout">
-                  <input type="hidden" value="{{book.id}}" name="copyID">
+                  <input type="hidden" value="{{book.id}}" name="bookID">
+                  <input type="hidden" value="{{mod.id}}" name="modID">
                   <button type="submit" class="brix---btn-primary-6 w-button">Borrow now</button>
                 </div>
                 
