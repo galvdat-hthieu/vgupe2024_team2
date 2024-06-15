@@ -208,7 +208,7 @@ class shelfView(View):
 
   def get(self, request, id):
     owner = User.objects.get(id = id)
-    copies = Copy.objects.filter(userID =id)
+    copies = Copy.objects.filter(userID =id).order_by('bookID')
     
     books = search(request)
     books = books.filter(copy__userID_id=id).distinct()
