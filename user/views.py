@@ -424,9 +424,9 @@ class userBorrowanceManagerView(LoginRequiredMixin,View):
     context = {
       "web":"Borrow/Return books",
       "socialAccount": getSocialAccount(request),
-      "borrowancesRequests":borrowancesRequests,
-      "borrowancesBorrowing":borrowancesBorrowing,  
-      "borrowancesHistory":borrowancesHistory,
+      "borrowancesRequests":borrowancesRequests[:5],
+      "borrowancesBorrowing":borrowancesBorrowing[:5],  
+      "borrowancesHistory":borrowancesHistory[:5],
     }
     
     return render(request, "user/borrowManage.html", context=context)

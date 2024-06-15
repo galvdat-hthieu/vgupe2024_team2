@@ -332,10 +332,10 @@ class modManageView(LoginRequiredMixin, View):
     bookApplicationHistory = BookApplication.objects.filter(status__in=[1,2], uploader=request.user)
     context = {
       "socialAccount": getSocialAccount(request),
-      "borrowancesRequests": borrowancesRequests,
-      "borrowancesHistory": borrowancesHistory,
-      "bookApplication": bookApplication,
-      "bookApplicationHistory": bookApplicationHistory,
+      "borrowancesRequests": borrowancesRequests[:5],
+      "borrowancesHistory": borrowancesHistory[:5],
+      "bookApplication": bookApplication[:5],
+      "bookApplicationHistory": bookApplicationHistory[:5],
     }
     return render(request, "mod/modManageBorrowing.html", context)
   
@@ -396,10 +396,10 @@ class adminManageView(LoginRequiredMixin, View):
     
     context = {
       "socialAccount": getSocialAccount(request),
-      "applications": ModApplication.objects.filter(status=0),
-      "applicationsHistory": ModApplication.objects.filter(status__in=[1, 2]),
-      "bookApplications": BookApplication.objects.filter(status=0),
-      "bookApplicationsHistory": BookApplication.objects.filter(status__in=[1, 2]),
+      "applications": ModApplication.objects.filter(status=0)[:5],
+      "applicationsHistory": ModApplication.objects.filter(status__in=[1, 2])[:5],
+      "bookApplications": BookApplication.objects.filter(status=0)[:5],
+      "bookApplicationsHistory": BookApplication.objects.filter(status__in=[1, 2])[:5],
     }
     return render(request, "mod/adminManageBorrowing.html", context)
     
