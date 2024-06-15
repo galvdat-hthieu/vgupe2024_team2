@@ -15,6 +15,7 @@ urlpatterns = [
     path('modManage',modManageView.as_view(), name="modManage_get"),
     path('modManage/<int:id>',modManageView.as_view(), name="modManage_post"),
     path('adminManage',adminManageView.as_view(), name="adminManage"),
+    path('adminManage/<int:id>',adminManageView.as_view(), name="adminManage_post"),
     path('deleteBook/bookid=<int:id>',deleteBook,name='deleteBook'),
     # Do not uncomment "import"
     # This function is only used to automatically add book

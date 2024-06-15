@@ -396,11 +396,26 @@ class adminManageView(LoginRequiredMixin, View):
     
     context = {
       "socialAccount": getSocialAccount(request),
-      "applications": ModApplication.objects.select_related('applicant').all()
+      "applications": ModApplication.objects.filter(status=0),
+      "applicationsHistory": ModApplication.objects.filter(status__in=[1, 2]),
+      "bookApplications": BookApplication.objects.filter(status=0),
+      "bookApplicationsHistory": BookApplication.objects.filter(status__in=[1, 2]),
     }
     return render(request, "mod/adminManageBorrowing.html", context)
     
-  def post(self, request):
+  def post(self, request, id):
+    
+    action = request.POST.get("action")
+    if action == "Approve":
+      bookApp = BookApplication.objects.get(id=id)
+      bookApp.status = 1
+      bookApp.save()
+
+    if action == "Decline":
+      bookApp = BookApplication.objects.get(id=id)
+      bookApp.status = 2
+      bookApp.save()
+    
     return redirect("mod:adminManage")
   
   

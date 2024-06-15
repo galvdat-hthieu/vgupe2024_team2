@@ -156,30 +156,33 @@
                                   <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3be-eb07c9ab" class="text-50 bold color-neutral-700">Status</div>
                                 </div>
                                 <div class="rows">
-
-                                  {% for book in books %}
+                                  {% if not bookApplications%}
+                                  <br>
+                                  <p>There is no pending book upload requests!</p>
+                                  {% endif %}
+                                  {% for bookApp in bookApplications %}
                                   <div class="data-block">
                                     <div class="data-table-row">
-                                      {% if book.coverImage %}          
-                                        {% if book.manual == True  %}                                    
-                                        <img src="{{ book.coverImage.url }}" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c3-eb07c9ab" alt="" class="book-images-size" />                
+                                      {% if bookApp.coverImage %}          
+                                        {% if bookApp.manual == True  %}                                    
+                                        <img src="{{ bookApp.coverImage.url }}" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c3-eb07c9ab" alt="" class="book-images-size" />                
                                         {% else %}   
-                                        <img src="{{ book.coverImage }}" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c3-eb07c9ab" alt="" class="book-images-size" />                                
+                                        <img src="{{ bookApp.coverImage }}" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c3-eb07c9ab" alt="" class="book-images-size" />                                
                                         {% endif %}                 
                                       {% else %}   
                                       <img src="/media/book/defaultCover.jpg" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c3-eb07c9ab" alt="" class="book-images-size" />                                  
                                       {% endif %}               
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c4-eb07c9ab" class="text-100---book-title bold color-neutral-800">{{book.title}}</div>
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c6-eb07c9ab" class="text-100---provider medium">Vietnamese - German University</div>
-                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c8-eb07c9ab" class="text-100---time medium">05/05/24</div>
+                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c4-eb07c9ab" class="text-100---book-title bold color-neutral-800">{{bookApp.bookID.title}}</div>
+                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c6-eb07c9ab" class="text-100---provider medium">{{bookApp.uploader.first_name}}</div>
+                                      <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c8-eb07c9ab" class="text-100---time medium">{{bookApp.created_at}}</div>
                                       <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3ca-eb07c9ab" class="combo-button">
-                                        <form action="" method="post">
+                                        <form action="{% url 'mod:adminManage_post' bookApp.id%}" method="post">
                                           {% csrf_token %}
-                                        <input type="submit" value="Approve" class="btn-primary flex-horizontal gap-column-4px" />
+                                        <input type="submit" value="Approve" class="btn-primary flex-horizontal gap-column-4px" name="action"/>
                                         </form>
-                                        <form action="" method="post">
+                                        <form action="{% url 'mod:adminManage_post' bookApp.id%}" method="post">
                                           {% csrf_token %}
-                                        <input type="submit" value="Decline" class="btn-secondary flex-horizontal gap-column-4px" />
+                                        <input type="submit" value="Decline" class="btn-secondary flex-horizontal gap-column-4px" name="action"/>
                                         </form>
                                       </div>
                                     </div>
@@ -198,6 +201,10 @@
                                   <div id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3f9-eb07c9ab" class="text-50 bold color-neutral-700">Status</div>
                                 </div>
                                 <div class="rows">
+                                {% if not applications%}
+                                <br>
+                                <p>There is no pending moderator applications!</p>
+                                {% endif %}
                                 {% for application in applications %}     
                                   {% if application.status == 0 %}
                                   <div class="data-block">
@@ -412,22 +419,33 @@
                                   <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393a6-eb07c9ab" class="text-50 bold color-neutral-700">Status</div>
                                 </div>
                                 <div class="rows">
-                                  <div class="data-table-row"><img src="images/screenshot-202024-04-15-20203148.png" loading="lazy" width="76" id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393aa-eb07c9ab" alt="" class="book-images-size" />
-                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393ab-eb07c9ab" class="text-100---book-title bold color-neutral-800">Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow 3nd Edition</div>
-                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393ad-eb07c9ab" class="text-100---provider medium">Vietnamese - German University</div>
-                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393af-eb07c9ab" class="text-100---time medium">05/05/24</div>
+                                  {% if not bookApplicationsHistory%}
+                                  <br>
+                                  <p>There is no history book upload requests!</p>
+                                  {% endif %}
+                                  {% for bookApp in bookApplicationsHistory %}
+                                  <div class="data-table-row">
+                                    {% if book.coverImage %}          
+                                        {% if book.manual == True  %}                                    
+                                        <img src="{{ book.coverImage.url }}" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c3-eb07c9ab" alt="" class="book-images-size" />                
+                                        {% else %}   
+                                        <img src="{{ book.coverImage }}" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c3-eb07c9ab" alt="" class="book-images-size" />                                
+                                        {% endif %}                 
+                                      {% else %}   
+                                      <img src="/media/book/defaultCover.jpg" loading="lazy" width="76" id="w-node-_1fc42a17-a1dc-71f0-e3fa-8ea61179a3c3-eb07c9ab" alt="" class="book-images-size" />                                  
+                                      {% endif %}  
+                                    
+                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393ab-eb07c9ab" class="text-100---book-title bold color-neutral-800">{{bookApp.bookID.title}}</div>
+                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393ad-eb07c9ab" class="text-100---provider medium">{{bookApp.uploader.first_name}}</div>
+                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393af-eb07c9ab" class="text-100---time medium">{{bookApp.created_at}}</div>
                                     <div class="color-badge green">Accpeted</div>
                                   </div>
-                                  <div class="data-table-row"><img src="images/screenshot-202024-04-16-20203339.png" loading="lazy" id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393b4-eb07c9ab" alt="" class="book-images-size" />
-                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393b5-eb07c9ab" class="text-100---book-title bold color-neutral-800">Deep Learning with TensorFlow, Keras, and PyTorch</div>
-                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393b7-eb07c9ab" class="text-100---provider medium">University of Science - HCM</div>
-                                    <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393b9-eb07c9ab" class="text-100---time medium">06/06/24</div>
-                                    <div class="color-badge red">Rejected</div>
-                                  </div>
+                                  {% endfor %}
+                                  
                                 </div>
                               </div>
                               <div class="overflow-auto">
-                                <div class="text-400 bold color-neutral-800 align-left padding-top-table">Moderator Application</div>
+                                <div class="text-400 bold color-neutral-800 align-left padding-top-table">Moderator123 Application</div>
                                 <div class="data-table-row table-header">
                                   <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393c1-eb07c9ab" class="text-50 bold color-neutral-700 self-central---avatar">Avatar</div>
                                   <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393c3-eb07c9ab" class="text-50 bold color-neutral-700 self-central---name">Name</div>
@@ -436,7 +454,11 @@
                                   <div id="w-node-bae15ac9-69a9-cb98-c454-e36cb99393c9-eb07c9ab" class="text-50 bold color-neutral-700">Status</div>
                                 </div>
                                 <div class="rows">
-								                {% for application in applications %}
+                                {% if not applicationsHistory%}
+                                <br>
+                                <p>There is no history moderator applications</p>
+                                {% endif %}
+								                {% for application in applicationsHistory %}
                                   {% if application.status == 1 %}
                                   <div class="data-table-row">
                                     {% if application.applicant.avatar %}
