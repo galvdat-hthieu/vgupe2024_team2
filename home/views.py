@@ -22,7 +22,7 @@ class indexView(View):
       "cssFiles": [],
       "socialAccount": getSocialAccount(request),
       "books": {
-        "random": Book.objects.get(id = random.randint(1, len(Book.objects.all()))),
+        "random": Book.objects.get(id = random.randint(1, 178)),
         "literature": random.sample(list(Book.objects.filter(liteCate = 1)), 6),
         "trending": random.sample(list(Book.objects.all()), 6),
         "favorite": random.sample(list(Book.objects.all()), 6),
