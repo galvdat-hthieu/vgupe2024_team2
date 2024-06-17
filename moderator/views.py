@@ -9,7 +9,7 @@ from django.core.mail import EmailMessage
 from home.models import *
 from home.functions import *
 from home.util import *
-from datetime import date
+from datetime import date, timedelta
 import csv
 import sqlite3
 from django.db import connections
@@ -350,6 +350,7 @@ class modManageView(LoginRequiredMixin, View):
     
     if action == "Approve":
       borrowance.status = 2
+      borrowance.expiredDate = timezone.now() + timezone.timedelta(days=14)
       borrowance.save()
     
       #Send approve email
@@ -365,7 +366,7 @@ class modManageView(LoginRequiredMixin, View):
     
     if action == "Decline":
       borrowance.status = 1
-      borrowance.expiredDate = timezone.now() + timezone.timedelta(days=14)
+      
       borrowance.save()
       
       #Send decline email
