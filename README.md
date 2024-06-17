@@ -119,12 +119,12 @@ Our team have four actors in our system:
 ## UI Display
 <table>
   <tr>
-    <td><img src=".document/photos/home.png" alt="Image 1" width="500" /><center>Image 1</center>center</td>
-    <td><img src=".document/photos/dashboard.png" alt="Image 2" width="500" /></td>
+    <td><img src=".document/photos/home.png" alt="Image 1" width="520" />Home</td>
+    <td><img src=".document/photos/dashboard.png" alt="Image 2" width="600" />Dashboard</td>
   </tr>
     <tr>
-    <td><img src=".document/photos/gallery.png" alt="Image 3" width="500" /></td>
-    <td><img src=".document/photos/myborrowings.png" alt="Image 4" width="500" /></td>
+    <td><img src=".document/photos/gallery.png" alt="Image 3" width="500" />Gallery</td>
+    <td><img src=".document/photos/myborrowings.png" alt="Image 4" width="620" />My Borrowings</td>
     </tr>
 </table>
 
