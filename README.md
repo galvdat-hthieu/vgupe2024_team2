@@ -86,13 +86,15 @@ Our team have four actors in our system:
 
 <a href=".document/diagrams/usecase/usecase_guest.png">Use case diagram for guest</a>
 
-<a href=".document/diagrams/usecase/usecase_other.png">Use case diagram for user, moderator and admin</a>
+<a href=".document/diagrams/usecase/usecase_other.png">Use case diagram for user</a>
+
+<a href=".document/diagrams/usecase/usecase_other.png">Use case diagram for moderator and admin</a>
 
 -----
 
 ### Sequence Diagram
 
-<a href=".document/diagrams/sequence/sequence_guest.png">Sequence diagram for guest functions: contact, search book, view books, read news</a>
+<a href=".document/diagrams/sequence/sequence_guest.png">Sequence diagram for guest functions: contact, search book, view books, read FAQs</a>
 
 <a href=".document/diagrams/sequence/sequence_register.png">Sequence diagram for "register" function</a>
 
@@ -104,24 +106,25 @@ Our team have four actors in our system:
 
 -----
 
-### E-R Class Diagram
+### E-R Diagram
 
-<img src=".document/ER-diagram.png" alt="Alt text" title="usecase diagram">
+<a href=".document/ER-diagram.png">E-R Diagram</a>
 
 -----
 
 ### Deployment Diagram
 
-<img src=".document/diagrams/deployment/deployment.jpg" alt="Alt text" title="deployment diagram">
+<a href=".document/diagrams/deployment/deployment.jpg">Deployment Diagram</a>
 
-<!-- <img src=".document/flowChart.png" alt="Alt text" title="flow chart">
-<img src=".document/usecase_guest.png" alt="Alt text" title="usecase diagram" width=400px>
-<img src=".document/usecase_other.png" alt="Alt text" title="usecase diagram"> -->
-
-## Prototypes
-Prototyped UI
-
-Deployment here
+## UI Display
+<table>
+  <tr>
+    <td><img src=".document/photos/home.png" alt="Image 1" width="500" /></td>
+    <td><img src=".document/photos/dashboard.png" alt="Image 2" width="500" /></td>
+    <td><img src=".document/photos/gallery.png" alt="Image 3" width="500" /></td>
+    <td><img src=".document/photos/myborrowings.png" alt="Image 4" width="500" /></td>
+  </tr>
+</table>
 
 ## Credits
 List all the tasks and history of contribution (if possible)
