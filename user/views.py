@@ -202,7 +202,7 @@ class registerView(View):
         email = EmailMessage(mail_subject, message, to=[to_email])
         # Try to send the email and provide user feedback
         if email.send():
-            messages.success(request, f'Dear <b>{user.username}</b>, please go to your email <b>{to_email}</b>.')
+            messages.success(request, f'Dear {user.username}, please go to your email {to_email}.')
         else:
             messages.error(request, f'Problem sending email to {to_email}, check if you typed correctly.')
 
