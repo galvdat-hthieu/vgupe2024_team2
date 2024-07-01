@@ -83,7 +83,6 @@ def activate(request, uidb64, token):
     user = User.objects.get(username = uid) # Retrieve the user based on the decoded username
   except:
     user = None
-  print(user.username)
   if user is not None and account_activation_token.check_token(user, token):
     # If the user exists and the token is valid, activate the user account
     user.is_active = True
