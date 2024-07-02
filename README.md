@@ -2,7 +2,7 @@
 ***vgupe2024_team2***
 
 ## Table of Contents
-1. [Table of Contents](#table-of-contents)
+[Table of Contents](#table-of-contents)
 2. [Team members](#team-members)
 3. [How to Install and Run the Package](#how-to-install-and-run-the-package)
 4. [File Structure](#file-structure)
@@ -65,12 +65,15 @@ The Online Library Management Application is a comprehensive system designed to 
 the file, execute the following command in the terminal:
    ```sh
    pip install -r requirements.txt
-   ```
 
 ### Running the Project
 To run the project, execute the following command in the terminal:
 ```sh
 python manage.py runserver
+```
+Or using Docker command:
+```sh
+docker-compose up
 ```
 
 ## File Structure
@@ -132,11 +135,12 @@ Our team have four actors in our system:
 Here are the following sequence diagrams to illustrate various functions within our project: 
 
 <a href=".document/diagrams/sequence/sequence_guest.png">Sequence diagram for guest functions: contact, search book, view books, read FAQs</a>
+
 <a href=".document/diagrams/sequence/sequence_register.png">Sequence diagram for "register" function</a>
 <a href=".document/diagrams/sequence/sequence_login.png">Sequence diagram for "login" function</a>
 <a href=".document/diagrams/sequence/sequence_addbook.png">Sequence diagram for "add book" function</a>
-<a href=".document/diagrams/sequence/Review.svg">Sequence diagram for "user's book review" function</a>
 
+<a href=".document/diagrams/sequence/Review.svg">Sequence diagram for "user's book review" function</a>
 
 ### E-R Diagram
 Below is the E-R diagram to demonstrate about our database throughout the project:
@@ -144,6 +148,7 @@ Below is the E-R diagram to demonstrate about our database throughout the projec
 <a href=".document/ER-diagram.png">E-R Diagram</a>
 
 ### Deployment Diagram
+Below is the deployment diagram to demonstrate about our database throughout the project:
 
 Below is the link to the component diagram of our prroject.
 
@@ -155,6 +160,7 @@ Below is the link to the component diagram of our prroject.
 <a href=".document/diagrams/component/usecase-Component.drawio.png">Component Diagram</a>
 
 ## UI Display
+Below are some of the UI displays taken from our website:
 <table>
   <tr>
     <td><img src=".document/photos/home.png" alt="Image 1" width="520" />Home</td>
