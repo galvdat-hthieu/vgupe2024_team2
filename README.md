@@ -127,7 +127,7 @@ Here are the following sequence diagrams to illustrate various functions within 
 
 <a href=".document/diagrams/sequence/sequence_guest.png">Sequence diagram for guest functions: contact, search book, view books, read FAQs</a>
 <a href=".document/diagrams/sequence/sequence_register.png">Sequence diagram for "register" function</a>
-<a href=".document/diagrams/sequence/sequence_login.jpg">Sequence diagram for "login" function</a>
+<a href=".document/diagrams/sequence/sequence_login.png">Sequence diagram for "login" function</a>
 <a href=".document/diagrams/sequence/sequence_addbook.png">Sequence diagram for "add book" function</a>
 <a href=".document/diagrams/sequence/Review.svg">Sequence diagram for "user's book review" function</a>
 
@@ -139,10 +139,14 @@ Below is the E-R diagram to demonstrate about our database throughout the projec
 
 ### Deployment Diagram
 
-<a href=".document/diagrams/deployment/deployment.jpg">Deployment Diagram</a>
+Below is the link to the component diagram of our prroject.
+
+<a href=".document/diagrams/deployment/usecase-Deployment.png">Deployment Diagram</a>
 
 ### Component Diagram
-Below is the link to the component diagram of our prroject
+Below is the link to the component diagram of our prroject.
+
+<a href=".document/diagrams/component/usecase-Component.drawio.png">Component Diagram</a>
 
 ## UI Display
 <table>
@@ -156,8 +160,6 @@ Below is the link to the component diagram of our prroject
     </tr>
 </table>
 
-## Credits
-List all the tasks and history of contribution (if possible)
 
 ## Contributing
 1. Fork and clone the repository
@@ -165,4 +167,3 @@ List all the tasks and history of contribution (if possible)
 3. Submit a pull request
 
 ## License
-...
