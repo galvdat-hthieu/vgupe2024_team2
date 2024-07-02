@@ -3,6 +3,12 @@
 
 ## Table of Contents
 1. [Table of Contents](#table-of-contents)
+2. [Team members](#team-members)
+3. [How to Install and Run the Package](#how-to-install-and-run-the-package)
+4. [File Structure](#file-structure)
+5. [System Design](#system-design)
+6. [UI Display](#ui-display)
+8. [License](#license)
 
 ## Team members
 | Full Name    | Student's ID  |
@@ -160,10 +166,5 @@ Below is the link to the component diagram of our prroject.
     </tr>
 </table>
 
-
-## Contributing
-1. Fork and clone the repository
-2. Create a new branch
-3. Submit a pull request
-
 ## License
+MIT License
