@@ -2,7 +2,7 @@
 ***vgupe2024_team2***
 
 ## Table of Contents
-[Table of Contents](#table-of-contents)
+1. [Table of Contents](#table-of-contents)
 2. [Team members](#team-members)
 3. [How to Install and Run the Package](#how-to-install-and-run-the-package)
 4. [File Structure](#file-structure)
@@ -19,9 +19,6 @@
 | [Dương Thiên Hương](https://github.com/dxd1019) | 10421019 |
 | [Phan Tâm Như](https://github.com/nhuhuynh1508) | 10421122 |
 | [Nguyễn Minh Anh](https://github.com/sumirez) | 10421068 |
-
-***Link to the report:*** [Overleaf LaTeX report](https://www.overleaf.com/read/vnwzxfkpcztz#cff629)
-
 
 ## Project Description
 ### Overview
@@ -46,6 +43,17 @@ The Online Library Management Application is a comprehensive system designed to 
     - **Django and Python**: Chosen for their robustness, scalability, and the extensive online resources available for development support. Django's built-in admin interface simplifies administrative tasks, making it an ideal choice for managing complex database operations and user roles.
 - **Frontend**:
     - **Webflow**: Utilized to streamline the design-to-production process, allowing for rapid prototyping and a polished user interface. Webflow's visual editor makes it easy to create responsive designs without extensive front-end coding.
+
+### Deployment page
+You can find our deployment using Railway Production [here](https://vgupe2024team2clone-production.up.railway.app/).
+
+### Project Timeline
+Our timeline for the project has been described in the report. However, this is the actual link where we detail the goals and achievements for each week. See Notion link [here](https://lcnguyencs.notion.site/Schedule-96c5328274bc4e1b817b2768dd6da224)
+
+### Project Report
+[Overleaf LaTeX report](https://www.overleaf.com/read/vnwzxfkpcztz#cff629)
+
+We also include a pdf version on our GitHub repo [here](.document/report/Bibliotech_report.pdf).
 
 ## How to install and run the package
 ### Prequisites
@@ -84,7 +92,6 @@ The following outlines is the hierarchical structure of our project, generalizin
 ```
 ├─ .document
 │  └─ diagrams: Contains diagrams related to the project.
-│  └─ photos: Stores UI screenshots of the project.
 ├─ Bibliotech
 ├─ control: contains configurations, views, URL mappings, models, and migration files essential for these operations.
 ├─ front-end template
@@ -160,17 +167,9 @@ Below is the link to the component diagram of our prroject.
 <a href=".document/diagrams/component/usecase-Component.drawio.png">Component Diagram</a>
 
 ## UI Display
-Below are some of the UI displays taken from our website:
-<table>
-  <tr>
-    <td><img src=".document/photos/home.png" alt="Image 1" width="520" />Home</td>
-    <td><img src=".document/photos/dashboard.png" alt="Image 2" width="600" />Dashboard</td>
-  </tr>
-    <tr>
-    <td><img src=".document/photos/gallery.png" alt="Image 3" width="500" />Gallery</td>
-    <td><img src=".document/photos/myborrowings.png" alt="Image 4" width="620" />My Borrowings</td>
-    </tr>
-</table>
+Below is the link where we make a list of our UI display and to keep track of our work.
+
+See our prototypes here on [our Notion dashboard](https://lcnguyencs.notion.site/Tasks-for-reference-cc3fbe582dcb4f9d91675ce3e0b5d486)
 
 ## License
 MIT License
